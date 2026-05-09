@@ -1,0 +1,48 @@
+{
+  "source": "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/HomeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "証明写真",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "プロ品質をスマホで、いつでも",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "ID PHOTO JAPAN",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld × %lld mm",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 487
+        }
+      },
+      {
+        "comment": "",
+        "key": "STEP %lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 574
+        }
+      }
+    ]
+  },
+  "version": 1
+}

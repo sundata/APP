@@ -1,0 +1,160 @@
+{
+  "source": "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/PhotoEditorView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "エラー",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "写真が選択されていません",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@  %lld×%lldmm",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "戻る",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vision AIで人物を自動切り抜き",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 484
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI背景除去",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 473
+        }
+      },
+      {
+        "comment": "",
+        "key": "自動",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 476
+        }
+      },
+      {
+        "comment": "",
+        "key": "背景除去をやり直す",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 508
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI背景除去を実行",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 508
+        }
+      },
+      {
+        "comment": "",
+        "key": "カラーピッカーで選択",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 596
+        }
+      },
+      {
+        "comment": "",
+        "key": "比較を閉じる",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 679
+        }
+      },
+      {
+        "comment": "",
+        "key": "補正前と比較",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 679
+        }
+      },
+      {
+        "comment": "",
+        "key": "リセット",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 705
+        }
+      },
+      {
+        "comment": "",
+        "key": "完了",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 718
+        }
+      },
+      {
+        "comment": "",
+        "key": "完了",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 824
+        }
+      },
+      {
+        "comment": "",
+        "key": "補正前",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 981
+        }
+      },
+      {
+        "comment": "",
+        "key": "補正後",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 990
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 1095
+        }
+      }
+    ]
+  },
+  "version": 1
+}

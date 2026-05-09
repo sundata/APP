@@ -1,0 +1,72 @@
+{
+  "source": "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/BeautyControlView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "美肌補正",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "閉じる",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "比較",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "リセット",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "画質調整",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "リセット",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "補正前",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "補正後",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 313
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,23 @@
+{
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/AdMobManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/AdMobManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/AdMobManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/AdMobManager.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/AdMobManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/AdMobManager.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/BackgroundFetchManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/BackgroundFetchManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/BackgroundFetchManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/BackgroundFetchManager.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/BackgroundFetchManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/BackgroundFetchManager.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/ArticleWebView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/ArticleWebView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/ArticleWebView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/ArticleWebView.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/ArticleWebView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphoneos/SeeNews.build/Objects-normal/arm64/ArticleWebView.swiftdeps"
+  }
+}

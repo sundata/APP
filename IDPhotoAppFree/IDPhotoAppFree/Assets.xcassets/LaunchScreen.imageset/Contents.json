@@ -1,0 +1,55 @@
+{
+  "images" : [
+    {
+      "idiom" : "iphone",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "LaunchScreen-828x1792.png",
+      "idiom" : "iphone",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "LaunchScreen-1125x2436.png",
+      "idiom" : "iphone",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "LaunchScreen-1668x2388.png",
+      "idiom" : "ipad",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "LaunchScreen-1170x2532.png",
+      "idiom" : "iphone",
+      "subtype" : "2532",
+      "scale" : "3x"
+    },
+    {
+      "filename" : "LaunchScreen-1179x2556.png",
+      "idiom" : "iphone",
+      "subtype" : "2556",
+      "scale" : "3x"
+    },
+    {
+      "filename" : "LaunchScreen-1242x2688.png",
+      "idiom" : "iphone",
+      "subtype" : "2688",
+      "scale" : "3x"
+    },
+    {
+      "filename" : "LaunchScreen-1284x2778.png",
+      "idiom" : "iphone",
+      "subtype" : "2778",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

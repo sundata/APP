@@ -1,0 +1,21 @@
+INFO:     Started server process [2681]
+INFO:     Waiting for application startup.
+2026-04-24 23:55:52,651 [INFO] Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-04-24 23:55:52,652 [INFO] Added job "run_crawler" to job store "default"
+2026-04-24 23:55:52,652 [INFO] Scheduler started
+2026-04-24 23:55:52,652 [INFO] Scheduler started, interval=30min
+2026-04-24 23:55:52,652 [INFO] === crawler started ===
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-24 23:55:52,773 [INFO] [週刊女性PRIME] 0 articles matched
+2026-04-24 23:55:52,775 [INFO] [FRIDAY デジタル] 0 articles matched
+2026-04-24 23:55:52,804 [INFO] [スポーツ報知] 0 articles matched
+2026-04-24 23:55:52,847 [INFO] [女性自身] 0 articles matched
+2026-04-24 23:55:52,887 [INFO] [日刊ゲンダイ] 0 articles matched
+2026-04-24 23:55:52,887 [INFO] === crawler done, 0 new articles ===
+INFO:     127.0.0.1:50722 - "GET /v1/health HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+2026-04-25 00:02:18,843 [INFO] Scheduler has been shut down
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2681]

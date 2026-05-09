@@ -1,0 +1,23 @@
+{
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Models/FontScaler.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/FontScaler.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/FontScaler.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/FontScaler.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/FontScaler.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/FontScaler.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/BookmarkView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/BookmarkView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/BookmarkView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/BookmarkView.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/BookmarkView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/BookmarkView.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/CategoryView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/CategoryView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/CategoryView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/CategoryView.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/CategoryView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/CategoryView.swiftdeps"
+  }
+}

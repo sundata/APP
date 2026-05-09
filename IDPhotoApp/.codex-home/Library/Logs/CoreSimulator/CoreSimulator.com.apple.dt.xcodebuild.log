@@ -1,0 +1,51 @@
+Apr 30 22:51:54 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: Unable to deliver request ({
+	    "developer_dir" = "/Applications/Xcode.app/Contents/Developer";
+	    request = "set_developer_dir";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Warning>: Unable to discover any Simulator runtimes. Developer Directory is /Applications/Xcode.app/Contents/Developer.
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: Could not kickstart simdiskimaged; SimDiskImageManager services will not be available: Error Domain=NSPOSIXErrorDomain Code=53 "Software caused connection abort" UserInfo={NSLocalizedDescription=Error returned in reply from CoreSimulatorService: Connection invalid}
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: Could not get list of trusted mount directories: Error Domain=com.apple.CoreSimulator.SimError Code=410 "The service used to manage runtime disk images (simdiskimaged) crashed or is not responding" UserInfo={NSLocalizedDescription=The service used to manage runtime disk images (simdiskimaged) crashed or is not responding}
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:51:55 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[96630] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:24 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: Unable to deliver request ({
+	    "developer_dir" = "/Applications/Xcode.app/Contents/Developer";
+	    request = "set_developer_dir";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Warning>: Unable to discover any Simulator runtimes. Developer Directory is /Applications/Xcode.app/Contents/Developer.
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: Could not kickstart simdiskimaged; SimDiskImageManager services will not be available: Error Domain=NSPOSIXErrorDomain Code=53 "Software caused connection abort" UserInfo={NSLocalizedDescription=Error returned in reply from CoreSimulatorService: Connection invalid}
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: Could not get list of trusted mount directories: Error Domain=com.apple.CoreSimulator.SimError Code=410 "The service used to manage runtime disk images (simdiskimaged) crashed or is not responding" UserInfo={NSLocalizedDescription=The service used to manage runtime disk images (simdiskimaged) crashed or is not responding}
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:56:25 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[98894] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:39 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: Unable to deliver request ({
+	    "developer_dir" = "/Applications/Xcode.app/Contents/Developer";
+	    request = "set_developer_dir";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Warning>: Unable to discover any Simulator runtimes. Developer Directory is /Applications/Xcode.app/Contents/Developer.
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: simdiskimaged returned error (invalid), marking disconnected.
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: Could not kickstart simdiskimaged; SimDiskImageManager services will not be available: Error Domain=NSPOSIXErrorDomain Code=53 "Software caused connection abort" UserInfo={NSLocalizedDescription=Error returned in reply from CoreSimulatorService: Connection invalid}
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: Could not get list of trusted mount directories: Error Domain=com.apple.CoreSimulator.SimError Code=410 "The service used to manage runtime disk images (simdiskimaged) crashed or is not responding" UserInfo={NSLocalizedDescription=The service used to manage runtime disk images (simdiskimaged) crashed or is not responding}
+Apr 30 22:56:40 SunDatachinnoMacBook-Air com.apple.dt.xcodebuild[99013] <Error>: Unable to deliver request ({
+	    request = "notification_subscription";
+	    "set_path" = "/Users/sundata/Library/Developer/CoreSimulator/Devices";
+	}) because we are not connected to CoreSimulatorService.

@@ -1,0 +1,144 @@
+{
+  "source": "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/BackgroundPickerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "現在の背景",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "背景除去済み",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "除去後のプレビュー",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI除去で\nきれいに合成",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "カラーピッカーで選択",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 313
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vision AIが人物を自動検出・精細に切り抜き",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI背景除去",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 346
+        }
+      },
+      {
+        "comment": "",
+        "key": "自動",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 349
+        }
+      },
+      {
+        "comment": "",
+        "key": "背景除去をやり直す",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 377
+        }
+      },
+      {
+        "comment": "",
+        "key": "AI背景除去を実行",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 377
+        }
+      },
+      {
+        "comment": "",
+        "key": "使い方のポイント",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 405
+        }
+      },
+      {
+        "comment": "",
+        "key": "除去後に背景カラーを選択",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "カスタムカラー",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 688
+        }
+      },
+      {
+        "comment": "",
+        "key": "選択したカラーが背景に適用されます",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 671
+        }
+      },
+      {
+        "comment": "",
+        "key": "カラーを選択",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 656
+        }
+      },
+      {
+        "comment": "",
+        "key": "この色を適用",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 682
+        }
+      },
+      {
+        "comment": "",
+        "key": "キャンセル",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 692
+        }
+      }
+    ]
+  },
+  "version": 1
+}

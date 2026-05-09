@@ -1,0 +1,286 @@
+2026-03-25 02:19:51 +0000 [MT] Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0xb17dc6100; archive(resolved)="<IDEArchive: 0xb17ce34f0>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team(resolved)="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	Chain (15, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0xb17dc6100; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionProcessingPipelineContext: 0xb17dc5e00; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396d00; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396a80; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396800; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396580; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396300; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16396080; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16395e00; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16395180; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16394f00; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16394a00; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="<IDEProvisioningBasicTeam: 0xb17e49e80; teamID='HQ9A6C8C3R', teamName='(null)'>">
+	<IDEDistributionContext: 0xb16394780; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="(null)">
+	<IDEDistributionContext: 0xb16394000; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="<IDEDistributionMethodiOSAppStoreDistribution: 0xb168f4230>", team="(null)">
+	<IDEDistributionContext: 0x104f3e6d0; archive = "<IDEArchive: 0xb17ce34f0>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0xb17dc6100>
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionCreateDestRootStep
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionCopyItemStep
+2026-03-25 02:19:51 +0000 [MT] Running /usr/bin/ditto '-V' '/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app'
+2026-03-25 02:19:51 +0000  >>> Copying /Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app 
+2026-03-25 02:19:51 +0000  copying file ./_CodeSignature/CodeResources ... 
+2026-03-25 02:19:51 +0000  6289 bytes for ./_CodeSignature/CodeResources
+2026-03-25 02:19:51 +0000  copying file ./IDPhotoAppFree ... 
+2026-03-25 02:19:51 +0000  3476800 bytes for ./IDPhotoAppFree
+2026-03-25 02:19:51 +0000  copying file ./AppIcon60x60@2x.png ... 
+2026-03-25 02:19:51 +0000  9066 bytes for ./AppIcon60x60@2x.png
+2026-03-25 02:19:51 +0000  copying file ./Assets.car ... 
+2026-03-25 02:19:51 +0000  187480 bytes for ./Assets.car
+2026-03-25 02:19:51 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2026-03-25 02:19:51 +0000  11233 bytes for ./AppIcon76x76@2x~ipad.png
+2026-03-25 02:19:51 +0000  copying file ./PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:51 +0000  1167 bytes for ./PrivacyInfo.xcprivacy
+2026-03-25 02:19:51 +0000  copying file ./LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2026-03-25 02:19:51 +0000  4569 bytes for ./LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2026-03-25 02:19:51 +0000  copying file ./LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2026-03-25 02:19:51 +0000  924 bytes for ./LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+2026-03-25 02:19:51 +0000  copying file ./LaunchScreen.storyboardc/Info.plist ... 
+2026-03-25 02:19:51 +0000  258 bytes for ./LaunchScreen.storyboardc/Info.plist
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/GoogleMobileAds.framework/_CodeSignature/CodeResources ... 
+2026-03-25 02:19:51 +0000  2034 bytes for ./Frameworks/GoogleMobileAds.framework/_CodeSignature/CodeResources
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/GoogleMobileAds.framework/GoogleMobileAds ... 
+2026-03-25 02:19:51 +0000  51392 bytes for ./Frameworks/GoogleMobileAds.framework/GoogleMobileAds
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/GoogleMobileAds.framework/PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:51 +0000  4491 bytes for ./Frameworks/GoogleMobileAds.framework/PrivacyInfo.xcprivacy
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/GoogleMobileAds.framework/Info.plist ... 
+2026-03-25 02:19:51 +0000  1593 bytes for ./Frameworks/GoogleMobileAds.framework/Info.plist
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/UserMessagingPlatform.framework/_CodeSignature/CodeResources ... 
+2026-03-25 02:19:51 +0000  2034 bytes for ./Frameworks/UserMessagingPlatform.framework/_CodeSignature/CodeResources
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform ... 
+2026-03-25 02:19:51 +0000  51392 bytes for ./Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/UserMessagingPlatform.framework/PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:51 +0000  1677 bytes for ./Frameworks/UserMessagingPlatform.framework/PrivacyInfo.xcprivacy
+2026-03-25 02:19:51 +0000  copying file ./Frameworks/UserMessagingPlatform.framework/Info.plist ... 
+2026-03-25 02:19:51 +0000  1499 bytes for ./Frameworks/UserMessagingPlatform.framework/Info.plist
+2026-03-25 02:19:51 +0000  copying file ./embedded.mobileprovision ... 
+2026-03-25 02:19:51 +0000  12288 bytes for ./embedded.mobileprovision
+2026-03-25 02:19:51 +0000  copying file ./Info.plist ... 
+2026-03-25 02:19:51 +0000  2002 bytes for ./Info.plist
+2026-03-25 02:19:51 +0000  copying file ./PkgInfo ... 
+2026-03-25 02:19:51 +0000  8 bytes for ./PkgInfo
+2026-03-25 02:19:51 +0000 [MT] /usr/bin/ditto exited with 0
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionEmbedProfileStep
+2026-03-25 02:19:51 +0000 [MT] Skipping profile for item: <IDEDistributionItem: 0xb17dae220; bundleID='com.google.GoogleMobileAds', path='<DVTFilePath:0xb17e04700:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae1c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.GoogleMobileAds', executablePath='<DVTFilePath:0xb17dad440:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds'>', hardenedRuntime='0'>'>
+2026-03-25 02:19:51 +0000 [MT] Skipping profile for item: <IDEDistributionItem: 0xb17dae280; bundleID='com.google.UserMessagingPlatform', path='<DVTFilePath:0xb17e047e0:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae2e0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.UserMessagingPlatform', executablePath='<DVTFilePath:0xb17e04850:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform'>', hardenedRuntime='0'>'>
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionInfoPlistStep
+2026-03-25 02:19:51 +0000 [MT] Skipping Info.plist step because item: <IDEDistributionItem: 0xb17dae220; bundleID='com.google.GoogleMobileAds', path='<DVTFilePath:0xb17e04700:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae1c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.GoogleMobileAds', executablePath='<DVTFilePath:0xb17dad440:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds'>', hardenedRuntime='0'>'> is a framework or embedded in a framework.
+2026-03-25 02:19:51 +0000 [MT] Skipping Info.plist step because item: <IDEDistributionItem: 0xb17dae280; bundleID='com.google.UserMessagingPlatform', path='<DVTFilePath:0xb17e047e0:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae2e0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.UserMessagingPlatform', executablePath='<DVTFilePath:0xb17e04850:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform'>', hardenedRuntime='0'>'> is a framework or embedded in a framework.
+2026-03-25 02:19:51 +0000 [MT] Skipping setting DTXcodeBuildDistribution because toolsBuildVersionName was nil.
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionItemRemovalStep
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionAppThinningPlistStep
+2026-03-25 02:19:51 +0000 [MT] Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionSymbolsStep
+2026-03-25 02:19:51 +0000 [MT] Writing /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Symbols/1D157586-1D5D-349B-86B6-F337AD6C0016.symbols
+2026-03-25 02:19:51 +0000 [MT] Upload Symbols Failed
+2026-03-25 02:19:51 +0000 [MT] Upload Symbols Failed
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionCopyAppleProvidedContentStep
+2026-03-25 02:19:51 +0000 [MT] Running /usr/bin/ditto '-V' '/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Signatures' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Signatures'
+2026-03-25 02:19:51 +0000  >>> Copying /Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Signatures 
+2026-03-25 02:19:51 +0000  copying file ./GoogleMobileAds.xcframework-ios.signature ... 
+2026-03-25 02:19:51 +0000  6213 bytes for ./GoogleMobileAds.xcframework-ios.signature
+2026-03-25 02:19:51 +0000  copying file ./UserMessagingPlatform.xcframework-ios.signature ... 
+2026-03-25 02:19:51 +0000  6225 bytes for ./UserMessagingPlatform.xcframework-ios.signature
+2026-03-25 02:19:51 +0000 [MT] /usr/bin/ditto exited with 0
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionAppThinningStep
+2026-03-25 02:19:51 +0000 [MT] Skipping step: IDEDistributionAppThinningStep because it said so
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionArchThinningStep
+2026-03-25 02:19:51 +0000 [MT] Archs to thin for item /Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework are []
+2026-03-25 02:19:51 +0000 [MT] Archs to thin for item /Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework are []
+2026-03-25 02:19:51 +0000 [MT] Archs to thin for item /Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app are []
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionODRStep
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionStripXattrsStep
+2026-03-25 02:19:51 +0000 [MT] Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-25 02:19:51 +0000 [MT] Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-25 02:19:51 +0000 [MT] Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-25 02:19:51 +0000 [MT] Processing step: IDEDistributionCodesignStep
+2026-03-25 02:19:51 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb17dae220; bundleID='com.google.GoogleMobileAds', path='<DVTFilePath:0xb17e04700:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae1c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.GoogleMobileAds', executablePath='<DVTFilePath:0xb17dad440:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds'>', hardenedRuntime='0'>'>: {
+}
+2026-03-25 02:19:51 +0000 [MT] Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-25 02:19:51 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb17dae220; bundleID='com.google.GoogleMobileAds', path='<DVTFilePath:0xb17e04700:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae1c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.GoogleMobileAds', executablePath='<DVTFilePath:0xb17dad440:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds'>', hardenedRuntime='0'>'> are: {
+}
+2026-03-25 02:19:51 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0xb17dae220; bundleID='com.google.GoogleMobileAds', path='<DVTFilePath:0xb17e04700:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae1c0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.GoogleMobileAds', executablePath='<DVTFilePath:0xb17dad440:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds'>', hardenedRuntime='0'>'> to: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~VbpV3w
+2026-03-25 02:19:51 +0000 [MT] invoking codesign: <NSConcreteTask: 0xb181b3430; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    EF4FA22BC1E09EBCDDB761A91B5DCA599073903C,
+    "--entitlements",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~VbpV3w",
+    "--preserve-metadata=identifier,flags,runtime,launch-constraints,library-constraints",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework"
+)'>
+2026-03-25 02:19:52 +0000 [MT] codesign output: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework: replacing existing signature
+/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework: signed bundle with Mach-O universal (arm64) [com.google.GoogleMobileAds]
+2026-03-25 02:19:52 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb17dae280; bundleID='com.google.UserMessagingPlatform', path='<DVTFilePath:0xb17e047e0:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae2e0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.UserMessagingPlatform', executablePath='<DVTFilePath:0xb17e04850:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform'>', hardenedRuntime='0'>'>: {
+}
+2026-03-25 02:19:52 +0000 [MT] Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-25 02:19:52 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb17dae280; bundleID='com.google.UserMessagingPlatform', path='<DVTFilePath:0xb17e047e0:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae2e0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.UserMessagingPlatform', executablePath='<DVTFilePath:0xb17e04850:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform'>', hardenedRuntime='0'>'> are: {
+}
+2026-03-25 02:19:52 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0xb17dae280; bundleID='com.google.UserMessagingPlatform', path='<DVTFilePath:0xb17e047e0:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae2e0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='(null)', teamID='HQ9A6C8C3R', identifier='com.google.UserMessagingPlatform', executablePath='<DVTFilePath:0xb17e04850:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform'>', hardenedRuntime='0'>'> to: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~9ReFL2
+2026-03-25 02:19:52 +0000 [MT] invoking codesign: <NSConcreteTask: 0xb181b3570; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    EF4FA22BC1E09EBCDDB761A91B5DCA599073903C,
+    "--entitlements",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~9ReFL2",
+    "--preserve-metadata=identifier,flags,runtime,launch-constraints,library-constraints",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework"
+)'>
+2026-03-25 02:19:52 +0000 [MT] codesign output: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework: replacing existing signature
+/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework: signed bundle with Mach-O universal (arm64) [com.google.UserMessagingPlatform]
+2026-03-25 02:19:52 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb172a1380; bundleID='com.idphoto.japan.free', path='<DVTFilePath:0xb17ce3560:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae460; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e90840; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='{
+    "application-identifier" = "HQ9A6C8C3R.com.idphoto.japan.free";
+    "com.apple.developer.team-identifier" = HQ9A6C8C3R;
+    "get-task-allow" = 1;
+}', teamID='HQ9A6C8C3R', identifier='com.idphoto.japan.free', executablePath='<DVTFilePath:0xb17daca20:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/IDPhotoAppFree'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "HQ9A6C8C3R.com.idphoto.japan.free";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = HQ9A6C8C3R;
+    "get-task-allow" = 0;
+}
+2026-03-25 02:19:52 +0000 [MT] Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-25 02:19:52 +0000 [MT] Entitlements for <IDEDistributionItem: 0xb172a1380; bundleID='com.idphoto.japan.free', path='<DVTFilePath:0xb17ce3560:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae460; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='{
+    "application-identifier" = "HQ9A6C8C3R.com.idphoto.japan.free";
+    "com.apple.developer.team-identifier" = HQ9A6C8C3R;
+    "get-task-allow" = 1;
+}', teamID='HQ9A6C8C3R', identifier='com.idphoto.japan.free', executablePath='<DVTFilePath:0xb17daca20:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/IDPhotoAppFree'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "HQ9A6C8C3R.com.idphoto.japan.free";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = HQ9A6C8C3R;
+    "get-task-allow" = 0;
+}
+2026-03-25 02:19:52 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0xb172a1380; bundleID='com.idphoto.japan.free', path='<DVTFilePath:0xb17ce3560:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0xb17dae460; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0xb17e906c0; name='Apple Development: jianwei.chen@outlook.jp (J7GFS8D37L)', hash='E0279BE5D9603A3F224226454B2132E02BDECD21', serialNumber='17D35D5036DAF2F35C2A60B9AEA8E0BA', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2026-01-14 13:32:54 +0000''>', entitlements='{
+    "application-identifier" = "HQ9A6C8C3R.com.idphoto.japan.free";
+    "com.apple.developer.team-identifier" = HQ9A6C8C3R;
+    "get-task-allow" = 1;
+}', teamID='HQ9A6C8C3R', identifier='com.idphoto.japan.free', executablePath='<DVTFilePath:0xb17daca20:'/Users/sundata/WorkBuddy/20260313120252/IDPhotoAppFree/build/IDPhotoAppFree.xcarchive/Products/Applications/IDPhotoAppFree.app/IDPhotoAppFree'>', hardenedRuntime='0'>'> to: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~Mp80OQ
+2026-03-25 02:19:52 +0000 [MT] invoking codesign: <NSConcreteTask: 0xb181b3570; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    EF4FA22BC1E09EBCDDB761A91B5DCA599073903C,
+    "--entitlements",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/entitlements~~~Mp80OQ",
+    "--preserve-metadata=identifier,flags,runtime,launch-constraints,library-constraints",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app"
+)'>
+2026-03-25 02:19:52 +0000 [MT] codesign output: /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app: replacing existing signature
+/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app: signed app bundle with Mach-O thin (arm64) [com.idphoto.japan.free]
+2026-03-25 02:19:52 +0000 [MT] Processing step: IDEDistributionZipODRItemStep
+2026-03-25 02:19:52 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-25 02:19:52 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-25 02:19:52 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-25 02:19:52 +0000 [MT] Processing step: IDEDistributionCreateIPAStep
+2026-03-25 02:19:52 +0000 [MT] Running /usr/bin/rsync '-8aPhhE' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Symbols' '--link-dest' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root'
+2026-03-25 02:19:52 +0000  Symbols/
+._Symbols
+            163 170%    1.52MB/s   00:00:00 (xfer#1, to-check=0/4)
+2026-03-25 02:19:52 +0000  Symbols/1D157586-1D5D-349B-86B6-F337AD6C0016.symbols
+Symbols/._1D157586-1D5D-349B-86B6-F337AD6C0016.symbols
+            163   0%  166.33KB/s   00:00:00 (xfer#2, to-check=2/4)
+2026-03-25 02:19:52 +0000 [MT] /usr/bin/rsync exited with 0
+2026-03-25 02:19:52 +0000 [MT] Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root' '/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Packages/IDPhotoAppFree.ipa'
+2026-03-25 02:19:52 +0000  >>> Copying /var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root 
+2026-03-25 02:19:52 +0000  copying file ./Signatures/GoogleMobileAds.xcframework-ios.signature ... 
+2026-03-25 02:19:52 +0000  6213 bytes for ./Signatures/GoogleMobileAds.xcframework-ios.signature
+2026-03-25 02:19:52 +0000  copying file ./Signatures/UserMessagingPlatform.xcframework-ios.signature ... 
+2026-03-25 02:19:52 +0000  6225 bytes for ./Signatures/UserMessagingPlatform.xcframework-ios.signature
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/_CodeSignature/CodeResources ... 
+2026-03-25 02:19:52 +0000  6289 bytes for ./Payload/IDPhotoAppFree.app/_CodeSignature/CodeResources
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/IDPhotoAppFree ... 
+2026-03-25 02:19:52 +0000  3476864 bytes for ./Payload/IDPhotoAppFree.app/IDPhotoAppFree
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/AppIcon60x60@2x.png ... 
+9066 bytes for ./Payload/IDPhotoAppFree.app/AppIcon60x60@2x.png
+copying file ./Payload/IDPhotoAppFree.app/Assets.car ... 
+2026-03-25 02:19:52 +0000  187480 bytes for ./Payload/IDPhotoAppFree.app/Assets.car
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/AppIcon76x76@2x~ipad.png ... 
+2026-03-25 02:19:52 +0000  11233 bytes for ./Payload/IDPhotoAppFree.app/AppIcon76x76@2x~ipad.png
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:52 +0000  1167 bytes for ./Payload/IDPhotoAppFree.app/PrivacyInfo.xcprivacy
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2026-03-25 02:19:52 +0000  4569 bytes for ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2026-03-25 02:19:52 +0000  924 bytes for ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/Info.plist ... 
+2026-03-25 02:19:52 +0000  258 bytes for ./Payload/IDPhotoAppFree.app/LaunchScreen.storyboardc/Info.plist
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/_CodeSignature/CodeResources ... 
+2026-03-25 02:19:52 +0000  2034 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/_CodeSignature/CodeResources
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds ... 
+2026-03-25 02:19:52 +0000  51376 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/GoogleMobileAds
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:52 +0000  4491 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/PrivacyInfo.xcprivacy
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/Info.plist ... 
+2026-03-25 02:19:52 +0000  1593 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework/Info.plist
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/_CodeSignature/CodeResources ... 
+2026-03-25 02:19:52 +0000  2034 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/_CodeSignature/CodeResources
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform ... 
+2026-03-25 02:19:52 +0000  51392 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/UserMessagingPlatform
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/PrivacyInfo.xcprivacy ... 
+2026-03-25 02:19:52 +0000  1677 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/PrivacyInfo.xcprivacy
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/Info.plist ... 
+2026-03-25 02:19:52 +0000  1499 bytes for ./Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework/Info.plist
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/embedded.mobileprovision ... 
+2026-03-25 02:19:52 +0000  14290 bytes for ./Payload/IDPhotoAppFree.app/embedded.mobileprovision
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/Info.plist ... 
+2026-03-25 02:19:52 +0000  2002 bytes for ./Payload/IDPhotoAppFree.app/Info.plist
+2026-03-25 02:19:52 +0000  copying file ./Payload/IDPhotoAppFree.app/PkgInfo ... 
+2026-03-25 02:19:52 +0000  8 bytes for ./Payload/IDPhotoAppFree.app/PkgInfo
+2026-03-25 02:19:52 +0000  copying file ./Symbols/1D157586-1D5D-349B-86B6-F337AD6C0016.symbols ... 
+2026-03-25 02:19:52 +0000  4324316 bytes for ./Symbols/1D157586-1D5D-349B-86B6-F337AD6C0016.symbols
+2026-03-25 02:19:52 +0000 [MT] /usr/bin/ditto exited with 0
+2026-03-25 02:19:52 +0000 [MT] Processing step: IDEDistributionAppStoreInformationStep
+2026-03-25 02:19:52 +0000 [MT] Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2026-03-25 02:19:52 +0000 [MT] Processing step: IDEDistributionGenerateProcessedDistributionItems
+2026-03-25 02:19:52 +0000 [MT] IDEDistributionItem init <DVTFilePath:0xb17cdca10:'/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/UserMessagingPlatform.framework'>
+2026-03-25 02:19:52 +0000 [MT] IDEDistributionItem init <DVTFilePath:0xb181e2f40:'/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app/Frameworks/GoogleMobileAds.framework'>
+2026-03-25 02:19:52 +0000 [MT] IDEDistributionItem init <DVTFilePath:0xb181e2760:'/var/folders/69/hvz9kkz523g7_gr_7gx04hp40000gn/T/XcodeDistPipeline.~~~ZJJY1D/Root/Payload/IDPhotoAppFree.app'>
+2026-03-25 02:19:52 +0000 [MT] Processing step: IDEDistributionCreateManifestStep
+2026-03-25 02:19:52 +0000 [MT] Skipping step: IDEDistributionCreateManifestStep because it said so

@@ -1,0 +1,57 @@
+name: FurinNews
+options:
+  bundleIdPrefix: com.newsnow
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+packages:
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: "11.0.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1"
+    INFOPLIST_FILE: Resources/Info.plist
+    DEVELOPMENT_TEAM: "J7GFS8D37L"
+
+targets:
+  FurinNews:
+    type: application
+    platform: iOS
+    sources:
+      - path: FurinNewsApp.swift
+      - path: Models
+      - path: ViewModels
+      - path: Views
+      - path: Services
+      - path: Resources
+    dependencies:
+      - package: GoogleMobileAds
+        product: GoogleMobileAds
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sundata.newsnow
+        INFOPLIST_FILE: Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        MARKETING_VERSION: "1.0.1"
+        CURRENT_PROJECT_VERSION: "5"
+        SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: false
+        DEVELOPMENT_TEAM: "J7GFS8D37L"
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "Apple Development"
+    info:
+      path: Resources/Info.plist
+      properties:
+        CFBundleDisplayName: ニュースNow
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true

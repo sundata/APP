@@ -1,0 +1,239 @@
+{
+  "" : {
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SeeNews-primary.dia",
+    "emit-module-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SeeNews-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SeeNews-primary-emit-module.dia",
+    "pch" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SeeNews-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SeeNews-primary.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/FurinNewsApp.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FurinNewsApp~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Models/FontScaler.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/FontScaler~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Models/NewsModels.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsModels~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/AIAnalysisService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/AdMobManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdMobManager~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/BackgroundFetchManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BackgroundFetchManager~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/GoogleAdMobWrapper.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GoogleAdMobWrapper~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/MockDataProvider.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/MockDataProvider~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/NewsService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/PurchaseManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/PurchaseManager~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/SubscriptionManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionManager~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/UserManager.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/UserManager~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/ViewModels/NewsViewModel.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/NewsViewModel~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/AIAnalysisView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AIAnalysisView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/AdBannerView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/AdBannerView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/ArticleWebView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/ArticleWebView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/BookmarkView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/BookmarkView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/CategoryView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/CategoryView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/HomeView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/HomeView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/SearchView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SearchView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/SettingsView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/SubscriptionView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/SubscriptionView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/x86_64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

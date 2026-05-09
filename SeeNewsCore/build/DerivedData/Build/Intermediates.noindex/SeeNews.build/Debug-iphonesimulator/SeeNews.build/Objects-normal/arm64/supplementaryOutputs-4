@@ -1,0 +1,23 @@
+{
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Services/AIAnalysisService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisService.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisService.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/AIAnalysisView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisView.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AIAnalysisView.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/Views/AdBannerView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AdBannerView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AdBannerView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AdBannerView.dia",
+    "object" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AdBannerView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260412212940/SeeNewsCore/build/DerivedData/Build/Intermediates.noindex/SeeNews.build/Debug-iphonesimulator/SeeNews.build/Objects-normal/arm64/AdBannerView.swiftdeps"
+  }
+}

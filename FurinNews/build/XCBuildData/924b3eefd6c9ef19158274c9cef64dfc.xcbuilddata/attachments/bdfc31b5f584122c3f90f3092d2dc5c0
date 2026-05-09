@@ -1,0 +1,4 @@
+module UserMessagingPlatformTarget {
+umbrella "/Users/sundata/Library/Developer/Xcode/DerivedData/FurinNews-awanonawftrlmifzjjqvabbphryb/SourcePackages/checkouts/swift-package-manager-google-user-messaging-platform/UserMessagingPlatformTarget/include"
+export *
+}

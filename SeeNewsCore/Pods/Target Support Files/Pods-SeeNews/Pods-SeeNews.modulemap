@@ -1,0 +1,6 @@
+module Pods_SeeNews {
+  umbrella header "Pods-SeeNews-umbrella.h"
+
+  export *
+  module * { export * }
+}

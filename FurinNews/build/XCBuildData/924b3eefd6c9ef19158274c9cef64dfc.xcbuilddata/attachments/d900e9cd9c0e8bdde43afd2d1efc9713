@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>application-identifier</key>
+	<string>HQ9A6C8C3R.com.sundata.newsnow</string>
+	<key>com.apple.developer.team-identifier</key>
+	<string>HQ9A6C8C3R</string>
+	<key>get-task-allow</key>
+	<true/>
+</dict>
+</plist>

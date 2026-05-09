@@ -1,0 +1,40 @@
+{
+  "source": "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/CropView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "ピンチでズーム・ドラッグで位置を調整 / 左右スワイプで微回転",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "切り取り",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "リセット",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "微調整",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 189
+        }
+      }
+    ]
+  },
+  "version": 1
+}

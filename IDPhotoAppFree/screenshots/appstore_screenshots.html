@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>パシャっと証明写真 - App Store Screenshots</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 60px;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 22px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .screenshot-row {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .screenshot-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .screenshot-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* iPhone 15 frame: 393 × 852 pt → 显示为 295 × 638 */
+  .phone-frame {
+    width: 295px;
+    height: 638px;
+    background: #0d0d0d;
+    border-radius: 46px;
+    padding: 10px;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.12),
+      0 30px 80px rgba(0,0,0,0.7),
+      inset 0 0 0 1px rgba(255,255,255,0.04);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 38px;
+    overflow: hidden;
+    position: relative;
+    background: #F4F6FA;
+  }
+
+  /* Dynamic Island */
+  .dynamic-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background: #0d0d0d;
+    border-radius: 20px;
+    z-index: 100;
+  }
+
+  /* ===== SCREENSHOT 1: HOME ===== */
+  .s1-screen {
+    background: #F4F6FA;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .s1-header {
+    background: linear-gradient(135deg, #0D2744 0%, #1A4A7A 55%, #2C7EC8 100%);
+    padding: 44px 20px 26px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .s1-header::before {
+    content: '';
+    position: absolute;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -50px; right: -30px;
+  }
+  .s1-header::after {
+    content: '';
+    position: absolute;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(74,175,255,0.10);
+    bottom: -20px; left: -20px;
+  }
+
+  .s1-brand {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+  .s1-brand-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4AAFFF;
+  }
+  .s1-brand-text {
+    font-size: 9px;
+    font-weight: 700;
+    color: #4AAFFF;
+    letter-spacing: 2px;
+  }
+
+  .s1-title {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 5px;
+  }
+
+  .s1-subtitle {
+    font-size: 11px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 12px;
+  }
+
+  .s1-badges {
+    display: flex;
+    gap: 7px;
+  }
+  .s1-badge {
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .s1-badge-val {
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .s1-badge-lbl {
+    font-size: 8px;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .s1-icon {
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    width: 54px; height: 54px;
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .s1-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-row {
+    background: #fff;
+    border-radius: 14px;
+    padding: 13px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  }
+  .action-icon {
+    width: 40px; height: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .action-icon.blue { background: linear-gradient(135deg, #2C7EC8, #1A4A7A); }
+  .action-icon.green { background: linear-gradient(135deg, #30B96A, #1A7A45); }
+  .action-text { flex: 1; }
+  .action-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1A2B3C;
+  }
+  .action-sub {
+    font-size: 10px;
+    color: #6B7C8D;
+    margin-top: 1px;
+  }
+  .action-badge {
+    background: #FF6B35;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+
+  .feature-row {
+    display: flex;
+    gap: 7px;
+  }
+  .feature-chip {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  }
+  .feature-chip-icon { font-size: 14px; }
+  .feature-chip-text { font-size: 8px; color: #1A2B3C; font-weight: 600; text-align: center; }
+
+  .size-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 11px 13px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .size-header {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1A2B3C;
+    margin-bottom: 8px;
+  }
+  .size-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .size-chip {
+    background: #F0F4FF;
+    border: 1px solid #C8D8F0;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #2471C8;
+  }
+  .size-chip.active {
+    background: #2471C8;
+    color: #fff;
+    border-color: #2471C8;
+  }
+
+  /* ===== SCREENSHOT 2: BG REMOVAL ===== */
+  .s2-screen {
+    background: #F4F6FA;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .editor-topbar {
+    background: #fff;
+    padding: 46px 16px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #E4E8EE;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+
+  .back-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #F4F6FA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #2471C8;
+  }
+
+  .topbar-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1A2B3C;
+  }
+
+  .topbar-step {
+    font-size: 10px;
+    color: #6B7C8D;
+    background: #F0F4FF;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  .photo-preview-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-card {
+    width: 150px;
+    height: 180px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    position: relative;
+  }
+
+  .photo-bg-removed {
+    width: 100%;
+    height: 100%;
+    background: #AAD4F5;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .photo-person-silhouette {
+    width: 90px;
+    height: 130px;
+    position: relative;
+  }
+
+  /* Person silhouette made with CSS */
+  .silhouette-head {
+    width: 44px;
+    height: 44px;
+    background: #F5D5B0;
+    border-radius: 50%;
+    margin: 0 auto 0;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .silhouette-head::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 10px;
+    background: #F5D5B0;
+    border-radius: 0 0 50% 50%;
+  }
+  .silhouette-neck {
+    width: 18px;
+    height: 14px;
+    background: #F5D5B0;
+    margin: 0 auto;
+  }
+  .silhouette-body {
+    width: 70px;
+    height: 60px;
+    background: linear-gradient(135deg, #2C7EC8, #1A4A7A);
+    border-radius: 14px 14px 0 0;
+    margin: 0 auto;
+  }
+
+  .ai-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #2C7EC8, #4AAFFF);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .before-after {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 8px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+  }
+
+  .bg-color-panel {
+    background: #fff;
+    border-radius: 14px 14px 0 0;
+    padding: 12px 13px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+
+  .panel-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1A2B3C;
+    margin-bottom: 9px;
+  }
+
+  .color-swatches {
+    display: flex;
+    gap: 8px;
+  }
+
+  .swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .swatch.active::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2.5px #fff, 0 0 0 4px #2471C8;
+  }
+
+  .swatch-white { background: #fff; border: 1.5px solid #ddd; }
+  .swatch-lightblue { background: #AAD4F5; }
+  .swatch-blue { background: #2471C8; }
+  .swatch-gray { background: #D8DCE0; }
+  .swatch-darkgray { background: #808080; }
+  .swatch-red { background: #D94040; }
+  .swatch-pink { background: #F5B8C4; }
+  .swatch-green { background: #3DAA6A; }
+  .swatch-plus { background: #F0F4FF; border: 1.5px dashed #2471C8; display:flex; align-items:center; justify-content:center; color:#2471C8; font-size:16px; font-weight:300; }
+
+  .remove-bg-btn {
+    background: linear-gradient(135deg, #2A7EF5, #1A5FC7);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* ===== SCREENSHOT 3: SIZE PICKER ===== */
+  .s3-screen {
+    background: #F4F6FA;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .size-picker-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .size-cat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #6B7C8D;
+    letter-spacing: 0.8px;
+    padding: 0 2px;
+    margin-top: 4px;
+  }
+
+  .size-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  }
+
+  .size-item.selected {
+    background: linear-gradient(135deg, #F0F6FF, #E8F0FF);
+    border: 1.5px solid #2471C8;
+  }
+
+  .size-thumb {
+    border: 1.5px solid #C8D8F0;
+    border-radius: 4px;
+    background: #EAF2FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .size-info { flex: 1; }
+
+  .size-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1A2B3C;
+  }
+
+  .size-desc {
+    font-size: 9px;
+    color: #6B7C8D;
+    margin-top: 1px;
+  }
+
+  .size-dim {
+    font-size: 9px;
+    font-weight: 600;
+    color: #2471C8;
+    background: #F0F4FF;
+    padding: 2px 6px;
+    border-radius: 5px;
+    flex-shrink: 0;
+  }
+
+  .size-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #2471C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ===== SCREENSHOT 4: BEAUTY ===== */
+  .s4-screen {
+    background: #1a1a2a;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .beauty-topbar {
+    padding: 46px 16px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .beauty-photo-area {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .beauty-photo-card {
+    width: 130px;
+    height: 155px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    background: #AAD4F5;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .beauty-sparkle {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .beauty-panel {
+    background: #fff;
+    border-radius: 18px 18px 0 0;
+    padding: 14px 14px;
+    flex-shrink: 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+  }
+
+  .beauty-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+    background: #F4F6FA;
+    border-radius: 10px;
+    padding: 3px;
+  }
+
+  .beauty-tab {
+    flex: 1;
+    padding: 5px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 600;
+    color: #6B7C8D;
+    border-radius: 8px;
+  }
+  .beauty-tab.active {
+    background: #fff;
+    color: #1A2B3C;
+    font-weight: 700;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .slider-label {
+    font-size: 9px;
+    font-weight: 600;
+    color: #1A2B3C;
+    width: 42px;
+    flex-shrink: 0;
+  }
+  .slider-track {
+    flex: 1;
+    height: 4px;
+    background: #E4E8EE;
+    border-radius: 2px;
+    position: relative;
+  }
+  .slider-fill {
+    height: 100%;
+    background: linear-gradient(to right, #2A7EF5, #4AAFFF);
+    border-radius: 2px;
+  }
+  .slider-thumb {
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border: 2px solid #2471C8;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 1px 4px rgba(36,113,200,0.4);
+  }
+  .slider-val {
+    font-size: 9px;
+    font-weight: 700;
+    color: #2471C8;
+    width: 22px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ===== SCREENSHOT 5: EXPORT ===== */
+  .s5-screen {
+    background: #F4F6FA;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .export-header {
+    background: linear-gradient(135deg, #0D2744 0%, #1A4A7A 60%, #2C7EC8 100%);
+    padding: 44px 16px 20px;
+    flex-shrink: 0;
+    text-align: center;
+  }
+
+  .export-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3px;
+  }
+
+  .export-subtitle {
+    color: rgba(255,255,255,0.65);
+    font-size: 10px;
+  }
+
+  .export-preview {
+    display: flex;
+    justify-content: center;
+    padding: 16px 14px 10px;
+    flex-shrink: 0;
+  }
+
+  .print-layout {
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    width: 160px;
+  }
+
+  .print-photo {
+    background: #AAD4F5;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .print-photo.large {
+    width: 68px;
+    height: 88px;
+  }
+  .print-photo.small {
+    width: 50px;
+    height: 66px;
+  }
+  .print-photo.medium {
+    width: 58px;
+    height: 75px;
+  }
+
+  .print-label {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 6px;
+    color: rgba(0,0,0,0.4);
+    white-space: nowrap;
+  }
+
+  .export-body {
+    flex: 1;
+    overflow: hidden;
+    padding: 0 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .export-info-row {
+    display: flex;
+    gap: 7px;
+  }
+
+  .export-info-card {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+  }
+
+  .export-info-label {
+    font-size: 8px;
+    color: #6B7C8D;
+    margin-bottom: 2px;
+  }
+
+  .export-info-val {
+    font-size: 12px;
+    font-weight: 800;
+    color: #1A2B3C;
+  }
+
+  .export-info-sub {
+    font-size: 8px;
+    color: #2471C8;
+    font-weight: 600;
+  }
+
+  .export-btn {
+    background: linear-gradient(135deg, #2A7EF5, #1A5FC7);
+    color: #fff;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(36,113,200,0.45);
+  }
+
+  .export-options {
+    display: flex;
+    gap: 7px;
+  }
+
+  .export-option {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+  }
+  .export-option-icon { font-size: 16px; }
+  .export-option-text { font-size: 8px; font-weight: 600; color: #1A2B3C; }
+
+  .success-banner {
+    background: linear-gradient(90deg, #34C759, #2AA347);
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+  }
+  .success-icon { font-size: 14px; }
+  .success-text { font-size: 10px; font-weight: 700; }
+
+  /* Mini persons for photos */
+  .mini-person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 4px;
+  }
+  .mini-head {
+    border-radius: 50%;
+    background: #F5D5B0;
+  }
+  .mini-body {
+    background: linear-gradient(135deg, #2C7EC8, #1A4A7A);
+    border-radius: 4px 4px 0 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>パシャっと証明写真 — App Store Screenshots</h1>
+
+<div class="screenshot-row">
+
+  <!-- ===== SCREENSHOT 1: HOME ===== -->
+  <div class="screenshot-wrap">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="s1-screen">
+          <!-- Header -->
+          <div class="s1-header">
+            <div class="s1-brand">
+              <div class="s1-brand-dot"></div>
+              <div class="s1-brand-text">ID PHOTO JAPAN</div>
+            </div>
+            <div class="s1-title">パシャっと証明写真</div>
+            <div class="s1-subtitle">プロ品質をスマホで、いつでも</div>
+            <div class="s1-badges">
+              <div class="s1-badge">
+                <div class="s1-badge-val">14+</div>
+                <div class="s1-badge-lbl">サイズ対応</div>
+              </div>
+              <div class="s1-badge">
+                <div class="s1-badge-val">AI</div>
+                <div class="s1-badge-lbl">背景除去</div>
+              </div>
+              <div class="s1-badge">
+                <div class="s1-badge-val">1分</div>
+                <div class="s1-badge-lbl">で完成</div>
+              </div>
+            </div>
+            <div class="s1-icon">📸</div>
+          </div>
+
+          <!-- Body -->
+          <div class="s1-body">
+            <!-- Camera button -->
+            <div class="action-row">
+              <div class="action-icon blue">📷</div>
+              <div class="action-text">
+                <div class="action-title">カメラで撮影</div>
+                <div class="action-sub">その場で正面写真を撮影して作成</div>
+              </div>
+              <div class="action-badge">おすすめ</div>
+            </div>
+
+            <!-- Photo library button -->
+            <div class="action-row">
+              <div class="action-icon green">🖼</div>
+              <div class="action-text">
+                <div class="action-title">写真を選択</div>
+                <div class="action-sub">フォトライブラリから既存の写真を選ぶ</div>
+              </div>
+            </div>
+
+            <!-- Feature badges -->
+            <div class="feature-row">
+              <div class="feature-chip">
+                <div class="feature-chip-icon">🤖</div>
+                <div class="feature-chip-text">AI背景除去</div>
+              </div>
+              <div class="feature-chip">
+                <div class="feature-chip-icon">✨</div>
+                <div class="feature-chip-text">美顔補正</div>
+              </div>
+              <div class="feature-chip">
+                <div class="feature-chip-icon">📐</div>
+                <div class="feature-chip-text">14サイズ</div>
+              </div>
+              <div class="feature-chip">
+                <div class="feature-chip-icon">🖨</div>
+                <div class="feature-chip-text">300DPI出力</div>
+              </div>
+            </div>
+
+            <!-- Quick size section -->
+            <div class="size-section">
+              <div class="size-header">よく使うサイズ</div>
+              <div class="size-chips">
+                <div class="size-chip active">パスポート</div>
+                <div class="size-chip">マイナンバー</div>
+                <div class="size-chip">運転免許</div>
+                <div class="size-chip">履歴書</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-label">01 — ホーム画面</div>
+  </div>
+
+  <!-- ===== SCREENSHOT 2: BG REMOVAL ===== -->
+  <div class="screenshot-wrap">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="s2-screen">
+          <!-- Top bar -->
+          <div class="editor-topbar">
+            <div class="back-btn">‹</div>
+            <div class="topbar-title">背景を変更</div>
+            <div class="topbar-step">2 / 4</div>
+          </div>
+
+          <!-- Photo preview -->
+          <div class="photo-preview-area">
+            <div class="photo-card">
+              <div class="photo-bg-removed">
+                <div class="ai-badge">AI 除去済み</div>
+                <div class="photo-person-silhouette">
+                  <div class="silhouette-head"></div>
+                  <div class="silhouette-neck"></div>
+                  <div class="silhouette-body"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BG color panel -->
+          <div class="bg-color-panel">
+            <div class="panel-title">背景カラーを選択</div>
+            <div class="color-swatches">
+              <div class="swatch swatch-white"></div>
+              <div class="swatch swatch-lightblue active"></div>
+              <div class="swatch swatch-blue"></div>
+              <div class="swatch swatch-gray"></div>
+              <div class="swatch swatch-darkgray"></div>
+              <div class="swatch swatch-red"></div>
+              <div class="swatch swatch-green"></div>
+              <div class="swatch swatch-plus">+</div>
+            </div>
+            <div class="remove-bg-btn">
+              <span>🤖</span>
+              <span>AI背景除去を実行</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-label">02 — AI背景除去</div>
+  </div>
+
+  <!-- ===== SCREENSHOT 3: SIZE PICKER ===== -->
+  <div class="screenshot-wrap">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="s3-screen">
+          <!-- Top bar -->
+          <div class="editor-topbar">
+            <div class="back-btn">‹</div>
+            <div class="topbar-title">サイズを選択</div>
+            <div class="topbar-step">1 / 4</div>
+          </div>
+
+          <!-- Size picker -->
+          <div class="size-picker-body">
+            <div class="size-cat-label">パスポート・ビザ</div>
+
+            <div class="size-item selected">
+              <div class="size-thumb" style="width:28px;height:36px;">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:14px;height:14px;"></div>
+                  <div class="mini-body" style="width:20px;height:12px;margin-top:2px;"></div>
+                </div>
+              </div>
+              <div class="size-info">
+                <div class="size-name">パスポート</div>
+                <div class="size-desc">旅券申請用</div>
+              </div>
+              <div class="size-dim">35×45mm</div>
+              <div class="size-check">✓</div>
+            </div>
+
+            <div class="size-item">
+              <div class="size-thumb" style="width:30px;height:30px;">
+                <div style="font-size:14px;display:flex;align-items:center;justify-content:center;height:100%;">🇺🇸</div>
+              </div>
+              <div class="size-info">
+                <div class="size-name">米国ビザ</div>
+                <div class="size-desc">アメリカビザ用</div>
+              </div>
+              <div class="size-dim">51×51mm</div>
+            </div>
+
+            <div class="size-cat-label">運転免許・資格</div>
+
+            <div class="size-item">
+              <div class="size-thumb" style="width:24px;height:30px;">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:12px;height:12px;"></div>
+                  <div class="mini-body" style="width:18px;height:10px;margin-top:1px;"></div>
+                </div>
+              </div>
+              <div class="size-info">
+                <div class="size-name">運転免許証</div>
+                <div class="size-desc">免許更新用</div>
+              </div>
+              <div class="size-dim">24×30mm</div>
+            </div>
+
+            <div class="size-cat-label">マイナンバー</div>
+
+            <div class="size-item">
+              <div class="size-thumb" style="width:28px;height:36px;">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:13px;height:13px;"></div>
+                  <div class="mini-body" style="width:20px;height:12px;margin-top:2px;"></div>
+                </div>
+              </div>
+              <div class="size-info">
+                <div class="size-name">マイナンバー</div>
+                <div class="size-desc">個人番号カード用</div>
+              </div>
+              <div class="size-dim">35×45mm</div>
+            </div>
+
+            <div class="size-cat-label">就職・履歴書</div>
+
+            <div class="size-item">
+              <div class="size-thumb" style="width:32px;height:40px;">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:14px;height:14px;"></div>
+                  <div class="mini-body" style="width:22px;height:14px;margin-top:2px;"></div>
+                </div>
+              </div>
+              <div class="size-info">
+                <div class="size-name">履歴書用（大）</div>
+                <div class="size-desc">就職・転職活動</div>
+              </div>
+              <div class="size-dim">40×50mm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-label">03 — サイズ選択</div>
+  </div>
+
+  <!-- ===== SCREENSHOT 4: BEAUTY ===== -->
+  <div class="screenshot-wrap">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="s4-screen">
+          <!-- Top bar -->
+          <div class="beauty-topbar">
+            <div class="back-btn" style="background:rgba(255,255,255,0.1);color:#fff;">‹</div>
+            <div class="topbar-title" style="color:#fff;">美顔・補正</div>
+            <div class="topbar-step" style="background:rgba(255,255,255,0.15);color:#fff;">3 / 4</div>
+          </div>
+
+          <!-- Photo area -->
+          <div class="beauty-photo-area">
+            <div class="beauty-sparkle"></div>
+            <div class="beauty-photo-card">
+              <div class="photo-person-silhouette">
+                <div class="silhouette-head"></div>
+                <div class="silhouette-neck"></div>
+                <div class="silhouette-body"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beauty panel -->
+          <div class="beauty-panel">
+            <div class="beauty-tabs">
+              <div class="beauty-tab active">美肌</div>
+              <div class="beauty-tab">明るさ</div>
+              <div class="beauty-tab">色調</div>
+              <div class="beauty-tab">詳細</div>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">肌補正</div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width:60%"></div>
+                <div class="slider-thumb" style="left:calc(60% - 7px)"></div>
+              </div>
+              <div class="slider-val">60</div>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">明るさ</div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width:35%"></div>
+                <div class="slider-thumb" style="left:calc(35% - 7px)"></div>
+              </div>
+              <div class="slider-val">+20</div>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">シャープ</div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width:45%"></div>
+                <div class="slider-thumb" style="left:calc(45% - 7px)"></div>
+              </div>
+              <div class="slider-val">45</div>
+            </div>
+
+            <div class="slider-row">
+              <div class="slider-label">色温度</div>
+              <div class="slider-track">
+                <div class="slider-fill" style="width:50%"></div>
+                <div class="slider-thumb" style="left:calc(50% - 7px)"></div>
+              </div>
+              <div class="slider-val">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-label">04 — 美顔・補正</div>
+  </div>
+
+  <!-- ===== SCREENSHOT 5: EXPORT ===== -->
+  <div class="screenshot-wrap">
+    <div class="phone-frame">
+      <div class="dynamic-island"></div>
+      <div class="phone-screen">
+        <div class="s5-screen">
+          <!-- Header -->
+          <div class="export-header">
+            <div class="export-title">書き出し完了 🎉</div>
+            <div class="export-subtitle">高解像度300DPI・印刷対応</div>
+          </div>
+
+          <!-- Print layout preview -->
+          <div class="export-preview">
+            <div class="print-layout">
+              <div class="print-photo large">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:26px;height:26px;"></div>
+                  <div class="mini-neck" style="width:12px;height:8px;background:#F5D5B0;margin:0 auto;"></div>
+                  <div class="mini-body" style="width:42px;height:32px;background:linear-gradient(135deg,#2C7EC8,#1A4A7A);border-radius:6px 6px 0 0;"></div>
+                </div>
+                <div class="print-label">35×45mm</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;">
+                <div class="print-photo small">
+                  <div class="mini-person">
+                    <div class="mini-head" style="width:18px;height:18px;"></div>
+                    <div class="mini-body" style="width:28px;height:22px;background:linear-gradient(135deg,#2C7EC8,#1A4A7A);border-radius:4px 4px 0 0;margin-top:1px;"></div>
+                  </div>
+                </div>
+                <div class="print-photo small">
+                  <div class="mini-person">
+                    <div class="mini-head" style="width:18px;height:18px;"></div>
+                    <div class="mini-body" style="width:28px;height:22px;background:linear-gradient(135deg,#2C7EC8,#1A4A7A);border-radius:4px 4px 0 0;margin-top:1px;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="print-photo medium" style="align-self:flex-start">
+                <div class="mini-person">
+                  <div class="mini-head" style="width:22px;height:22px;"></div>
+                  <div class="mini-body" style="width:34px;height:26px;background:linear-gradient(135deg,#2C7EC8,#1A4A7A);border-radius:5px 5px 0 0;margin-top:1px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Export body -->
+          <div class="export-body">
+            <!-- Success banner -->
+            <div class="success-banner">
+              <div class="success-icon">✅</div>
+              <div class="success-text">4枚印刷レイアウト・300DPI JPEG</div>
+            </div>
+
+            <!-- Info cards -->
+            <div class="export-info-row">
+              <div class="export-info-card">
+                <div class="export-info-label">サイズ</div>
+                <div class="export-info-val">パスポート</div>
+                <div class="export-info-sub">35 × 45 mm</div>
+              </div>
+              <div class="export-info-card">
+                <div class="export-info-label">解像度</div>
+                <div class="export-info-val">300 DPI</div>
+                <div class="export-info-sub">印刷対応品質</div>
+              </div>
+              <div class="export-info-card">
+                <div class="export-info-label">背景色</div>
+                <div class="export-info-val" style="display:flex;align-items:center;gap:4px;">
+                  <div style="width:10px;height:10px;border-radius:50%;background:#AAD4F5;flex-shrink:0;"></div>水色
+                </div>
+                <div class="export-info-sub">コンビニ印刷可</div>
+              </div>
+            </div>
+
+            <!-- Export button -->
+            <div class="export-btn">
+              <span>📥</span>
+              <span>写真アルバムに保存</span>
+            </div>
+
+            <!-- Other options -->
+            <div class="export-options">
+              <div class="export-option">
+                <div class="export-option-icon">📤</div>
+                <div class="export-option-text">共有</div>
+              </div>
+              <div class="export-option">
+                <div class="export-option-icon">🖨</div>
+                <div class="export-option-text">印刷</div>
+              </div>
+              <div class="export-option">
+                <div class="export-option-icon">☁️</div>
+                <div class="export-option-text">iCloud</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screenshot-label">05 — 書き出し・保存</div>
+  </div>
+
+</div>
+
+<!-- Caption row -->
+<div style="color:rgba(255,255,255,0.35);font-size:12px;text-align:center;line-height:1.8;max-width:800px;">
+  App Store スクリーンショット — iPhone 6.9" (393×852pt) 対応<br>
+  パシャっと証明写真 - Bundle ID: com.idphoto.japan.free
+</div>
+
+</body>
+</html>

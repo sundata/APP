@@ -1,0 +1,16 @@
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+feedparser>=6.0.11
+aiohttp>=3.9.5
+apscheduler>=3.10.4
+sqlalchemy>=2.0.29
+pydantic>=2.7.0
+psycopg2-binary>=2.9.9
+openai>=1.30.0
+python-dotenv>=1.0.0
+python-multipart>=0.0.6
+
+# 推送通知和支付
+firebase-admin>=6.4.0
+stripe>=7.6.0  # 可选：用于 Stripe 支付集成
+

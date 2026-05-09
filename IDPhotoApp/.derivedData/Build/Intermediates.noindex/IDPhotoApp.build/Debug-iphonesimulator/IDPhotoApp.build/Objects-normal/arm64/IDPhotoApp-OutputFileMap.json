@@ -1,0 +1,199 @@
+{
+  "" : {
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoApp-primary.dia",
+    "emit-module-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoApp-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoApp-primary-emit-module.dia",
+    "pch" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoApp-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoApp-primary.swiftdeps"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/ContentView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/IDPhotoAppApp.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoAppApp~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Models/IDPhotoModel.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/IDPhotoModel~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Services/BackgroundService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Services/BeautyService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Services/ExportService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Services/ImageService.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageService~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Utils/ColorExtensions.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ColorExtensions~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Utils/ImageExtensions.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ImageExtensions~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/ViewModels/PhotoEditorViewModel.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorViewModel~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/AdjustmentControlView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/AdjustmentControlView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/BackgroundPickerView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BackgroundPickerView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/BeautyControlView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/BeautyControlView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/CropView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/CropView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/ExportView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/ExportView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/HomeView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/HomeView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/PhotoEditorView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/PhotoEditorView~partial.swiftmodule"
+  },
+  "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/IDPhotoApp/Sources/Views/SizePickerView.swift" : {
+    "const-values" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.swiftconstvalues",
+    "dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.d",
+    "diagnostics" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.dia",
+    "index-unit-output-path" : "/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.o",
+    "llvm-bc" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.bc",
+    "object" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.o",
+    "swift-dependencies" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView.swiftdeps",
+    "swiftmodule" : "/Users/sundata/WorkBuddy/20260313120252/IDPhotoApp/.derivedData/Build/Intermediates.noindex/IDPhotoApp.build/Debug-iphonesimulator/IDPhotoApp.build/Objects-normal/arm64/SizePickerView~partial.swiftmodule"
+  }
+}

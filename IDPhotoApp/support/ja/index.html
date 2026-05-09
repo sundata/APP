@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サポート - 証明写真 - ID Photo Maker</title>
+    <meta name="description" content="証明写真アプリの公式サポートページ。よくある質問、使い方、お問い合わせ先をご案内しています。">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans", "Noto Sans JP", sans-serif;
+            line-height: 1.8;
+            color: #1d1d1f;
+            background: #f5f5f7;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 0;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #007AFF;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #007AFF;
+            border-radius: 2px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e5e5e5;
+            padding: 20px 0;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: #1d1d1f;
+        }
+        
+        .faq-answer {
+            color: #424245;
+            font-size: 15px;
+        }
+        
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #007AFF;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .step-content p {
+            font-size: 14px;
+            color: #424245;
+        }
+        
+        .app-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            background: #f5f5f7;
+            padding: 16px;
+            border-radius: 12px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #86868b;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .contact-methods {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .contact-email {
+            font-size: 20px;
+            font-weight: 700;
+            color: #007AFF;
+            word-break: break-all;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #86868b;
+            font-size: 13px;
+        }
+        
+        footer a {
+            color: #007AFF;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 24px;
+            }
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>証明写真 - ID Photo Maker</h1>
+            <p>サポート・よくある質問</p>
+        </div>
+    </header>
+    
+    <main class="content">
+        <div class="container">
+            <!-- アプリ情報 -->
+            <section class="section">
+                <h2>アプリ情報</h2>
+                <div class="app-info">
+                    <div class="info-item">
+                        <div class="info-label">アプリ名</div>
+                        <div class="info-value">証明写真</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">対応OS</div>
+                        <div class="info-value">iOS 16.0 以上</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">カテゴリ</div>
+                        <div class="info-value">写真／ビデオ</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">言語</div>
+                        <div class="info-value">日本語</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- よくある質問 -->
+            <section class="section">
+                <h2>よくある質問</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. 背景除去がうまくいかない時は？</div>
+                    <div class="faq-answer">
+                        A. 以下の点を確認してください。<br>
+                        ・明るい場所で撮影してください<br>
+                        ・背景と被写体の色が近いと精度が下がります<br>
+                        ・正面を向いて撮影してください<br>
+                        ・複数人が映っている場合は背景除去できません
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. 作成した証明写真はどこに保存されますか？</div>
+                    <div class="faq-answer">
+                        A. iPhone のフォトライブラリに保存されます。「保存」ボタンをタップすると、写真アプリで確認できます。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. コンビニで印刷できますか？</div>
+                    <div class="faq-answer">
+                        A. はい。保存した写真を写真アプリからプリントサービス（セブン-イレブンのネットプリントなど）で印刷できます。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. パスポート写真のサイズは対応していますか？</div>
+                    <div class="faq-answer">
+                        A. はい。日本のパスポート（35×45mm）に対応しています。その他、運転免許証、マイナンバーカード、履歴書など14種類以上のサイズに対応しています。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. 写真はサーバーに送信されますか？</div>
+                    <div class="faq-answer">
+                        A. いいえ。背景除去・サイズ調整などの処理はすべて端末内で行われます。写真データは外部に送信されません。
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q. アカウント登録は必要ですか？</div>
+                    <div class="faq-answer">
+                        A. いいえ。本アプリはアカウント登録不要です。ダウンロード後すぐにすべての機能をお使いいただけます。
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 使い方ガイド -->
+            <section class="section">
+                <h2>基本的な使い方</h2>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>写真を撮影・選択</h3>
+                        <p>カメラアイコンをタップしてその場で撮影、またはフォルダアイコンからフォトライブラリから写真を選択</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>背景を除去</h3>
+                        <p>「背景除去」ボタンをタップするとAIが人物を自動検出。背景を白・青・水色などに変更</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>サイズを選択</h3>
+                        <p>用途に合わせて証明写真のサイズを選択（パスポート、免許証、履歴書など）</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>微調整・保存</h3>
+                        <p>必要に応じて美顔補正やトリミングを調整してから「保存」ボタンで完成</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 対応サイズ -->
+            <section class="section">
+                <h2>対応サイズ一覧</h2>
+                <div class="faq-answer">
+                    <p>以下の証明写真サイズに対応しています：</p>
+                    <ul style="margin-top: 10px; margin-left: 20px; line-height: 2;">
+                        <li>パスポート（35×45mm）</li>
+                        <li>マイナンバーカード（35×45mm）</li>
+                        <li>運転免許証（24×30mm）</li>
+                        <li>履歴書・就活写真（大：40×50mm、小：30×40mm）</li>
+                        <li>在留カード（35×45mm）</li>
+                        <li>米国ビザ（51×51mm）</li>
+                        <li>中国ビザ・欧州ビザ・各種資格試験・JLPTなど</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- お問い合わせ -->
+            <section class="section">
+                <h2>お問い合わせ</h2>
+                <p style="margin-bottom: 8px;">お問い合わせは以下のメールアドレスまでご連絡ください。</p>
+                <p class="contact-email">work.sundata@gmail.com</p>
+                <p style="margin-top: 16px; font-size: 13px; color: #86868b;">
+                    ※お問い合わせの際は、以下の情報をご記入ください。<br>
+                    ・お使いのデバイスモデル<br>
+                    ・iOS のバージョン<br>
+                    ・アプリのバージョン<br>
+                    ・不具合の再現手順
+                </p>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 ID Photo Maker. All rights reserved.</p>
+        <p style="margin-top: 8px;">
+            <a href="/privacy.html">プライバシーポリシー</a>
+        </p>
+    </footer>
+</body>
+</html>

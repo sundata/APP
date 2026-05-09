@@ -1,0 +1,26 @@
+# Podfile - SeeNews App 依赖管理
+
+platform :ios, '16.0'
+
+project 'SeeNews.xcodeproj'
+
+target 'SeeNews' do
+  # Google Mobile Ads SDK
+  pod 'Google-Mobile-Ads-SDK'
+
+  # 其他可选但推荐的依赖
+  # pod 'Alamofire'              # 网络请求框架
+  # pod 'Kingfisher'             # 图片缓存框架
+  # pod 'Sentry'                 # 崩溃报告
+
+end
+
+# 安装步骤:
+# 1. 在包含此文件的目录中运行: pod install
+# 2. 关闭 Xcode
+# 3. 打开生成的 .xcworkspace 文件
+# 4. 更新 Info.plist 和 SeeNewsApp.swift（已完成）
+
+# 注意: 需要取消注释 SeeNewsApp.swift 中的 GoogleMobileAds import 和 GADMobileAds.sharedInstance().start()
+
+# 更多信息: https://cocoapods.org
