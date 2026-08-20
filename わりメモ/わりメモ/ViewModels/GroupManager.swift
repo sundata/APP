@@ -42,16 +42,21 @@ class GroupManager: ObservableObject {
     
     // 保存
     private func saveGroups() {
-        if let encoded = try? JSONEncoder().encode(groups) {
+        do {
+            let encoded = try JSONEncoder().encode(groups)
             UserDefaults.standard.set(encoded, forKey: groupsKey)
+        } catch {
+            print("[GroupManager] グループ保存に失敗: \(error)")
         }
     }
     
     // 読み込み
     private func loadGroups() {
-        if let data = UserDefaults.standard.data(forKey: groupsKey),
-           let decoded = try? JSONDecoder().decode([Group].self, from: data) {
-            groups = decoded
+        guard let data = UserDefaults.standard.data(forKey: groupsKey) else { return }
+        do {
+            groups = try JSONDecoder().decode([Group].self, from: data)
+        } catch {
+            print("[GroupManager] グループ読み込みに失敗: \(error)")
         }
     }
 }

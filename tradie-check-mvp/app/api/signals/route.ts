@@ -2,15 +2,22 @@ import { getDb } from "../../../db";
 import { signals } from "../../../db/schema";
 
 export async function POST(request: Request) {
-  try {
-    const body = (await request.json()) as {
-      kind?: string;
-      email?: string;
-      sentiment?: string;
-      score?: number;
-      projectType?: string;
-    };
+  let body: {
+    kind?: string;
+    email?: string;
+    sentiment?: string;
+    score?: number;
+    projectType?: string;
+  };
 
+  try {
+    body = (await request.json()) as typeof body;
+  } catch (error) {
+    console.error("[signals] Malformed request body", error);
+    return Response.json({ error: "Invalid request body" }, { status: 400 });
+  }
+
+  try {
     if (!body.kind || !["report", "feedback", "waitlist"].includes(body.kind)) {
       return Response.json({ error: "Invalid signal" }, { status: 400 });
     }
@@ -31,7 +38,12 @@ export async function POST(request: Request) {
     });
 
     return Response.json({ ok: true }, { status: 201 });
-  } catch {
+  } catch (error) {
+    console.error("[signals] Failed to save signal", {
+      error,
+      kind: body.kind,
+      projectType: body.projectType,
+    });
     return Response.json({ error: "Could not save your response" }, { status: 500 });
   }
 }

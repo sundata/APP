@@ -396,6 +396,64 @@ class DeepAnalysisResponse(BaseModel):
 # ─────────────────────── Crawler ───────────────────────
 
 logger = logging.getLogger("furinnews")
+
+_background_tasks: set[asyncio.Task] = set()
+
+
+def _create_background_task(coro):
+    task = asyncio.create_task(coro)
+    _background_tasks.add(task)
+
+    def _on_done(completed: asyncio.Task):
+        _background_tasks.discard(completed)
+        if completed.cancelled():
+            return
+        try:
+            error = completed.exception()
+        except asyncio.CancelledError:
+            return
+        if error:
+            logger.error(
+                "Background task failed",
+                exc_info=(type(error), error, error.__traceback__),
+            )
+
+    task.add_done_callback(_on_done)
+    return task
+
+
+def _find_article(db, article_id: str):
+    try:
+        article = (
+            db.query(ArticleORM)
+            .filter(ArticleORM.uid == article_id)
+            .first()
+        )
+    except Exception:
+        db.rollback()
+        logger.exception(f"Article lookup failed for uid={article_id!r}")
+        raise HTTPException(
+            status_code=503,
+            detail="Article database unavailable",
+        )
+
+    if article:
+        return article
+
+    try:
+        numeric_id = int(article_id)
+    except (TypeError, ValueError):
+        return None
+
+    try:
+        return db.query(ArticleORM).filter(ArticleORM.id == numeric_id).first()
+    except Exception:
+        db.rollback()
+        logger.exception(f"Article lookup failed for id={numeric_id}")
+        raise HTTPException(
+            status_code=503,
+            detail="Article database unavailable",
+        )
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 
@@ -537,8 +595,8 @@ async def _analyze_with_openai(prompt: str) -> Optional[dict]:
         import json
         result = json.loads(content)
         return result
-    except Exception as e:
-        logger.error(f"OpenAI API error: {e}, using mock analysis as fallback")
+    except Exception:
+        logger.exception("OpenAI API error, using mock analysis as fallback")
         # ✅ 如果 OpenAI 失败，返回模拟分析而不是 None
         return _generate_mock_analysis()
 
@@ -629,13 +687,21 @@ def _parse_date(entry) -> datetime:
         try:
             return datetime(*entry.published_parsed[:6], tzinfo=timezone.utc)
         except Exception:
-            pass
+            logger.debug(
+                "Failed to parse published_parsed for "
+                f"entry={getattr(entry, 'link', entry)!r}",
+                exc_info=True,
+            )
     # RFC 2822 string
     if hasattr(entry, "published") and entry.published:
         try:
             return parsedate_to_datetime(entry.published)
         except Exception:
-            pass
+            logger.debug(
+                "Failed to parse published date for "
+                f"entry={getattr(entry, 'link', entry)!r}",
+                exc_info=True,
+            )
     return datetime.now(timezone.utc)
 
 
@@ -683,7 +749,7 @@ async def _fetch_og_image(url: str, source_name: str = "") -> Optional[str]:
                 return None
             return img
     except Exception:
-        pass
+        logger.warning(f"OG image fetch failed url={url}", exc_info=True)
     return None
 
 
@@ -738,7 +804,7 @@ async def _fetch_article_detail(url: str) -> dict:
                 result["summary"] = desc
 
     except Exception:
-        pass
+        logger.warning(f"Article detail fetch failed url={url}", exc_info=True)
     return result
 
 
@@ -892,7 +958,7 @@ async def startup():
     async def _delayed_crawl():
         await asyncio.sleep(30)
         await run_crawler()
-    asyncio.create_task(_delayed_crawl())
+    _create_background_task(_delayed_crawl())
     scheduler.add_job(run_crawler, "interval", minutes=FETCH_INTERVAL_MINUTES)
     scheduler.start()
     logger.info(f"Scheduler started, interval={FETCH_INTERVAL_MINUTES}min")
@@ -997,7 +1063,7 @@ def get_article(article_id: int):
 
 @app.post("/v1/crawl")
 async def manual_crawl():
-    asyncio.create_task(run_crawler())
+    _create_background_task(run_crawler())
     return {"status": "crawling started"}
 
 
@@ -1053,6 +1119,9 @@ async def backfill_images(limit: int = Query(100, ge=1, le=200)):
             results = await asyncio.gather(*[t for _, _, t in detail_tasks], return_exceptions=True)
             for (aid, url, _), result in zip(detail_tasks, results):
                 if isinstance(result, Exception):
+                    logger.warning(
+                        f"Article detail fetch failed url={url}: {result}"
+                    )
                     continue
                 updates[aid] = {}
                 if result.get("image_url"):
@@ -1066,6 +1135,10 @@ async def backfill_images(limit: int = Query(100, ge=1, le=200)):
             og_results = await asyncio.gather(*[t for _, _, t in og_tasks], return_exceptions=True)
             for (aid, url, _), img in zip(og_tasks, og_results):
                 if isinstance(img, Exception) or not img:
+                    if isinstance(img, Exception):
+                        logger.warning(
+                            f"OG image fetch failed url={url}: {img}"
+                        )
                     continue
                 updates[aid] = updates.get(aid, {})
                 updates[aid]["image_url"] = img
@@ -1119,19 +1192,7 @@ async def ai_analyze(
         db = SessionLocal()
         try:
             # uid (String) または id (Integer) で検索
-            article = None
-            try:
-                # まず uid での検索を試みる
-                article = db.query(ArticleORM).filter(ArticleORM.uid == article_id).first()
-            except Exception:
-                pass
-            
-            if not article:
-                # Integer ID での検索
-                try:
-                    article = db.query(ArticleORM).filter(ArticleORM.id == int(article_id)).first()
-                except Exception:
-                    pass
+            article = _find_article(db, article_id)
             
             if not article:
                 raise HTTPException(status_code=404, detail="Article not found")
@@ -1155,7 +1216,13 @@ async def ai_analyze(
                 # 如果 force_refresh=True，后台异步刷新（不阻塞响应）
                 if force_refresh:
                     import asyncio
-                    asyncio.create_task(_refresh_analysis_background(article.id, article.title, article.summary))
+                    _create_background_task(
+                        _refresh_analysis_background(
+                            article.id,
+                            article.title,
+                            article.summary,
+                        )
+                    )
                 
                 return cached_response
             
@@ -1191,7 +1258,12 @@ async def ai_analyze(
     # 后台异步获取真实 OpenAI 分析
     import asyncio
     if article_data["id"]:
-        asyncio.create_task(_fetch_and_cache_real_analysis_background(article_data["id"], prompt))
+        _create_background_task(
+            _fetch_and_cache_real_analysis_background(
+                article_data["id"],
+                prompt,
+            )
+        )
     
     # キャッシュに保存（模拟分析）
     if article_data["id"]:
@@ -1248,19 +1320,7 @@ async def ai_deep_analyze(
         db = SessionLocal()
         try:
             # uid (String) または id (Integer) で検索
-            article = None
-            try:
-                # まず uid での検索を試みる
-                article = db.query(ArticleORM).filter(ArticleORM.uid == article_id).first()
-            except Exception:
-                pass
-            
-            if not article:
-                # Integer ID での検索
-                try:
-                    article = db.query(ArticleORM).filter(ArticleORM.id == int(article_id)).first()
-                except Exception:
-                    pass
+            article = _find_article(db, article_id)
             
             if not article:
                 raise HTTPException(status_code=404, detail="Article not found")
@@ -1354,19 +1414,33 @@ async def verify_receipt(receipt_data: dict):
         manager = get_subscription_manager()
         
         # 从请求数据创建 ReceiptData
-        receipt = ReceiptData(
-            transactionID=receipt_data.get("transactionID", ""),
-            productID=receipt_data.get("productID", ""),
-            originalTransactionID=receipt_data.get("originalTransactionID", ""),
-            expirationDate=float(receipt_data.get("expirationDate", 0)),
-            purchaseDate=float(receipt_data.get("purchaseDate", 0))
-        )
+        try:
+            receipt = ReceiptData(
+                transactionID=receipt_data.get("transactionID", ""),
+                productID=receipt_data.get("productID", ""),
+                originalTransactionID=receipt_data.get(
+                    "originalTransactionID",
+                    "",
+                ),
+                expirationDate=float(receipt_data.get("expirationDate", 0)),
+                purchaseDate=float(receipt_data.get("purchaseDate", 0))
+            )
+        except (TypeError, ValueError):
+            raise HTTPException(status_code=400, detail="Invalid receipt data")
         
         result = await manager.verify_receipt(receipt)
-        return {"verified": True, "data": result}
-    except Exception as e:
-        logger.error(f"Receipt verification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        return {
+            "verified": bool(result.get("verified", False)),
+            "data": result,
+        }
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Receipt verification error")
+        raise HTTPException(
+            status_code=500,
+            detail="Receipt verification failed",
+        )
 
 
 @app.post("/v1/subscription/purchase")
@@ -1380,14 +1454,20 @@ async def handle_purchase(purchase_data: dict, authorization: str = Header(None)
         
         manager = get_subscription_manager()
         
-        purchase = PurchaseNotification(
-            plan=purchase_data.get("plan", "monthly"),
-            productID=purchase_data.get("productID", ""),
-            price=float(purchase_data.get("price", 0)),
-            currency=purchase_data.get("currency", "JPY"),
-            transactionID=purchase_data.get("transactionID", ""),
-            timestamp=float(purchase_data.get("timestamp", 0))
-        )
+        try:
+            purchase = PurchaseNotification(
+                plan=purchase_data.get("plan", "monthly"),
+                productID=purchase_data.get("productID", ""),
+                price=float(purchase_data.get("price", 0)),
+                currency=purchase_data.get("currency", "JPY"),
+                transactionID=purchase_data.get("transactionID", ""),
+                timestamp=float(purchase_data.get("timestamp", 0))
+            )
+        except (TypeError, ValueError):
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid purchase data",
+            )
         
         success = await manager.notify_purchase(purchase, user_id)
         
@@ -1398,10 +1478,16 @@ async def handle_purchase(purchase_data: dict, authorization: str = Header(None)
                 "subscription": manager.get_subscription_status(user_id)
             }
         else:
-            raise Exception("Failed to record purchase")
-    except Exception as e:
-        logger.error(f"Purchase handling error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+            logger.error("Purchase manager did not record purchase")
+            raise HTTPException(
+                status_code=500,
+                detail="Purchase recording failed",
+            )
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Purchase handling error")
+        raise HTTPException(status_code=500, detail="Purchase handling failed")
 
 
 @app.get("/v1/subscription/status")
@@ -1414,9 +1500,14 @@ async def get_subscription_status(authorization: str = Header(None)):
         manager = get_subscription_manager()
         status = manager.get_subscription_status(user_id)
         return status
-    except Exception as e:
-        logger.error(f"Status retrieval error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Status retrieval error")
+        raise HTTPException(
+            status_code=500,
+            detail="Subscription status unavailable",
+        )
 
 
 @app.post("/v1/notifications/register-device")
@@ -1444,9 +1535,14 @@ async def register_device(
             "message": "Device registered successfully",
             "device": device_info
         }
-    except Exception as e:
-        logger.error(f"Device registration error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Device registration error")
+        raise HTTPException(
+            status_code=500,
+            detail="Device registration failed",
+        )
 
 
 @app.post("/v1/notifications/send-test")
@@ -1482,9 +1578,11 @@ async def send_test_notification(
             "success": success,
             "message": "Test notification sent" if success else "Failed to send notification"
         }
-    except Exception as e:
-        logger.error(f"Test notification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Test notification error")
+        raise HTTPException(status_code=500, detail="Test notification failed")
 
 
 @app.get("/v1/health")

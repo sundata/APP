@@ -230,15 +230,20 @@ class AIAnalysisService: ObservableObject {
     
     // MARK: - キャッシュ管理
     private func cacheAnalyses() {
-        if let encoded = try? JSONEncoder().encode(analyses) {
+        do {
+            let encoded = try JSONEncoder().encode(analyses)
             UserDefaults.standard.set(encoded, forKey: "AIAnalysesCache")
+        } catch {
+            print("[AIAnalysisService] 分析キャッシュ保存に失敗: \(error)")
         }
     }
     
     private func loadCachedAnalyses() {
-        if let data = UserDefaults.standard.data(forKey: "AIAnalysesCache"),
-           let decoded = try? JSONDecoder().decode([String: AIAnalysis].self, from: data) {
-            self.analyses = decoded
+        guard let data = UserDefaults.standard.data(forKey: "AIAnalysesCache") else { return }
+        do {
+            self.analyses = try JSONDecoder().decode([String: AIAnalysis].self, from: data)
+        } catch {
+            print("[AIAnalysisService] 分析キャッシュ読み込みに失敗: \(error)")
         }
     }
     

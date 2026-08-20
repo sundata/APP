@@ -55,6 +55,7 @@ struct SettingsView: View {
                                                 }
                                             }
                                         } catch {
+                                            print("❌ 通知権限の要求に失敗: \(error)")
                                             notificationsEnabled = false
                                         }
                                     }

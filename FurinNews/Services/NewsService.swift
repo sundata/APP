@@ -80,6 +80,7 @@ class NewsService: ObservableObject {
                 }
             }
         } catch {
+            print("[NewsService] ニュース取得に失敗、キャッシュを使用: \(error)")
             await MainActor.run {
                 self.error = error.localizedDescription
                 self.isLoading = false
@@ -128,6 +129,7 @@ class NewsService: ObservableObject {
             }
             return []
         } catch {
+            print("[NewsService] 検索に失敗、キャッシュを使用: \(error)")
             return articles.filter {
                 $0.title.localizedCaseInsensitiveContains(query) ||
                 $0.summary.localizedCaseInsensitiveContains(query) ||
@@ -149,6 +151,7 @@ class NewsService: ObservableObject {
             let apiResponse = try JSONDecoder().decode(NewsResponse.self, from: data)
             return apiResponse.articles.compactMap { $0.toNewsArticle() }
         } catch {
+            print("[NewsService] カテゴリ取得に失敗、キャッシュを使用: \(error)")
             guard page == 1 else { return [] }
             return articles.filter { $0.category == category }
         }
@@ -167,6 +170,7 @@ class NewsService: ObservableObject {
             let results = apiResponse.articles.compactMap { $0.toNewsArticle() }
             return results.sorted { $0.publishedAt > $1.publishedAt }
         } catch {
+            print("[NewsService] 最新記事取得に失敗、キャッシュを使用: \(error)")
             let sorted = articles.sorted { $0.publishedAt > $1.publishedAt }
             let start = max(0, (page - 1) * limit)
             guard start < sorted.count else { return [] }
@@ -286,7 +290,7 @@ class NewsService: ObservableObject {
                 }
             }
         } catch {
-            // 静默失败
+            print("[NewsService] OG画像取得に失敗 url=\(url): \(error)")
         }
         return nil
     }
@@ -367,15 +371,22 @@ class NewsCache {
                 isRead: a.isRead, isBookmarked: a.isBookmarked
             )
         }
-        if let encoded = try? JSONEncoder().encode(cached) {
+        do {
+            let encoded = try JSONEncoder().encode(cached)
             UserDefaults.standard.set(encoded, forKey: cacheKey)
             lastCacheDate = Date()
+        } catch {
+            print("[NewsCache] 保存に失敗: \(error)")
         }
     }
     
     func load() -> [NewsArticle]? {
-        guard let data = UserDefaults.standard.data(forKey: cacheKey),
-              let cached = try? JSONDecoder().decode([CachedArticle].self, from: data) else {
+        guard let data = UserDefaults.standard.data(forKey: cacheKey) else { return nil }
+        let cached: [CachedArticle]
+        do {
+            cached = try JSONDecoder().decode([CachedArticle].self, from: data)
+        } catch {
+            print("[NewsCache] 読み込みに失敗: \(error)")
             return nil
         }
         return cached.compactMap { c -> NewsArticle? in
