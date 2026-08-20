@@ -1,17 +1,19 @@
 import { getDb } from "../../../db";
 import { signals } from "../../../db/schema";
 
+type SignalRequestBody = {
+  kind?: string;
+  email?: string;
+  sentiment?: string;
+  score?: number;
+  projectType?: string;
+};
+
 export async function POST(request: Request) {
-  let body: {
-    kind?: string;
-    email?: string;
-    sentiment?: string;
-    score?: number;
-    projectType?: string;
-  };
+  let body: SignalRequestBody;
 
   try {
-    body = (await request.json()) as typeof body;
+    body = (await request.json()) as SignalRequestBody;
   } catch (error) {
     console.error("[signals] Malformed request body", error);
     return Response.json({ error: "Invalid request body" }, { status: 400 });

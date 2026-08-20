@@ -499,7 +499,10 @@ struct ExportView: View {
             }
         }
 
-        // 3秒後にトーストを消す
+        await clearSaveResultAfterDelay()
+    }
+
+    private func clearSaveResultAfterDelay() async {
         try? await Task.sleep(nanoseconds: 3_000_000_000)
         await MainActor.run { saveResult = nil }
     }
@@ -524,6 +527,7 @@ struct ExportView: View {
                 saveResult = .failure("画像の書き出しに失敗しました")
                 HapticFeedback.error()
             }
+            await clearSaveResultAfterDelay()
             return
         }
 
@@ -537,6 +541,7 @@ struct ExportView: View {
                 saveResult = .failure("画像の保存に失敗しました")
                 HapticFeedback.error()
             }
+            await clearSaveResultAfterDelay()
             return
         }
 

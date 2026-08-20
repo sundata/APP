@@ -396,6 +396,8 @@ class DeepAnalysisResponse(BaseModel):
 # ─────────────────────── Crawler ───────────────────────
 
 logger = logging.getLogger("furinnews")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
 
 _background_tasks: set[asyncio.Task] = set()
 
@@ -454,7 +456,6 @@ def _find_article(db, article_id: str):
             status_code=503,
             detail="Article database unavailable",
         )
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
 
 # ─────────────────────── AI分析ヘルパー関数 ───────────────────────
@@ -748,8 +749,8 @@ async def _fetch_og_image(url: str, source_name: str = "") -> Optional[str]:
             if _is_bad_image(img):
                 return None
             return img
-    except Exception:
-        logger.warning(f"OG image fetch failed url={url}", exc_info=True)
+    except Exception as exc:
+        logger.warning(f"OG image fetch failed url={url}: {exc}")
     return None
 
 
@@ -803,8 +804,8 @@ async def _fetch_article_detail(url: str) -> dict:
             if desc:
                 result["summary"] = desc
 
-    except Exception:
-        logger.warning(f"Article detail fetch failed url={url}", exc_info=True)
+    except Exception as exc:
+        logger.warning(f"Article detail fetch failed url={url}: {exc}")
     return result
 
 
