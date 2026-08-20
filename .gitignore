@@ -1,0 +1,25 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+*firebase-credentials*.json
+*.p8
+*.p12
+*.mobileprovision
+
+# Logs and local databases
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Node
+node_modules/
+
+# macOS
+.DS_Store

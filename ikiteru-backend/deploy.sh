@@ -5,13 +5,15 @@
 # =============================================================
 set -euo pipefail
 
-# ── 設定（ここを変更してください）─────────────────────────
-PROJECT_ID="ikiteru-2026"
-REGION="asia-northeast1"          # 東京
-SERVICE_NAME="ikiteru-backend"
-GMAIL_USER="work.sundata@gmail.com"
-GMAIL_APP_PASSWORD="jtyc wmaz zgko lynb"
-SCHEDULER_SECRET="ikiteru-secret-2026"
+# ── 設定 ────────────────────────────────────────────────────
+# 秘密情報はスクリプトに書かず、環境変数で渡してください:
+#   GMAIL_USER=... GMAIL_APP_PASSWORD=... SCHEDULER_SECRET=... bash deploy.sh
+PROJECT_ID="${PROJECT_ID:-ikiteru-2026}"
+REGION="${REGION:-asia-northeast1}"          # 東京
+SERVICE_NAME="${SERVICE_NAME:-ikiteru-backend}"
+GMAIL_USER="${GMAIL_USER:-}"
+GMAIL_APP_PASSWORD="${GMAIL_APP_PASSWORD:-}"
+SCHEDULER_SECRET="${SCHEDULER_SECRET:-}"
 # ──────────────────────────────────────────────────────────────
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
@@ -20,8 +22,8 @@ warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*"; exit 1; }
 
 # ── 0. 入力チェック ────────────────────────────────────────
-if [[ -z "$PROJECT_ID" || -z "$GMAIL_USER" || -z "$GMAIL_APP_PASSWORD" ]]; then
-    error "deploy.sh の先頭にある PROJECT_ID / GMAIL_USER / GMAIL_APP_PASSWORD を設定してください"
+if [[ -z "$PROJECT_ID" || -z "$GMAIL_USER" || -z "$GMAIL_APP_PASSWORD" || -z "$SCHEDULER_SECRET" ]]; then
+    error "環境変数 PROJECT_ID / GMAIL_USER / GMAIL_APP_PASSWORD / SCHEDULER_SECRET を設定してください（例: SCHEDULER_SECRET=\$(openssl rand -hex 32)）"
 fi
 
 info "プロジェクト: $PROJECT_ID  リージョン: $REGION"
@@ -93,7 +95,6 @@ echo -e "${GREEN}========================================${NC}"
 echo ""
 echo "  API URL    : $SERVICE_URL"
 echo "  Scheduler  : 5分ごとに期限切れチェック"
-echo "  Secret     : $SCHEDULER_SECRET"
 echo ""
 echo -e "${YELLOW}iOS App の BackendConfig.swift に以下を設定してください:${NC}"
 echo "  BASE_URL = \"$SERVICE_URL\""

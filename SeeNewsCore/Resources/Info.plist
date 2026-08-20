@@ -24,7 +24,7 @@
 	<string>ca-app-pub-7019246421185381~8398499848</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 	</dict>
 	<key>UILaunchScreen</key>

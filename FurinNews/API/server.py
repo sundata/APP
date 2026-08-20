@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import hmac
 import logging
 import re
 import os
@@ -24,7 +25,7 @@ from typing import Optional, List
 import feedparser
 import aiohttp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from fastapi import FastAPI, Query, HTTPException, Header
+from fastapi import Depends, FastAPI, Query, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import (
@@ -46,6 +47,12 @@ FETCH_INTERVAL_MINUTES = 5
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_MODEL = "gpt-4o-mini"
 openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
+
+# ブラウザからの呼び出しを許可するオリジン（カンマ区切り、未設定なら許可なし）
+ALLOWED_ORIGINS = [o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "").split(",") if o.strip()]
+
+# 管理・メンテナンス用エンドポイントの共有トークン（未設定なら該当APIは無効）
+ADMIN_API_TOKEN = os.environ.get("ADMIN_API_TOKEN", "")
 
 # 真实可用 RSS 源（用户推荐的稳定源）
 RSS_SOURCES: list[dict] = [
@@ -879,11 +886,19 @@ async def run_crawler():
 app = FastAPI(title="FurinNews API", version="2.0.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=ALLOWED_ORIGINS,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Authorization", "Content-Type", "X-User-ID", "X-Admin-Token"],
 )
 scheduler = AsyncIOScheduler()
+
+
+def require_admin_token(x_admin_token: Optional[str] = Header(None, alias="X-Admin-Token")) -> None:
+    """メンテナンス用エンドポイントを共有トークンで保護する"""
+    if not ADMIN_API_TOKEN:
+        raise HTTPException(status_code=503, detail="Admin endpoints are disabled")
+    if not x_admin_token or not hmac.compare_digest(x_admin_token, ADMIN_API_TOKEN):
+        raise HTTPException(status_code=401, detail="Unauthorized")
 
 
 @app.on_event("startup")
@@ -996,7 +1011,7 @@ def get_article(article_id: int):
 
 
 @app.post("/v1/crawl")
-async def manual_crawl():
+async def manual_crawl(_: None = Depends(require_admin_token)):
     asyncio.create_task(run_crawler())
     return {"status": "crawling started"}
 
@@ -1015,7 +1030,10 @@ def stats():
 
 
 @app.post("/v1/backfill-images")
-async def backfill_images(limit: int = Query(100, ge=1, le=200)):
+async def backfill_images(
+    limit: int = Query(100, ge=1, le=200),
+    _: None = Depends(require_admin_token),
+):
     """为image_url为空的文章补填缩略图和summary"""
     # 先获取需要更新的文章ID和URL
     db = SessionLocal()
@@ -1366,7 +1384,7 @@ async def verify_receipt(receipt_data: dict):
         return {"verified": True, "data": result}
     except Exception as e:
         logger.error(f"Receipt verification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail="Receipt verification failed")
 
 
 @app.post("/v1/subscription/purchase")
@@ -1401,7 +1419,7 @@ async def handle_purchase(purchase_data: dict, authorization: str = Header(None)
             raise Exception("Failed to record purchase")
     except Exception as e:
         logger.error(f"Purchase handling error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail="Failed to record purchase")
 
 
 @app.get("/v1/subscription/status")
@@ -1416,7 +1434,7 @@ async def get_subscription_status(authorization: str = Header(None)):
         return status
     except Exception as e:
         logger.error(f"Status retrieval error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail="Failed to retrieve subscription status")
 
 
 @app.post("/v1/notifications/register-device")
@@ -1446,14 +1464,15 @@ async def register_device(
         }
     except Exception as e:
         logger.error(f"Device registration error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail="Device registration failed")
 
 
 @app.post("/v1/notifications/send-test")
 async def send_test_notification(
     device_token: str,
     title: str = "テスト通知",
-    body: str = "これはテスト通知です"
+    body: str = "これはテスト通知です",
+    _: None = Depends(require_admin_token),
 ):
     """测试通知发送（用于开发调试）"""
     try:
@@ -1484,14 +1503,11 @@ async def send_test_notification(
         }
     except Exception as e:
         logger.error(f"Test notification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
-
-
-@app.get("/v1/health")
+        raise HTTPException(status_code=400, detail="Failed to send test notification")
 
 
 @app.post("/v1/cleanup-bad-images")
-def cleanup_bad_images():
+def cleanup_bad_images(_: None = Depends(require_admin_token)):
     """清理数据库中无效的图片URL（Google logo等）"""
     db = SessionLocal()
     try:

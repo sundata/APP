@@ -8,6 +8,7 @@ Endpoints:
   POST /internal/check-overdue             Cloud Scheduler 呼び出し、期限切れチェック
 """
 
+import hmac
 import os
 import smtplib
 import logging
@@ -19,7 +20,7 @@ from email.utils import formataddr
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Header, Request
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_validator
 import google.cloud.firestore as firestore
 
 # ──────────────────────────────────────────────
@@ -34,7 +35,9 @@ db  = firestore.Client()
 # Gmail SMTP 設定（環境変数から読み込む）
 GMAIL_USER     = os.environ.get("GMAIL_USER", "")
 GMAIL_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")   # アプリパスワード
-SCHEDULER_SECRET = os.environ.get("SCHEDULER_SECRET", "ikiteru-secret-2026")
+SCHEDULER_SECRET = os.environ.get("SCHEDULER_SECRET", "")
+if not SCHEDULER_SECRET:
+    logger.warning("SCHEDULER_SECRET が未設定です。/internal/* は常に 403 を返します。")
 
 
 # ──────────────────────────────────────────────
@@ -43,13 +46,20 @@ SCHEDULER_SECRET = os.environ.get("SCHEDULER_SECRET", "ikiteru-secret-2026")
 class ContactModel(BaseModel):
     name:         str
     relationship: str
-    email:        str
+    email:        EmailStr
     phone:        Optional[str] = ""
     is_priority:  bool = False
 
+    @field_validator("name", "relationship", "phone")
+    @classmethod
+    def _no_control_chars(cls, value: Optional[str]) -> Optional[str]:
+        if value and any(c in value for c in "\r\n"):
+            raise ValueError("改行を含む値は指定できません")
+        return value
+
 class UserSettings(BaseModel):
     user_name:       str
-    user_email:      str
+    user_email:      EmailStr
     interval_hours:  int = 24          # 24 / 48 / 72
     contacts:        list[ContactModel]
     notify_email:    bool = True
@@ -235,7 +245,7 @@ def send_test_alert(device_id: str):
             server.login(GMAIL_USER, GMAIL_PASSWORD)
             sorted_contacts = sorted(contacts, key=lambda c: not c.get("is_priority", False))
             for contact in sorted_contacts:
-                to_email = contact.get("email", "")
+                to_email = _safe_email(contact.get("email", ""))
                 if not to_email:
                     continue
                 body = body_template.format(
@@ -252,7 +262,7 @@ def send_test_alert(device_id: str):
         return {"ok": True, "sent_to": len(contacts)}
     except Exception as e:
         logger.error(f"[test-alert] SMTP error: {e}")
-        raise HTTPException(status_code=500, detail=f"メール送信失敗: {str(e)}")
+        raise HTTPException(status_code=500, detail="メール送信に失敗しました")
 
 
 # ──────────────────────────────────────────────
@@ -266,7 +276,8 @@ def check_overdue(x_scheduler_secret: Optional[str] = Header(None)):
     緊急連絡先にメールを送る。
     """
     # 簡易認証
-    if x_scheduler_secret != SCHEDULER_SECRET:
+    if not SCHEDULER_SECRET or not x_scheduler_secret or \
+            not hmac.compare_digest(x_scheduler_secret, SCHEDULER_SECRET):
         raise HTTPException(status_code=403, detail="Forbidden")
 
     now      = datetime.now(timezone.utc)
@@ -322,6 +333,14 @@ def check_overdue(x_scheduler_secret: Optional[str] = Header(None)):
 # ──────────────────────────────────────────────
 # メール送信ユーティリティ
 # ──────────────────────────────────────────────
+def _safe_email(value: str) -> str:
+    """ヘッダーインジェクションを防ぐため、制御文字を含む宛先は破棄する"""
+    email_addr = (value or "").strip()
+    if not email_addr or any(c in email_addr for c in "\r\n") or "@" not in email_addr:
+        return ""
+    return email_addr
+
+
 def make_from_header(display_name: str, email_addr: str) -> str:
     """日本語表示名を RFC2047 エンコードして From ヘッダーを生成する"""
     h = EmailHeader()
@@ -371,7 +390,7 @@ def send_alert_emails(user_name: str, last_checkin: str,
                                      key=lambda c: not c.get("is_priority", False))
 
             for contact in sorted_contacts:
-                to_email = contact.get("email", "")
+                to_email = _safe_email(contact.get("email", ""))
                 if not to_email:
                     continue
 
