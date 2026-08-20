@@ -542,7 +542,7 @@ struct PhotoEditorView: View {
             spacing: 10
         ) {
             ForEach(solidPresets) { bg in
-                BGColorCell(
+                BackgroundColorCell(
                     background: bg,
                     isSelected: viewModel.editState.selectedBackground.id == bg.id
                 ) {
@@ -560,7 +560,7 @@ struct PhotoEditorView: View {
         return ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(gradPresets) { bg in
-                    BGGradientCell(
+                    BackgroundGradientCell(
                         background: bg,
                         isSelected: viewModel.editState.selectedBackground.id == bg.id
                     ) {
@@ -874,48 +874,6 @@ struct PhotoEditorView: View {
     }
 }
 
-// MARK: - 背景カラーチェル
-
-private struct BGColorCell: View {
-    let background: BackgroundColor
-    let isSelected: Bool
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: onTap) {
-            VStack(spacing: 6) {
-                ZStack {
-                    Color(hex: background.colorHex)
-                        .frame(height: 60)
-                        .cornerRadius(12)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(
-                                    isSelected ? Color.appPrimary : Color.appDivider,
-                                    lineWidth: isSelected ? 2.5 : 1
-                                )
-                        )
-                    if isSelected {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(
-                                background.colorHex == "#FFFFFF"
-                                    ? Color.appPrimary : .white
-                            )
-                    }
-                }
-                .shadow(color: Color(hex: background.colorHex).opacity(0.3),
-                        radius: isSelected ? 6 : 2, y: 2)
-                Text(background.name)
-                    .font(.system(size: 11, weight: isSelected ? .bold : .regular))
-                    .foregroundColor(isSelected ? Color.appPrimary : Color.appTextSecondary)
-            }
-        }
-        .scaleEffect(isSelected ? 1.04 : 1.0)
-        .animation(.spring(response: 0.25, dampingFraction: 0.7), value: isSelected)
-    }
-}
-
 // MARK: - エディター用美肌を比較プレビュー（ドラッグ比較スライダー）
 
 private struct EditorBeautyComparisonView: View {
@@ -1012,52 +970,6 @@ private struct EditorBeautyComparisonView: View {
             )
         }
         .shadow(color: .black.opacity(0.2), radius: 6, y: 3)
-    }
-}
-
-
-
-private struct BGGradientCell: View {
-    let background: BackgroundColor
-    let isSelected: Bool
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: onTap) {
-            VStack(spacing: 6) {
-                ZStack {
-                    if background.isRadialGradient, let endHex = background.gradientEndHex {
-                        RadialGradient(
-                            colors: [Color(hex: background.colorHex), Color(hex: endHex)],
-                            center: .center, startRadius: 0, endRadius: 55
-                        )
-                    } else if let endHex = background.gradientEndHex {
-                        LinearGradient(
-                            colors: [Color(hex: background.colorHex), Color(hex: endHex)],
-                            startPoint: .topLeading, endPoint: .bottomTrailing
-                        )
-                    }
-                    if isSelected {
-                        Image(systemName: "checkmark")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.white)
-                            .shadow(color: .black.opacity(0.3), radius: 2)
-                    }
-                }
-                .frame(width: 80, height: 60)
-                .cornerRadius(12)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.appPrimary : Color.appDivider,
-                                lineWidth: isSelected ? 2.5 : 1)
-                )
-                Text(background.name)
-                    .font(.system(size: 11, weight: isSelected ? .bold : .regular))
-                    .foregroundColor(isSelected ? Color.appPrimary : Color.appTextSecondary)
-            }
-        }
-        .scaleEffect(isSelected ? 1.04 : 1.0)
-        .animation(.spring(response: 0.25, dampingFraction: 0.7), value: isSelected)
     }
 }
 

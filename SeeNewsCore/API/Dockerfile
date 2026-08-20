@@ -13,6 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY server.py .
+COPY api_utils.py .
 COPY notifications.py .
 
 # Cloud Run provides PORT env var; default 8080

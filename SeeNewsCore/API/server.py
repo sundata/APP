@@ -14,15 +14,16 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import logging
 import re
 import os
+from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
-from typing import Optional, List
+from typing import ContextManager, Optional, List
 
 import feedparser
-import aiohttp
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI, Query, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,7 +31,17 @@ from pydantic import BaseModel
 from sqlalchemy import (
     Boolean, Column, DateTime, Index, Integer, String, Text, create_engine, text
 )
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, Session
+
+from api_utils import (
+    FEED_UA,
+    absolutize_url,
+    fetch_text,
+    find_meta_content,
+    session_scope,
+    strip_tags,
+    url_matches_any,
+)
 
 # OpenAI API
 from openai import AsyncOpenAI
@@ -303,8 +314,6 @@ BAD_IMAGE_PATTERNS = [
 
 # ─────────────────────── DB ───────────────────────
 
-import os
-
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
 CLOUD_SQL_CONNECTION_NAME = os.environ.get("CLOUD_SQL_CONNECTION_NAME", "")
 
@@ -322,6 +331,11 @@ else:
 
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
+
+
+def db_session() -> ContextManager[Session]:
+    """DBセッションのスコープ（必ず close する）"""
+    return session_scope(SessionLocal)
 
 
 class ArticleORM(Base):
@@ -489,32 +503,95 @@ def _build_deep_analysis_prompt(article_title: str, article_summary: str, articl
 """
 
 
+def _save_analysis_cache(
+    article_id: int,
+    *,
+    basic: Optional[dict] = None,
+    deep: Optional[dict] = None,
+) -> None:
+    """AI分析結果のキャッシュを作成または更新"""
+    with db_session() as db:
+        cached = db.query(ArticleAIAnalysisORM).filter(
+            ArticleAIAnalysisORM.article_id == article_id
+        ).first()
+
+        if not cached:
+            cached = ArticleAIAnalysisORM(article_id=article_id)
+
+        if basic is not None:
+            cached.summary = basic.get("summary", "")
+            cached.three_points = json.dumps(basic.get("points", []))
+            cached.importance = basic.get("importance", "")
+        if deep is not None:
+            cached.deep_analysis = json.dumps(deep)
+        cached.cached_at = datetime.now(timezone.utc)
+
+        db.add(cached)
+        db.commit()
+
+
+def _find_article_by_ref(db: Session, ref: str) -> Optional[ArticleORM]:
+    """uid (String) または id (Integer) で記事を検索"""
+    try:
+        article = db.query(ArticleORM).filter(ArticleORM.uid == ref).first()
+    except Exception:
+        article = None
+    if article:
+        return article
+    try:
+        return db.query(ArticleORM).filter(ArticleORM.id == int(ref)).first()
+    except Exception:
+        return None
+
+
+def _article_data(article: ArticleORM) -> dict:
+    # サーバーには詳細内容がないため summary を content として使う
+    return {
+        "id": article.id,
+        "title": article.title,
+        "summary": article.summary,
+        "content": article.summary,
+    }
+
+
+def _article_data_from_params(
+    title: Optional[str], summary: Optional[str], content: Optional[str]
+) -> dict:
+    if not title or not summary:
+        raise HTTPException(status_code=400, detail="title and summary required")
+    return {
+        "id": None,
+        "title": title,
+        "summary": summary,
+        "content": content or summary,
+    }
+
+
+def _require_user(user_id: Optional[str], authorization: Optional[str]) -> None:
+    if not user_id or not authorization:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+@contextmanager
+def _bad_request_on_error(label: str):
+    """想定外の例外を 400 レスポンスに変換する"""
+    try:
+        yield
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error(f"{label}: {exc}")
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
 # ✅ 后台异步任务1：获取真实分析（不阻塞响应）
 async def _fetch_and_cache_real_analysis_background(article_id: int, prompt: str):
     """使用 OpenAI 获取真实分析并缓存"""
-    import json
     try:
         result = await _analyze_with_openai(prompt)
         if result:
-            db = SessionLocal()
-            try:
-                cached = db.query(ArticleAIAnalysisORM).filter(
-                    ArticleAIAnalysisORM.article_id == article_id
-                ).first()
-                
-                if not cached:
-                    cached = ArticleAIAnalysisORM(article_id=article_id)
-
-                # 更新缓存为真实分析数据
-                cached.summary = result.get("summary", "")
-                cached.three_points = json.dumps(result.get("points", []))
-                cached.importance = result.get("importance", "")
-                cached.cached_at = datetime.now(timezone.utc)
-                db.add(cached)
-                db.commit()
-                logger.info(f"✅ 真实分析已缓存 article_id={article_id}")
-            finally:
-                db.close()
+            _save_analysis_cache(article_id, basic=result)
+            logger.info(f"✅ 真实分析已缓存 article_id={article_id}")
     except Exception as e:
         logger.warning(f"后台获取真实分析失败 article_id={article_id}: {e}")
 
@@ -522,30 +599,12 @@ async def _fetch_and_cache_real_analysis_background(article_id: int, prompt: str
 # ✅ 后台异步刷新分析（不阻塞客户端）
 async def _refresh_analysis_background(article_id: int, title: str, summary: str):
     """在后台异步刷新 AI 分析，不会阻塞 HTTP 响应"""
-    import json
     try:
         prompt = _build_analysis_prompt(title, summary, summary)
         result = await _analyze_with_openai(prompt)
         if result:
-            db = SessionLocal()
-            try:
-                cached = db.query(ArticleAIAnalysisORM).filter(
-                    ArticleAIAnalysisORM.article_id == article_id
-                ).first()
-                
-                if not cached:
-                    cached = ArticleAIAnalysisORM(article_id=article_id)
-                
-                cached.summary = result.get("summary", "")
-                cached.three_points = json.dumps(result.get("points", []))
-                cached.importance = result.get("importance", "")
-                cached.cached_at = datetime.now(timezone.utc)
-                
-                db.add(cached)
-                db.commit()
-                logger.info(f"✅ Background refresh completed for article {article_id}")
-            finally:
-                db.close()
+            _save_analysis_cache(article_id, basic=result)
+            logger.info(f"✅ Background refresh completed for article {article_id}")
     except Exception as e:
         logger.warning(f"Background refresh failed for article {article_id}: {e}")
 
@@ -575,9 +634,7 @@ async def _analyze_with_openai(prompt: str) -> Optional[dict]:
         )
         
         content = response.choices[0].message.content
-        import json
-        result = json.loads(content)
-        return result
+        return json.loads(content)
     except Exception as e:
         logger.error(f"OpenAI API error: {e}")
         return None
@@ -609,8 +666,7 @@ def _is_bad_image(url: str) -> bool:
     """判断图片URL是否为无效图片（favicon/logo等小图标）"""
     if not url:
         return True
-    url_lower = url.lower()
-    return any(pat in url_lower for pat in BAD_IMAGE_PATTERNS)
+    return url_matches_any(url, BAD_IMAGE_PATTERNS)
 
 
 def _extract_image(entry) -> Optional[str]:
@@ -654,42 +710,21 @@ def _resolve_source_name(entry, source: dict) -> str:
     return source["name"]
 
 
+def _extract_preview_image(html: str, page_url: str) -> Optional[str]:
+    """og:image / twitter:image から有効なサムネイルURLを取得"""
+    raw = find_meta_content(html, properties=["og:image"], names=["twitter:image"])
+    if not raw:
+        return None
+    img = absolutize_url(page_url, raw)
+    return None if _is_bad_image(img) else img
+
+
 async def _fetch_og_image(url: str, source_name: str = "") -> Optional[str]:
     """获取文章缩略图：尝试抓取OG图片"""
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                url,
-                headers={"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15"},
-                timeout=aiohttp.ClientTimeout(total=10),
-                ssl=False,
-                allow_redirects=True,
-            ) as resp:
-                if resp.status != 200:
-                    return None
-                ct = resp.headers.get("content-type", "")
-                if "text/html" not in ct and "application/xhtml" not in ct:
-                    return None
-                html = await resp.text(errors="ignore")
-        # og:image
-        m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']', html)
-        if m:
-            img = m.group(1)
-            if img.startswith("//"):
-                img = "https:" + img
-            elif img.startswith("/"):
-                from urllib.parse import urlparse
-                parsed = urlparse(url)
-                img = f"{parsed.scheme}://{parsed.netloc}{img}"
-            if _is_bad_image(img):
-                return None
-            return img
+        html = await fetch_text(url, require_html=True, verify_ssl=False)
+        if html:
+            return _extract_preview_image(html, url)
     except Exception:
         pass
     return None
@@ -699,52 +734,17 @@ async def _fetch_article_detail(url: str) -> dict:
     """Yahoo記事の詳細ページからsummaryとog:imageを取得"""
     result = {"summary": "", "image_url": None}
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                url,
-                headers={"User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15"},
-                timeout=aiohttp.ClientTimeout(total=10),
-                ssl=False,
-                allow_redirects=True,
-            ) as resp:
-                if resp.status != 200:
-                    return result
-                html = await resp.text(errors="ignore")
+        html = await fetch_text(url, verify_ssl=False)
+        if not html:
+            return result
 
-        # Extract og:image
-        img = None
-        m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m:
-            m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']', html)
-        if m:
-            img = m.group(1)
-            if img.startswith("//"):
-                img = "https:" + img
-            elif img.startswith("/"):
-                from urllib.parse import urlparse
-                parsed = urlparse(url)
-                img = f"{parsed.scheme}://{parsed.netloc}{img}"
-            if not _is_bad_image(img):
-                result["image_url"] = img
+        result["image_url"] = _extract_preview_image(html, url)
 
-        # Extract og:description as summary
-        desc = None
-        m2 = re.search(r'<meta[^>]+property=["\']og:description["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m2:
-            m2 = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:description["\']', html)
-        if not m2:
-            m2 = re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"\']+)["\']', html)
-        if not m2:
-            m2 = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']description["\']', html)
-        if m2:
-            desc = re.sub(r'<[^>]+>', '', m2.group(1))[:500]
-            if desc:
-                result["summary"] = desc
-
+        description = find_meta_content(
+            html, properties=["og:description"], names=["description"]
+        )
+        if description:
+            result["summary"] = strip_tags(description, 500)
     except Exception:
         pass
     return result
@@ -752,20 +752,14 @@ async def _fetch_article_detail(url: str) -> dict:
 
 async def fetch_rss(source: dict) -> list[dict]:
     results = []
-    ua = source.get("ua", "Mozilla/5.0 FeedFetcher")
+    ua = source.get("ua", FEED_UA)
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                source["url"],
-                headers={"User-Agent": ua},
-                timeout=aiohttp.ClientTimeout(total=15),
-            ) as resp:
-                raw = await resp.text()
+        raw = await fetch_text(source["url"], ua=ua, timeout=15, require_ok=False)
 
         feed = feedparser.parse(raw)
         for entry in feed.entries:
             title   = entry.get("title", "").strip()
-            summary = re.sub(r"<[^>]+>", "", entry.get("summary", ""))[:500]
+            summary = strip_tags(entry.get("summary", ""), 500)
             url     = entry.get("link", "").strip()
 
             if not url or not title:
@@ -869,10 +863,9 @@ async def run_crawler():
             # 20件を超えた分も画像なしで保存
 
         # Step 3: DBに保存
-        db = SessionLocal()
         new_count = 0
         new_articles_for_analysis = []
-        try:
+        with db_session() as db:
             for a in all_articles:
                 if not db.query(ArticleORM).filter_by(uid=a["uid"]).first():
                     article = ArticleORM(**a)
@@ -894,8 +887,6 @@ async def run_crawler():
             if deleted:
                 db.commit()
                 logger.info(f"Auto-cleanup: deleted {deleted} articles older than 30 days")
-        finally:
-            db.close()
 
         # ログ：画像あり/なしの数
         with_img = sum(1 for a in all_articles if a["image_url"])
@@ -959,8 +950,7 @@ def get_articles(
     limit: int = Query(20, ge=1, le=100),
     keyword: Optional[str] = Query(None),
 ):
-    db = SessionLocal()
-    try:
+    with db_session() as db:
         q = db.query(ArticleORM).filter(
             ArticleORM.is_active == True,
         )
@@ -1014,20 +1004,15 @@ def get_articles(
             page=page,
             hasMore=has_more,
         )
-    finally:
-        db.close()
 
 
 @app.get("/v1/articles/{article_id}", response_model=ArticleSchema)
 def get_article(article_id: int):
-    db = SessionLocal()
-    try:
+    with db_session() as db:
         a = db.query(ArticleORM).filter(ArticleORM.id == article_id).first()
         if not a:
             raise HTTPException(status_code=404, detail="Not found")
         return _to_schema(a)
-    finally:
-        db.close()
 
 
 @app.post("/v1/crawl")
@@ -1038,29 +1023,23 @@ async def manual_crawl():
 
 @app.get("/v1/stats")
 def stats():
-    db = SessionLocal()
-    try:
+    with db_session() as db:
         total = db.query(ArticleORM).count()
         from sqlalchemy import func
         by_cat = db.query(ArticleORM.category, func.count()).group_by(ArticleORM.category).all()
         with_img = db.query(func.count(ArticleORM.id)).filter(ArticleORM.image_url != None, ArticleORM.image_url != "").scalar()
         return {"total": total, "with_image": with_img, "by_category": dict(by_cat)}
-    finally:
-        db.close()
 
 
 @app.post("/v1/backfill-images")
 async def backfill_images(limit: int = Query(100, ge=1, le=200)):
     """为image_url为空的文章补填缩略图和summary"""
     # 先获取需要更新的文章ID和URL
-    db = SessionLocal()
-    try:
+    with db_session() as db:
         rows = db.query(ArticleORM).filter(
             (ArticleORM.image_url == None) | (ArticleORM.image_url == "")
         ).limit(limit).all()
         items = [(r.id, r.url, r.source_name, r.summary) for r in rows]
-    finally:
-        db.close()
 
     if not items:
         return {"status": "no articles need images"}
@@ -1109,18 +1088,15 @@ async def backfill_images(limit: int = Query(100, ge=1, le=200)):
         await asyncio.sleep(0.3)
 
     # DB更新
-    db2 = SessionLocal()
-    try:
+    with db_session() as db:
         for aid, data in updates.items():
-            r = db2.query(ArticleORM).filter_by(id=aid).first()
+            r = db.query(ArticleORM).filter_by(id=aid).first()
             if r:
                 if data.get("image_url"):
                     r.image_url = data["image_url"]
                 if data.get("summary") and not r.summary:
                     r.summary = data["summary"]
-        db2.commit()
-    finally:
-        db2.close()
+        db.commit()
 
     return {"checked": len(items), "updated_images": updated_img, "updated_summaries": updated_summary}
 
@@ -1144,30 +1120,13 @@ async def ai_analyze(
 ):
     """基本的なAI分析（一言まとめ、3つのポイント、なぜ重要か）"""
     
-    # ユーザー認証チェック
-    if not user_id or not authorization:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+    _require_user(user_id, authorization)
     
     # 記事情報取得
     article_data = None
     if article_id:
-        db = SessionLocal()
-        try:
-            # uid (String) または id (Integer) で検索
-            article = None
-            try:
-                # まず uid での検索を試みる
-                article = db.query(ArticleORM).filter(ArticleORM.uid == article_id).first()
-            except Exception:
-                pass
-            
-            if not article:
-                # Integer ID での検索
-                try:
-                    article = db.query(ArticleORM).filter(ArticleORM.id == int(article_id)).first()
-                except Exception:
-                    pass
-            
+        with db_session() as db:
+            article = _find_article_by_ref(db, article_id)
             if not article:
                 raise HTTPException(status_code=404, detail="Article not found")
             
@@ -1177,7 +1136,6 @@ async def ai_analyze(
             ).first()
             
             if cached and cached.summary and cached.three_points:
-                import json
                 cached_response = AIAnalysisResponse(
                     articleId=str(article.id),
                     summary=cached.summary,
@@ -1188,28 +1146,13 @@ async def ai_analyze(
                 
                 # 如果 force_refresh=True，后台异步刷新（不阻塞响应）
                 if force_refresh:
-                    import asyncio
                     asyncio.create_task(_refresh_analysis_background(article.id, article.title, article.summary))
                 
                 return cached_response
             
-            article_data = {
-                "id": article.id,
-                "title": article.title,
-                "summary": article.summary,
-                "content": article.summary  # サーバーには詳細内容がないため summary を使う
-            }
-        finally:
-            db.close()
+            article_data = _article_data(article)
     else:
-        if not title or not summary:
-            raise HTTPException(status_code=400, detail="title and summary required")
-        article_data = {
-            "id": None,
-            "title": title,
-            "summary": summary,
-            "content": content or summary
-        }
+        article_data = _article_data_from_params(title, summary, content)
     
     # OpenAI で分析
     prompt = _build_analysis_prompt(
@@ -1234,27 +1177,10 @@ async def ai_analyze(
 
     # キャッシュに保存（真实分析）
     if article_data["id"]:
-        import json
-        db = SessionLocal()
         try:
-            cached = db.query(ArticleAIAnalysisORM).filter(
-                ArticleAIAnalysisORM.article_id == article_data["id"]
-            ).first()
-            
-            if not cached:
-                cached = ArticleAIAnalysisORM(article_id=article_data["id"])
-            
-            cached.summary = result.get("summary", "")
-            cached.three_points = json.dumps(result.get("points", []))
-            cached.importance = result.get("importance", "")
-            cached.cached_at = datetime.now(timezone.utc)
-            
-            db.add(cached)
-            db.commit()
+            _save_analysis_cache(article_data["id"], basic=result)
         except Exception as e:
             logger.warning(f"Failed to cache analysis: {e}")
-        finally:
-            db.close()
     
     return AIAnalysisResponse(
         articleId=str(article_data["id"]) if article_data["id"] else title[:10],
@@ -1277,30 +1203,13 @@ async def ai_deep_analyze(
 ):
     """深度AI分析（影響分析、今後の予測、行動アドバイス）"""
     
-    # ユーザー認証チェック
-    if not user_id or not authorization:
-        raise HTTPException(status_code=401, detail="Unauthorized")
+    _require_user(user_id, authorization)
     
     # 記事情報取得
     article_data = None
     if article_id:
-        db = SessionLocal()
-        try:
-            # uid (String) または id (Integer) で検索
-            article = None
-            try:
-                # まず uid での検索を試みる
-                article = db.query(ArticleORM).filter(ArticleORM.uid == article_id).first()
-            except Exception:
-                pass
-            
-            if not article:
-                # Integer ID での検索
-                try:
-                    article = db.query(ArticleORM).filter(ArticleORM.id == int(article_id)).first()
-                except Exception:
-                    pass
-            
+        with db_session() as db:
+            article = _find_article_by_ref(db, article_id)
             if not article:
                 raise HTTPException(status_code=404, detail="Article not found")
             
@@ -1310,7 +1219,6 @@ async def ai_deep_analyze(
             ).first()
             
             if cached and cached.deep_analysis:
-                import json
                 deep = json.loads(cached.deep_analysis)
                 return DeepAnalysisResponse(
                     articleId=str(article.id),
@@ -1319,23 +1227,9 @@ async def ai_deep_analyze(
                     actionAdvice=deep.get("actionAdvice", "")
                 )
             
-            article_data = {
-                "id": article.id,
-                "title": article.title,
-                "summary": article.summary,
-                "content": article.summary
-            }
-        finally:
-            db.close()
+            article_data = _article_data(article)
     else:
-        if not title or not summary:
-            raise HTTPException(status_code=400, detail="title and summary required")
-        article_data = {
-            "id": None,
-            "title": title,
-            "summary": summary,
-            "content": content or summary
-        }
+        article_data = _article_data_from_params(title, summary, content)
     
     # OpenAI で深度分析
     if not basic_analysis:
@@ -1354,25 +1248,10 @@ async def ai_deep_analyze(
     
     # キャッシュに保存
     if article_data["id"]:
-        import json
-        db = SessionLocal()
         try:
-            cached = db.query(ArticleAIAnalysisORM).filter(
-                ArticleAIAnalysisORM.article_id == article_data["id"]
-            ).first()
-            
-            if not cached:
-                cached = ArticleAIAnalysisORM(article_id=article_data["id"])
-            
-            cached.deep_analysis = json.dumps(result)
-            cached.cached_at = datetime.now(timezone.utc)
-            
-            db.add(cached)
-            db.commit()
+            _save_analysis_cache(article_data["id"], deep=result)
         except Exception as e:
             logger.warning(f"Failed to cache deep analysis: {e}")
-        finally:
-            db.close()
     
     return DeepAnalysisResponse(
         articleId=str(article_data["id"]) if article_data["id"] else title[:10],
@@ -1389,7 +1268,7 @@ async def verify_receipt(receipt_data: dict):
     """验证App Store收据"""
     from notifications import get_subscription_manager, ReceiptData
     
-    try:
+    with _bad_request_on_error("Receipt verification error"):
         manager = get_subscription_manager()
         
         # 从请求数据创建 ReceiptData
@@ -1403,9 +1282,6 @@ async def verify_receipt(receipt_data: dict):
         
         result = await manager.verify_receipt(receipt)
         return {"verified": True, "data": result}
-    except Exception as e:
-        logger.error(f"Receipt verification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/v1/subscription/purchase")
@@ -1413,7 +1289,7 @@ async def handle_purchase(purchase_data: dict, authorization: str = Header(None)
     """处理订阅购买"""
     from notifications import get_subscription_manager, PurchaseNotification
     
-    try:
+    with _bad_request_on_error("Purchase handling error"):
         # 从授权头获取用户ID（需要在应用中实现认证）
         user_id = authorization or "anonymous"
         
@@ -1438,9 +1314,6 @@ async def handle_purchase(purchase_data: dict, authorization: str = Header(None)
             }
         else:
             raise Exception("Failed to record purchase")
-    except Exception as e:
-        logger.error(f"Purchase handling error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.get("/v1/subscription/status")
@@ -1448,14 +1321,10 @@ async def get_subscription_status(authorization: str = Header(None)):
     """获取用户订阅状态"""
     from notifications import get_subscription_manager
     
-    try:
+    with _bad_request_on_error("Status retrieval error"):
         user_id = authorization or "anonymous"
         manager = get_subscription_manager()
-        status = manager.get_subscription_status(user_id)
-        return status
-    except Exception as e:
-        logger.error(f"Status retrieval error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        return manager.get_subscription_status(user_id)
 
 
 @app.post("/v1/notifications/register-device")
@@ -1466,7 +1335,7 @@ async def register_device(
     authorization: str = Header(None)
 ):
     """注册设备以接收推送通知"""
-    try:
+    with _bad_request_on_error("Device registration error"):
         logger.info(f"📱 Device registered: {device_type} - {device_token[:20]}...")
         
         # 在生产环境中,这应该保存到数据库
@@ -1483,9 +1352,6 @@ async def register_device(
             "message": "Device registered successfully",
             "device": device_info
         }
-    except Exception as e:
-        logger.error(f"Device registration error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/v1/notifications/send-test")
@@ -1495,7 +1361,7 @@ async def send_test_notification(
     body: str = "これはテスト通知です"
 ):
     """测试通知发送（用于开发调试）"""
-    try:
+    with _bad_request_on_error("Test notification error"):
         from notifications import get_notification_manager, NotificationPayload
         
         manager = get_notification_manager()
@@ -1521,16 +1387,12 @@ async def send_test_notification(
             "success": success,
             "message": "Test notification sent" if success else "Failed to send notification"
         }
-    except Exception as e:
-        logger.error(f"Test notification error: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/v1/cleanup-bad-images")
 def cleanup_bad_images():
     """清理数据库中无效的图片URL（Google logo等）"""
-    db = SessionLocal()
-    try:
+    with db_session() as db:
         rows = db.query(ArticleORM).filter(ArticleORM.image_url != None).all()
         cleaned = 0
         for row in rows:
@@ -1539,8 +1401,6 @@ def cleanup_bad_images():
                 cleaned += 1
         db.commit()
         return {"checked": len(rows), "cleaned": cleaned}
-    finally:
-        db.close()
 
 
 if __name__ == "__main__":
