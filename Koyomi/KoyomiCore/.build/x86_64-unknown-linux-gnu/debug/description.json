@@ -1,0 +1,900 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.xctest",
+      "packagePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore",
+      "productName" : "KoyomiCorePackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+    "KoyomiCorePackageDiscoveredTests"
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.KoyomiCore-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/home/ubuntu/swift/usr/bin/swiftc",
+      "fileList" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources",
+      "importPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KoyomiCore",
+      "moduleOutputPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule",
+      "objects" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j2",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "koyomicore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift"
+      ],
+      "tempsPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/home/ubuntu/swift/usr/bin/swiftc",
+      "fileList" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources",
+      "importPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KoyomiCorePackageDiscoveredTests",
+      "moduleOutputPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule",
+      "objects" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j2",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "koyomicore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+      ],
+      "tempsPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/home/ubuntu/swift/usr/bin/swiftc",
+      "fileList" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources",
+      "importPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KoyomiCorePackageTests",
+      "moduleOutputPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule",
+      "objects" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j2",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "koyomicore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/home/ubuntu/swift/usr/bin/swiftc",
+      "fileList" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources",
+      "importPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "KoyomiCoreTests",
+      "moduleOutputPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule",
+      "objects" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j2",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "koyomicore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift",
+        "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift"
+      ],
+      "tempsPath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "KoyomiCore" : [
+      "/home/ubuntu/swift/usr/bin/swiftc",
+      "-module-name",
+      "KoyomiCore",
+      "-package-name",
+      "koyomicore",
+      "-incremental",
+      "-c",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift",
+      "-I",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j2",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "koyomicore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/home/ubuntu/swift/usr/bin/swiftc"
+    ],
+    "KoyomiCorePackageDiscoveredTests" : [
+      "/home/ubuntu/swift/usr/bin/swiftc",
+      "-module-name",
+      "KoyomiCorePackageDiscoveredTests",
+      "-package-name",
+      "koyomicore",
+      "-incremental",
+      "-c",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift",
+      "-I",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j2",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "koyomicore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/home/ubuntu/swift/usr/bin/swiftc"
+    ],
+    "KoyomiCorePackageTests" : [
+      "/home/ubuntu/swift/usr/bin/swiftc",
+      "-module-name",
+      "KoyomiCorePackageTests",
+      "-package-name",
+      "koyomicore",
+      "-incremental",
+      "-c",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift",
+      "-I",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j2",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "koyomicore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/home/ubuntu/swift/usr/bin/swiftc"
+    ],
+    "KoyomiCoreTests" : [
+      "/home/ubuntu/swift/usr/bin/swiftc",
+      "-module-name",
+      "KoyomiCoreTests",
+      "-package-name",
+      "koyomicore",
+      "-incremental",
+      "-c",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift",
+      "-I",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j2",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "koyomicore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/home/ubuntu/swift/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "KoyomiCore" : [
+
+    ],
+    "KoyomiCorePackageDiscoveredTests" : [
+      "KoyomiCoreTests",
+      "KoyomiCore"
+    ],
+    "KoyomiCorePackageTests" : [
+      "KoyomiCorePackageDiscoveredTests",
+      "KoyomiCoreTests",
+      "KoyomiCore"
+    ],
+    "KoyomiCoreTests" : [
+      "KoyomiCore"
+    ]
+  },
+  "testDiscoveryCommands" : {
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        }
+      ]
+    }
+  },
+  "testEntryPointCommands" : {
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "writeCommands" : {
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources"
+    },
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources"
+    },
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources"
+    },
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList"
+    },
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources"
+    },
+    "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/ubuntu/swift/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+    }
+  }
+}

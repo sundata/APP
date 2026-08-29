@@ -1,0 +1,164 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "KoyomiCore-x86_64-unknown-linux-gnu-debug.module": ["<KoyomiCore-x86_64-unknown-linux-gnu-debug.module>"]
+  "KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module": ["<KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module>"]
+  "KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module": ["<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module>"]
+  "KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test": ["<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test>"]
+  "KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module": ["<KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<KoyomiCore-x86_64-unknown-linux-gnu-debug.module>"]
+  "test": ["<KoyomiCore-x86_64-unknown-linux-gnu-debug.module>","<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test>","<KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module>"]
+default: "main"
+nodes:
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o"]
+    description: "Wrapping AST for KoyomiCore for debugging"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-modulewrap","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule","-o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o","-target","x86_64-unknown-linux-gnu"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources"]
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources"
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o"]
+    description: "Wrapping AST for KoyomiCorePackageDiscoveredTests for debugging"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-modulewrap","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule","-o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o","-target","x86_64-unknown-linux-gnu"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources"]
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources"
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift":
+    tool: test-discovery-tool
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o"]
+    description: "Wrapping AST for KoyomiCorePackageTests for debugging"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-modulewrap","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule","-o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o","-target","x86_64-unknown-linux-gnu"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources"]
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources"
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift":
+    tool: test-entry-point-tool
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList"
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o"]
+    description: "Wrapping AST for KoyomiCoreTests for debugging"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-modulewrap","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule","-o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o","-target","x86_64-unknown-linux-gnu"]
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources"]
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources"
+
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/home/ubuntu/swift/usr/bin/swiftc"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt"
+
+  "<KoyomiCore-x86_64-unknown-linux-gnu-debug.module>":
+    tool: phony
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule"]
+    outputs: ["<KoyomiCore-x86_64-unknown-linux-gnu-debug.module>"]
+
+  "<KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module>":
+    tool: phony
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"]
+    outputs: ["<KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module>"]
+
+  "<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module>":
+    tool: phony
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule"]
+    outputs: ["<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module>"]
+
+  "<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test>":
+    tool: phony
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.xctest"]
+    outputs: ["<KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test>"]
+
+  "<KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module>":
+    tool: phony
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"]
+    outputs: ["<KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module>"]
+
+  "C.KoyomiCore-x86_64-unknown-linux-gnu-debug.module":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule"]
+    description: "Compiling Swift Module 'KoyomiCore' (9 sources)"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-module-name","KoyomiCore","-emit-dependencies","-emit-module","-emit-module-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule","-output-file-map","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/output-file-map.json","-parse-as-library","-incremental","-c","@/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/sources","-I","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules","-target","x86_64-unknown-linux-gnu","-enable-batch-mode","-index-store-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store","-Onone","-enable-testing","-j2","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache","-parseable-output","-parse-as-library","-swift-version","6","-g","-Xcc","-fPIC","-Xcc","-g","-package-name","koyomicore","-Xcc","-fno-omit-frame-pointer"]
+
+  "C.KoyomiCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/KoyomiCoreTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.derived/all-discovered-tests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule"]
+    description: "Compiling Swift Module 'KoyomiCorePackageDiscoveredTests' (2 sources)"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-module-name","KoyomiCorePackageDiscoveredTests","-emit-dependencies","-emit-module","-emit-module-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule","-output-file-map","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/sources","-I","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules","-target","x86_64-unknown-linux-gnu","-enable-batch-mode","-index-store-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store","-Onone","-enable-testing","-j2","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache","-parseable-output","-parse-as-library","-g","-Xcc","-fPIC","-Xcc","-g","-package-name","koyomicore","-Xcc","-fno-omit-frame-pointer"]
+
+  "C.KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.module":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.derived/runner.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageDiscoveredTests.swiftmodule","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule"]
+    description: "Compiling Swift Module 'KoyomiCorePackageTests' (1 sources)"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-module-name","KoyomiCorePackageTests","-emit-dependencies","-emit-module","-emit-module-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCorePackageTests.swiftmodule","-output-file-map","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/sources","-I","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules","-target","x86_64-unknown-linux-gnu","-enable-batch-mode","-index-store-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store","-Onone","-enable-testing","-j2","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache","-parseable-output","-parse-as-library","-g","-Xcc","-fPIC","-Xcc","-g","-package-name","koyomicore","-Xcc","-fno-omit-frame-pointer"]
+
+  "C.KoyomiCorePackageTests-x86_64-unknown-linux-gnu-debug.test":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCore.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCorePackageDiscoveredTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/KoyomiCoreTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageDiscoveredTests.build/all-discovered-tests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/KoyomiCorePackageTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.build/runner.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCoreTests.swiftmodule.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.xctest"]
+    description: "Linking ./.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.xctest"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-L","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug","-o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.xctest","-module-name","KoyomiCorePackageTests","-emit-executable","-Xlinker","-rpath=$ORIGIN","@/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCorePackageTests.product/Objects.LinkFileList","-target","x86_64-unknown-linux-gnu","-g"]
+
+  "C.KoyomiCoreTests-x86_64-unknown-linux-gnu-debug.module":
+    tool: shell
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ContentLibraryTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/FortuneGeneratorTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/KoyomiCalendarTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ShareCardContentTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/ZodiacTests.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-39DE35E5FB675785.txt","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCore.swiftmodule","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources"]
+    outputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ContentLibraryTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/FortuneGeneratorTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/KoyomiCalendarTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ShareCardContentTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/ZodiacTests.swift.o","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule"]
+    description: "Compiling Swift Module 'KoyomiCoreTests' (5 sources)"
+    args: ["/home/ubuntu/swift/usr/bin/swiftc","-module-name","KoyomiCoreTests","-emit-dependencies","-emit-module","-emit-module-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules/KoyomiCoreTests.swiftmodule","-output-file-map","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCoreTests.build/sources","-I","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/Modules","-target","x86_64-unknown-linux-gnu","-enable-batch-mode","-index-store-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/index/store","-Onone","-enable-testing","-j2","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache","-parseable-output","-parse-as-library","-swift-version","6","-g","-Xcc","-fPIC","-Xcc","-g","-package-name","koyomicore","-Xcc","-fno-omit-frame-pointer"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Tests/KoyomiCoreTests/","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Package.swift","/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

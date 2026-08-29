@@ -1,0 +1,59 @@
+{
+  "": {
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/master.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentLibrary.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentLibrary.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ContentSafety.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ContentSafety.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/DailyFortune.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/DailyFortune.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/KoyomiCalendar.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/KoyomiCalendar.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/ShareCardContent.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/ShareCardContent.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/StableSeed.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/StableSeed.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/TemplateFortuneGenerator.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/TemplateFortuneGenerator.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Weather.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Weather.swiftdeps"
+  },
+  "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/Sources/KoyomiCore/Zodiac.swift": {
+    "dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.d",
+    "object": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swift.o",
+    "swiftmodule": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac~partial.swiftmodule",
+    "swift-dependencies": "/home/ubuntu/repos/APP/Koyomi/KoyomiCore/.build/x86_64-unknown-linux-gnu/debug/KoyomiCore.build/Zodiac.swiftdeps"
+  }
+}
