@@ -1,0 +1,5 @@
+# Swift / Xcode
+.build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
