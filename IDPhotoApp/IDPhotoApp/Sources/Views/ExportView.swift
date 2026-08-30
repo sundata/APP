@@ -499,7 +499,10 @@ struct ExportView: View {
             }
         }
 
-        // 3秒後にトーストを消す
+        await clearSaveResultAfterDelay()
+    }
+
+    private func clearSaveResultAfterDelay() async {
         try? await Task.sleep(nanoseconds: 3_000_000_000)
         await MainActor.run { saveResult = nil }
     }
@@ -519,16 +522,32 @@ struct ExportView: View {
             service.renderLayout(resized, size: size, layout: opts.layout) ?? resized
         }.value
 
-        if let data = service.imageData(for: layoutImg, format: opts.format, quality: opts.jpegQuality) {
-            let ext  = opts.format == .jpeg ? "jpg" : "png"
-            _ = opts.format == .jpeg ? "image/jpeg" : "image/png"
-            let url  = FileManager.default.temporaryDirectory
-                .appendingPathComponent("idphoto_\(size.id).\(ext)")
-            try? data.write(to: url)
+        guard let data = service.imageData(for: layoutImg, format: opts.format, quality: opts.jpegQuality) else {
             await MainActor.run {
-                shareItems = [url]
-                showShareSheet = true
+                saveResult = .failure("画像の書き出しに失敗しました")
+                HapticFeedback.error()
             }
+            await clearSaveResultAfterDelay()
+            return
+        }
+
+        let ext  = opts.format == .jpeg ? "jpg" : "png"
+        let url  = FileManager.default.temporaryDirectory
+            .appendingPathComponent("idphoto_\(size.id).\(ext)")
+        do {
+            try data.write(to: url)
+        } catch {
+            await MainActor.run {
+                saveResult = .failure("画像の保存に失敗しました")
+                HapticFeedback.error()
+            }
+            await clearSaveResultAfterDelay()
+            return
+        }
+
+        await MainActor.run {
+            shareItems = [url]
+            showShareSheet = true
         }
     }
 }

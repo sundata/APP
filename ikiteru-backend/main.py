@@ -132,7 +132,17 @@ def update_settings(device_id: str, settings: UserSettings):
     if doc.exists:
         data = doc.to_dict()
         if data.get("last_checkin"):
-            last_dt = datetime.fromisoformat(data["last_checkin"])
+            try:
+                last_dt = datetime.fromisoformat(data["last_checkin"])
+            except Exception:
+                logger.exception(
+                    f"[settings] Invalid last_checkin for device={device_id}: "
+                    f"{data['last_checkin']!r}"
+                )
+                raise HTTPException(
+                    status_code=500,
+                    detail="保存済みのチェックイン時刻が不正です",
+                )
             new_deadline = last_dt + timedelta(hours=settings.interval_hours)
             update_data["deadline"] = new_deadline.isoformat()
 
@@ -156,7 +166,17 @@ def get_status(device_id: str):
 
     deadline_str = data.get("deadline")
     if deadline_str:
-        deadline = datetime.fromisoformat(deadline_str)
+        try:
+            deadline = datetime.fromisoformat(deadline_str)
+        except Exception:
+            logger.exception(
+                f"[status] Invalid deadline for device={device_id}: "
+                f"{deadline_str!r}"
+            )
+            raise HTTPException(
+                status_code=500,
+                detail="保存済みの期限時刻が不正です",
+            )
         remaining_sec = max(0, int((deadline - now).total_seconds()))
         is_overdue    = deadline < now
     else:
@@ -250,9 +270,9 @@ def send_test_alert(device_id: str):
                 server.sendmail(GMAIL_USER, to_email, msg.as_string())
                 logger.info(f"[test-alert] Sent to {to_email}")
         return {"ok": True, "sent_to": len(contacts)}
-    except Exception as e:
-        logger.error(f"[test-alert] SMTP error: {e}")
-        raise HTTPException(status_code=500, detail=f"メール送信失敗: {str(e)}")
+    except Exception:
+        logger.exception(f"[test-alert] SMTP error for device={device_id}")
+        raise HTTPException(status_code=500, detail="メール送信に失敗しました")
 
 
 # ──────────────────────────────────────────────
@@ -279,38 +299,56 @@ def check_overdue(x_scheduler_secret: Optional[str] = Header(None)):
         data      = doc.to_dict()
         device_id = doc.id
 
-        deadline_str = data.get("deadline")
-        if not deadline_str:
-            continue
+        try:
+            deadline_str = data.get("deadline")
+            if not deadline_str:
+                continue
 
-        deadline   = datetime.fromisoformat(deadline_str)
-        alert_sent = data.get("alert_sent", False)
+            deadline   = datetime.fromisoformat(deadline_str)
+            alert_sent = data.get("alert_sent", False)
 
-        # 期限切れ かつ まだ通知していない
-        if deadline < now and not alert_sent:
-            contacts      = data.get("contacts", [])
-            user_name     = data.get("user_name", "ユーザー")
-            notify_email  = data.get("notify_email", True)
-            last_checkin  = data.get("last_checkin", "不明")
+            # 期限切れ かつ まだ通知していない
+            if deadline < now and not alert_sent:
+                contacts      = data.get("contacts", [])
+                user_name     = data.get("user_name", "ユーザー")
+                notify_email  = data.get("notify_email", True)
+                last_checkin  = data.get("last_checkin", "不明")
 
-            if notify_email and contacts:
-                sent = send_alert_emails(
-                    user_name    = user_name,
-                    last_checkin = last_checkin,
-                    interval_h   = data.get("interval_hours", 24),
-                    contacts     = contacts,
-                )
-                if sent:
-                    # 通知済みフラグを立てる
-                    db.collection("users").document(device_id).update({
-                        "alert_sent":  True,
-                        "alerted_at":  now.isoformat(),
-                    })
-                    alerted.append(device_id)
-                    logger.info(f"[alert] Sent for device={device_id}")
-                else:
-                    errors.append(device_id)
-                    logger.error(f"[alert] Failed for device={device_id}")
+                if notify_email and contacts:
+                    result = send_alert_emails(
+                        user_name    = user_name,
+                        last_checkin = last_checkin,
+                        interval_h   = data.get("interval_hours", 24),
+                        contacts     = contacts,
+                    )
+                    if result["sent"] > 0:
+                        # 通知済みフラグを立てる
+                        db.collection("users").document(device_id).update({
+                            "alert_sent":  True,
+                            "alerted_at":  now.isoformat(),
+                        })
+                        alerted.append(device_id)
+                        if result["failed"] > 0 or result["connection_failed"]:
+                            logger.warning(
+                                f"[alert] Partially sent for "
+                                f"device={device_id}: "
+                                f"{result['sent']} sent, "
+                                f"{result['failed']} failed, "
+                                "connection_failed="
+                                f"{result['connection_failed']}"
+                            )
+                        else:
+                            logger.info(f"[alert] Sent for device={device_id}")
+                    else:
+                        errors.append(device_id)
+                        logger.error(
+                            f"[alert] Failed for device={device_id}: "
+                            f"{result['failed']} contact failures, "
+                            f"connection_failed={result['connection_failed']}"
+                        )
+        except Exception:
+            errors.append(device_id)
+            logger.exception(f"[alert] Error processing device={device_id}")
 
     return {
         "checked_at": now.isoformat(),
@@ -329,12 +367,16 @@ def make_from_header(display_name: str, email_addr: str) -> str:
     return f"{h.encode()} <{email_addr}>"
 
 
-def send_alert_emails(user_name: str, last_checkin: str,
-                      interval_h: int, contacts: list[dict]) -> bool:
+def send_alert_emails(
+    user_name: str,
+    last_checkin: str,
+    interval_h: int,
+    contacts: list[dict],
+) -> dict[str, int | bool]:
     """Gmail SMTP で全緊急連絡先にメールを送る"""
     if not GMAIL_USER or not GMAIL_PASSWORD:
         logger.error("Gmail credentials not set")
-        return False
+        return {"sent": 0, "failed": 0, "connection_failed": True}
 
     # 日時フォーマット
     try:
@@ -342,6 +384,7 @@ def send_alert_emails(user_name: str, last_checkin: str,
         dt  = dt.astimezone(timezone(timedelta(hours=9)))  # JST
         last_str = dt.strftime("%Y年%m月%d日 %H:%M (JST)")
     except Exception:
+        logger.warning(f"[mail] Invalid last_checkin value: {last_checkin!r}")
         last_str = last_checkin
 
     subject = f"【安否確認】{user_name}さんの連絡が途絶えています — みまもり"
@@ -362,6 +405,8 @@ def send_alert_emails(user_name: str, last_checkin: str,
 ─────────────────────────
 """
 
+    sent_count = 0
+    failed_count = 0
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(GMAIL_USER, GMAIL_PASSWORD)
@@ -388,11 +433,24 @@ def send_alert_emails(user_name: str, last_checkin: str,
                 msg["To"]      = to_email
                 msg.attach(MIMEText(body, "plain", "utf-8"))
 
-                server.sendmail(GMAIL_USER, to_email, msg.as_string())
-                logger.info(f"[mail] Sent to {to_email}")
+                try:
+                    server.sendmail(GMAIL_USER, to_email, msg.as_string())
+                    sent_count += 1
+                    logger.info(f"[mail] Sent to {to_email}")
+                except Exception:
+                    failed_count += 1
+                    logger.exception(f"[mail] Failed to send to {to_email}")
 
-        return True
+        return {
+            "sent": sent_count,
+            "failed": failed_count,
+            "connection_failed": False,
+        }
 
-    except Exception as e:
-        logger.error(f"[mail] SMTP error: {e}")
-        return False
+    except Exception:
+        logger.exception("[mail] SMTP connection/login error")
+        return {
+            "sent": sent_count,
+            "failed": max(failed_count, 1),
+            "connection_failed": True,
+        }

@@ -102,7 +102,9 @@ export default function Home() {
     const tone = score >= 80 ? "good" : score >= 55 ? "watch" : "risk";
     setReport({ score: Math.max(score, 0), label, tone, checks });
     setFeedback(null);
-    void sendSignal({ kind: "report", score: Math.max(score, 0), projectType: project }).catch(() => undefined);
+    void sendSignal({ kind: "report", score: Math.max(score, 0), projectType: project }).catch((error) => {
+      console.error("Failed to save report signal", error);
+    });
     setTimeout(() => document.getElementById("report")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
@@ -110,7 +112,8 @@ export default function Home() {
     setFeedback(value);
     try {
       await sendSignal({ kind: "feedback", sentiment: value, score: report?.score, projectType: project });
-    } catch {
+    } catch (error) {
+      console.error("Failed to save feedback signal", error);
       setFeedback(null);
     }
   }
@@ -121,7 +124,8 @@ export default function Home() {
     try {
       await sendSignal({ kind: "waitlist", email, score: report?.score, projectType: project });
       setEmailState("saved");
-    } catch {
+    } catch (error) {
+      console.error("Failed to join waitlist", error);
       setEmailState("error");
     }
   }

@@ -68,15 +68,20 @@ class SubscriptionManager: ObservableObject {
     
     // MARK: - ローカル保存
     private func saveSubscription() {
-        if let encoded = try? JSONEncoder().encode(subscription) {
+        do {
+            let encoded = try JSONEncoder().encode(subscription)
             UserDefaults.standard.set(encoded, forKey: "UserSubscription")
+        } catch {
+            print("[SubscriptionManager] サブスクリプション保存に失敗: \(error)")
         }
     }
     
     private func loadSubscription() {
-        if let data = UserDefaults.standard.data(forKey: "UserSubscription"),
-           let decoded = try? JSONDecoder().decode(UserSubscription.self, from: data) {
-            self.subscription = decoded
+        guard let data = UserDefaults.standard.data(forKey: "UserSubscription") else { return }
+        do {
+            self.subscription = try JSONDecoder().decode(UserSubscription.self, from: data)
+        } catch {
+            print("[SubscriptionManager] サブスクリプション読み込みに失敗: \(error)")
         }
     }
     

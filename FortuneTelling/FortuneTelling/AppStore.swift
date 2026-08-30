@@ -144,13 +144,22 @@ final class AppStore: ObservableObject {
     }
 
     private func save<T: Encodable>(_ value: T, key: String) {
-        guard let data = try? JSONEncoder().encode(value) else { return }
-        defaults.set(data, forKey: key)
+        do {
+            let data = try JSONEncoder().encode(value)
+            defaults.set(data, forKey: key)
+        } catch {
+            print("[AppStore] 保存に失敗 key=\(key): \(error)")
+        }
     }
 
     private static func load<T: Decodable>(_ type: T.Type, key: String) -> T? {
         guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
-        return try? JSONDecoder().decode(type, from: data)
+        do {
+            return try JSONDecoder().decode(type, from: data)
+        } catch {
+            print("[AppStore] 読み込みに失敗 key=\(key): \(error)")
+            return nil
+        }
     }
 
     private static func todayKey() -> String {
