@@ -35,7 +35,7 @@ enum KoyomiLegalText {
 
     6. お問い合わせ
     本ポリシーに関するお問い合わせは、Koyomi サポート窓口からご連絡ください。
-    https://github.com/sundata/APP/issues
+    https://sundata.tech/apps.html
     """
 
     static let disclaimer = """

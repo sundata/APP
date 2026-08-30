@@ -36,4 +36,4 @@ Koyomi（以下「本アプリ」）は、毎日の占いを提供するため�
 
 ## 6. お問い合わせ
 
-[Koyomi サポート窓口](https://github.com/sundata/APP/issues)
+[Koyomi サポート窓口](https://sundata.tech/apps.html)
