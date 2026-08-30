@@ -49,18 +49,19 @@ protocol LocationProviding: AnyObject {
 #if canImport(CoreLocation)
 /// Core Location 実装。`When In Use` のみを要求し、バックグラウンド測位は使わない。
 @MainActor
-final class CoreLocationProvider: NSObject, LocationProviding, CLLocationManagerDelegate {
+final class CoreLocationProvider: LocationProviding {
     private let manager = CLLocationManager()
+    private let delegate = CoreLocationDelegate()
     private var authorizationContinuation: CheckedContinuation<LocationAuthorization, Never>?
     private var locationContinuation: CheckedContinuation<CLLocation?, Never>?
 
     private(set) var authorization: LocationAuthorization = .notDetermined
 
-    override init() {
-        super.init()
-        manager.delegate = self
+    init() {
+        manager.delegate = delegate
         manager.desiredAccuracy = kCLLocationAccuracyReduced
         authorization = Self.map(manager.authorizationStatus)
+        delegate.owner = self
     }
 
     func refreshAuthorization() {
@@ -120,10 +121,10 @@ final class CoreLocationProvider: NSObject, LocationProviding, CLLocationManager
         }
     }
 
-    // MARK: - CLLocationManagerDelegate
+    // MARK: - delegate からの通知
 
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let mapped = Self.map(manager.authorizationStatus)
+    fileprivate func handleAuthorizationChange(_ status: CLAuthorizationStatus) {
+        let mapped = Self.map(status)
         authorization = mapped
         if mapped != .notDetermined, let continuation = authorizationContinuation {
             authorizationContinuation = nil
@@ -131,16 +132,30 @@ final class CoreLocationProvider: NSObject, LocationProviding, CLLocationManager
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    fileprivate func handleLocation(_ location: CLLocation?) {
         guard let continuation = locationContinuation else { return }
         locationContinuation = nil
-        continuation.resume(returning: locations.last)
+        continuation.resume(returning: location)
+    }
+}
+
+/// Core Location のコールバックは `CLLocationManager` を生成したスレッド（ここではメイン）に届く。
+/// delegate 適合を MainActor 隔離の外に置き、`assumeIsolated` でメインアクターへ受け渡す。
+private final class CoreLocationDelegate: NSObject, CLLocationManagerDelegate {
+    weak var owner: CoreLocationProvider?
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        MainActor.assumeIsolated { owner?.handleAuthorizationChange(status) }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last
+        MainActor.assumeIsolated { owner?.handleLocation(location) }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        guard let continuation = locationContinuation else { return }
-        locationContinuation = nil
-        continuation.resume(returning: nil)
+        MainActor.assumeIsolated { owner?.handleLocation(nil) }
     }
 }
 #endif
