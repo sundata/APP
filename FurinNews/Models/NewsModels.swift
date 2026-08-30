@@ -45,6 +45,21 @@ struct NewsArticle: Identifiable, Hashable {
     }
 }
 
+/// 同じ出来事を扱う複数メディアの記事をまとめた、即時生成のイベント。
+struct NewsEvent: Identifiable, Hashable {
+    let id: String
+    let headline: NewsArticle
+    let relatedArticles: [NewsArticle]
+
+    var sourceCount: Int {
+        Set(([headline] + relatedArticles).map(\.source.name)).count
+    }
+
+    var latestUpdate: Date {
+        ([headline] + relatedArticles).map(\.publishedAt).max() ?? headline.publishedAt
+    }
+}
+
 // MARK: - 来源信息
 struct Source: Hashable {
     let name: String
@@ -215,6 +230,24 @@ struct BookmarkFolder: Identifiable, Codable {
 
 // MARK: - 图片有效性验证
 extension NewsArticle {
+    /// AIを待たず、カテゴリと本文からすぐ表示できる「なぜ重要か」。
+    var instantInsight: String {
+        switch category {
+        case .business:
+            return "暮らし・企業活動・市場への影響を確認したいニュースです"
+        case .politician:
+            return "制度や社会の動きにつながる可能性があります"
+        case .sports:
+            return "結果だけでなく、今後の日程や順位への影響に注目です"
+        case .overseas:
+            return "国際情勢や経済への波及を追う価値があります"
+        case .celebrity:
+            return "話題の背景と本人・関係者の発表を確認できます"
+        case .trending, .general:
+            return "いま注目が集まっている背景を短時間で把握できます"
+        }
+    }
+
     /// 过滤掉 favicon/logo 等无效图片，保留文章缩略图
     var validImageURL: URL? {
         guard let url = imageURL else { return nil }

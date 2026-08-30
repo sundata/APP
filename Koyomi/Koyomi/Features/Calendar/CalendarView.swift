@@ -8,6 +8,7 @@ struct CalendarView: View {
 
     @State private var month: Date = Date()
     @State private var records: [String: FortuneRecord] = [:]
+    @State private var moodRecords: [String: DailyMoodRecord] = [:]
     @State private var streak = 0
     @State private var selectedDayKey: String?
     @State private var showFavoritesOnly = false
@@ -34,7 +35,7 @@ struct CalendarView: View {
             set: { selectedDayKey = $0?.dayKey }
         )) { selection in
             if let record = records[selection.dayKey], let fortune = record.fortune {
-                HistoryDetailView(record: record, fortune: fortune)
+                HistoryDetailView(record: record, fortune: fortune, moodRecord: moodRecords[selection.dayKey])
             }
         }
     }
@@ -54,6 +55,11 @@ struct CalendarView: View {
                     .font(KoyomiTheme.titleFont)
                 Text("お休みの日があっても大丈夫。またいつでも戻ってきてください。")
                     .font(KoyomiTheme.captionFont)
+                if streak > 0 {
+                    Text(streakMessage)
+                        .font(KoyomiTheme.bodyFont.weight(.semibold))
+                        .padding(.top, KoyomiTheme.Spacing.xs)
+                }
             }
             .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
         }
@@ -116,6 +122,7 @@ struct CalendarView: View {
 
     private func dayCell(_ cell: DayCell) -> some View {
         let record = cell.dayKey.flatMap { records[$0] }
+        let mood = cell.dayKey.flatMap { moodRecords[$0]?.mood }
         return Button {
             if record != nil { selectedDayKey = cell.dayKey }
         } label: {
@@ -123,20 +130,21 @@ struct CalendarView: View {
                 Text(cell.day.map(String.init) ?? "")
                     .font(KoyomiTheme.bodyFont)
                 // 色だけでなく記号で状態を表す。
-                Text(record == nil ? " " : (record?.isFavorite == true ? "♥" : "•"))
+                Text(mood?.emoji ?? (record == nil ? " " : (record?.isFavorite == true ? "♥" : "•")))
                     .font(.caption2)
             }
             .frame(minWidth: KoyomiTheme.minimumTapTarget, minHeight: KoyomiTheme.minimumTapTarget)
         }
         .buttonStyle(.plain)
         .disabled(record == nil)
-        .accessibilityLabel(Text(accessibilityLabel(for: cell, record: record)))
+        .accessibilityLabel(Text(accessibilityLabel(for: cell, record: record, mood: mood)))
     }
 
-    private func accessibilityLabel(for cell: DayCell, record: FortuneRecord?) -> String {
+    private func accessibilityLabel(for cell: DayCell, record: FortuneRecord?, mood: DailyMood?) -> String {
         guard let day = cell.day else { return "" }
         if record == nil { return "\(day)日 記録なし" }
-        return record?.isFavorite == true ? "\(day)日 お気に入り" : "\(day)日 記録あり"
+        let state = record?.isFavorite == true ? "お気に入り" : "記録あり"
+        return mood.map { "\(day)日 \(state)、気分は\($0.japaneseName)" } ?? "\(day)日 \(state)"
     }
 
     private var listCard: some View {
@@ -160,6 +168,10 @@ struct CalendarView: View {
                             }
                             Text(record.fortune?.headline ?? "")
                                 .font(KoyomiTheme.bodyFont.weight(.semibold))
+                            if let mood = moodRecords[record.dayKey]?.mood {
+                                Text("\(mood.emoji) \(mood.japaneseName)")
+                                    .font(KoyomiTheme.captionFont)
+                            }
                             if let weather = record.weather {
                                 Text("\(record.cityName)・\(weather.category.japaneseName) \(weather.temperatureText)")
                                     .font(KoyomiTheme.captionFont)
@@ -186,7 +198,17 @@ struct CalendarView: View {
 
     private func reload() {
         records = Dictionary(uniqueKeysWithValues: environment.store.allRecords().map { ($0.dayKey, $0) })
+        moodRecords = Dictionary(uniqueKeysWithValues: environment.store.allMoodRecords().map { ($0.dayKey, $0) })
         streak = environment.store.currentStreak(today: environment.clock.now, calendar: calendar)
+    }
+
+    private var streakMessage: String {
+        switch streak {
+        case 1: return "今日のあなたに会えてうれしいです。"
+        case 2...6: return "小さな習慣が、少しずつ育っています。"
+        case 7...29: return "一週間以上の星の記録。あなたらしいリズムです。"
+        default: return "積み重ねた日々が、あなただけの暦になりました。"
+        }
     }
 }
 
@@ -196,6 +218,7 @@ struct HistoryDetailView: View {
     @Environment(\.colorScheme) private var colorScheme
     let record: FortuneRecord
     let fortune: DailyFortune
+    let moodRecord: DailyMoodRecord?
 
     var body: some View {
         NavigationStack {
@@ -210,10 +233,24 @@ struct HistoryDetailView: View {
                     }
                     Text(fortune.headline)
                         .font(KoyomiTheme.headlineFont)
+                    if let mood = moodRecord?.mood {
+                        Label("この日の気分：\(mood.emoji) \(mood.japaneseName)", systemImage: "heart.text.square")
+                            .font(KoyomiTheme.bodyFont.weight(.semibold))
+                    }
                     ScoreStars(score: fortune.overallScore, size: 18)
                     Text(fortune.overall)
                     Text(fortune.skySign)
                     Text("今日の小さなアクション：\(fortune.action)")
+                    if let reflection = moodRecord?.reflectionText, !reflection.isEmpty {
+                        VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.xs) {
+                            Text("夜のひとこと")
+                                .font(KoyomiTheme.captionFont)
+                                .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                            Text(reflection)
+                        }
+                        .padding(KoyomiTheme.Spacing.m)
+                        .background(KoyomiTheme.cardFill(colorScheme), in: RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small))
+                    }
                     Text(fortune.disclaimer)
                         .font(KoyomiTheme.captionFont)
                 }

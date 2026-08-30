@@ -7,10 +7,11 @@ struct KoyomiApp: App {
     private let container: ModelContainer
 
     init() {
-        let schema = Schema([UserPreferencesRecord.self, FortuneRecord.self])
+        let schema = Schema([UserPreferencesRecord.self, FortuneRecord.self, DailyMoodRecord.self])
         // UI テストではディスクを汚さないため、インメモリで動かす。
-        let isUITesting = ProcessInfo.processInfo.arguments.contains("-uiTesting")
-        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isUITesting)
+        let arguments = ProcessInfo.processInfo.arguments
+        let usesEphemeralStore = arguments.contains("-uiTesting") || arguments.contains("-screenshotTesting")
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: usesEphemeralStore)
         do {
             container = try ModelContainer(for: schema, configurations: configuration)
         } catch {

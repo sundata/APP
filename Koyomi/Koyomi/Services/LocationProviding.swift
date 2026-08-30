@@ -140,22 +140,23 @@ final class CoreLocationProvider: LocationProviding {
 }
 
 /// Core Location のコールバックは `CLLocationManager` を生成したスレッド（ここではメイン）に届く。
-/// delegate 適合を MainActor 隔離の外に置き、`assumeIsolated` でメインアクターへ受け渡す。
-private final class CoreLocationDelegate: NSObject, CLLocationManagerDelegate {
+/// delegate 自体を MainActor に隔離し、所有者への通知も同じアクター上で行う。
+@MainActor
+private final class CoreLocationDelegate: NSObject, @preconcurrency CLLocationManagerDelegate {
     weak var owner: CoreLocationProvider?
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = manager.authorizationStatus
-        MainActor.assumeIsolated { owner?.handleAuthorizationChange(status) }
+        owner?.handleAuthorizationChange(status)
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
-        MainActor.assumeIsolated { owner?.handleLocation(location) }
+        owner?.handleLocation(location)
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        MainActor.assumeIsolated { owner?.handleLocation(nil) }
+        owner?.handleLocation(nil)
     }
 }
 #endif

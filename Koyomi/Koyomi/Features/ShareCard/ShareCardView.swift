@@ -14,11 +14,27 @@ struct ShareCardView: View {
         var aspectRatio: CGFloat { size.width / size.height }
     }
 
+    enum Style: String, CaseIterable, Identifiable {
+        case nightSky
+        case rose
+        case journal
+
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .nightSky: return "夜空"
+            case .rose: return "ローズ"
+            case .journal: return "手帳"
+            }
+        }
+    }
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.displayScale) private var displayScale
     let content: ShareCardContent
 
     @State private var format: Format = .story
+    @State private var style: Style = .nightSky
     @State private var renderedImage: Image?
 
     var body: some View {
@@ -31,7 +47,14 @@ struct ShareCardView: View {
                 }
                 .pickerStyle(.segmented)
 
-                ShareCardCanvas(content: content, format: format)
+                Picker("デザイン", selection: $style) {
+                    ForEach(Style.allCases) { style in
+                        Text(style.title).tag(style)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                ShareCardCanvas(content: content, format: format, style: style)
                     .aspectRatio(format.aspectRatio, contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: KoyomiTheme.Radius.card, style: .continuous))
                     .accessibilityIdentifier("share.preview")
@@ -56,14 +79,14 @@ struct ShareCardView: View {
                     Button("閉じる") { dismiss() }
                 }
             }
-            .task(id: format) { await MainActor.run { render() } }
+            .task(id: "\(format.rawValue)-\(style.rawValue)") { await MainActor.run { render() } }
         }
     }
 
     @MainActor
     private func render() {
         let renderer = ImageRenderer(
-            content: ShareCardCanvas(content: content, format: format)
+            content: ShareCardCanvas(content: content, format: format, style: style)
                 .frame(width: format.size.width / 2, height: format.size.height / 2)
         )
         renderer.scale = max(displayScale, 2)
@@ -79,15 +102,12 @@ struct ShareCardView: View {
 struct ShareCardCanvas: View {
     let content: ShareCardContent
     let format: ShareCardView.Format
+    let style: ShareCardView.Style
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [KoyomiTheme.nightSky, KoyomiTheme.mistPurple, KoyomiTheme.color(hex: content.luckyColor.hex).opacity(0.8)],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            StarField(opacity: 0.6)
+            background
+            if style != .journal { StarField(opacity: style == .nightSky ? 0.6 : 0.25) }
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
                 Spacer(minLength: 0)
                 Text(content.dateText)
@@ -100,6 +120,18 @@ struct ShareCardCanvas: View {
                 Text(content.shortMessage)
                     .font(.system(.body, design: .default))
                     .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.xs) {
+                    Text("LOVE KEYWORD")
+                        .font(.system(.caption2, design: .rounded).weight(.bold))
+                        .tracking(1.2)
+                    Text(content.loveKeyword)
+                        .font(.system(.title3, design: .serif).weight(.semibold))
+                    Text(content.styleTip)
+                        .font(.system(.footnote, design: .default))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(KoyomiTheme.Spacing.s)
+                .background(Color.white.opacity(style == .journal ? 0.5 : 0.12), in: RoundedRectangle(cornerRadius: 14))
                 HStack(spacing: KoyomiTheme.Spacing.s) {
                     Circle()
                         .fill(KoyomiTheme.color(hex: content.luckyColor.hex))
@@ -114,9 +146,37 @@ struct ShareCardCanvas: View {
                     .font(.system(.caption2, design: .default))
                     .opacity(0.85)
             }
-            .foregroundStyle(KoyomiTheme.moonBeige)
+            .foregroundStyle(foregroundColor)
             .padding(format == .story ? KoyomiTheme.Spacing.xl : KoyomiTheme.Spacing.l)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    @ViewBuilder
+    private var background: some View {
+        switch style {
+        case .nightSky:
+            LinearGradient(
+                colors: [KoyomiTheme.nightSky, KoyomiTheme.mistPurple, KoyomiTheme.color(hex: content.luckyColor.hex).opacity(0.8)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        case .rose:
+            LinearGradient(
+                colors: [Color(red: 0.34, green: 0.16, blue: 0.28), Color(red: 0.78, green: 0.48, blue: 0.57), Color(red: 0.96, green: 0.78, blue: 0.72)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        case .journal:
+            LinearGradient(
+                colors: [Color(red: 0.99, green: 0.96, blue: 0.90), Color(red: 0.94, green: 0.88, blue: 0.82)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
+    }
+
+    private var foregroundColor: Color {
+        style == .journal ? KoyomiTheme.nightSky : KoyomiTheme.moonBeige
     }
 }

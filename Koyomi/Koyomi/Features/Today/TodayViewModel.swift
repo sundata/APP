@@ -25,6 +25,9 @@ final class TodayViewModel {
     /// 位置情報が拒否されたときに都市選択を促す。
     var needsCityChoice = false
     var dayKey: String = ""
+    var selectedMood: DailyMood?
+    var reflectionDraft = ""
+    var reflectionSaved = false
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -58,6 +61,9 @@ final class TodayViewModel {
         let now = environment.clock.now
         let key = KoyomiCalendar.dayKey(for: now, calendar: calendar)
         dayKey = key
+        selectedMood = environment.store.mood(dayKey: key)
+        reflectionDraft = environment.store.reflection(dayKey: key)
+        reflectionSaved = !reflectionDraft.isEmpty
 
         let availability = await loadWeather(place: place, now: now, dayKey: key)
         weather = availability
@@ -102,6 +108,23 @@ final class TodayViewModel {
         guard !dayKey.isEmpty else { return }
         environment.store.toggleFavorite(dayKey: dayKey)
         isFavorite = environment.store.record(dayKey: dayKey)?.isFavorite ?? false
+    }
+
+    func selectMood(_ mood: DailyMood) {
+        guard !dayKey.isEmpty else { return }
+        selectedMood = mood
+        environment.store.saveMood(mood, dayKey: dayKey)
+    }
+
+    func saveReflection() {
+        guard !dayKey.isEmpty else { return }
+        environment.store.saveReflection(reflectionDraft, dayKey: dayKey)
+        reflectionDraft = environment.store.reflection(dayKey: dayKey)
+        reflectionSaved = !reflectionDraft.isEmpty
+    }
+
+    var lifestyleContent: DailyLifestyleContent? {
+        fortune.map(DailyLifestyleContent.init(fortune:))
     }
 
     func selectCity(_ city: City) async {

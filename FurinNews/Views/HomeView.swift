@@ -21,6 +21,28 @@ struct HomeView: View {
                     } else if viewModel.filteredArticles.isEmpty {
                         EmptyStateView()
                     } else {
+                        if viewModel.selectedCategory == nil, !viewModel.todayEssentials.isEmpty {
+                            TodayEssentialsSection(
+                                articles: viewModel.todayEssentials,
+                                onArticleTap: { article in
+                                    viewModel.markAsRead(article: article)
+                                    selectedArticle = article
+                                }
+                            )
+                            .padding(.top, 12)
+                        }
+
+                        if viewModel.selectedCategory == nil, !viewModel.newsEvents.isEmpty {
+                            MultiSourceEventsSection(
+                                events: viewModel.newsEvents,
+                                onArticleTap: { article in
+                                    viewModel.markAsRead(article: article)
+                                    selectedArticle = article
+                                }
+                            )
+                            .padding(.top, 18)
+                        }
+
                         // ── トップストーリー（大カード） ──
                         if viewModel.selectedCategory == nil, viewModel.topStories.count > 0 {
                             TopStoriesSection(
@@ -134,6 +156,116 @@ struct HomeView: View {
             // 左スワイプ → 次のカテゴリへ
             if currentIndex < categories.count - 1 {
                 viewModel.selectCategory(categories[currentIndex + 1])
+            }
+        }
+    }
+}
+
+// MARK: - 今日の必読5件
+private struct TodayEssentialsSection: View {
+    let articles: [NewsArticle]
+    let onArticleTap: (NewsArticle) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                Label("今日の5件", systemImage: "checklist")
+                    .font(FontScaler.headline())
+                    .fontWeight(.bold)
+                Spacer()
+                Text("これだけで流れがわかる")
+                    .font(FontScaler.caption2())
+                    .foregroundColor(.secondary)
+            }
+
+            VStack(spacing: 0) {
+                ForEach(Array(articles.enumerated()), id: \.element.id) { index, article in
+                    Button {
+                        onArticleTap(article)
+                    } label: {
+                        HStack(alignment: .top, spacing: 10) {
+                            Text("\(index + 1)")
+                                .font(FontScaler.font(size: 13, weight: .bold))
+                                .foregroundColor(.white)
+                                .frame(width: 24, height: 24)
+                                .background(article.category.color)
+                                .clipShape(Circle())
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(article.title)
+                                    .font(FontScaler.font(size: 14, weight: .semibold))
+                                    .foregroundColor(.primary)
+                                    .lineLimit(2)
+                                Text(article.instantInsight)
+                                    .font(FontScaler.caption2())
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+                            }
+                            Spacer(minLength: 0)
+                        }
+                        .padding(.vertical, 10)
+                    }
+                    .buttonStyle(.plain)
+                    if index < articles.count - 1 { Divider() }
+                }
+            }
+            .padding(.horizontal, 12)
+            .background(Color(.secondarySystemBackground))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .padding(.horizontal, 16)
+    }
+}
+
+// MARK: - 複数メディアで追うイベント
+private struct MultiSourceEventsSection: View {
+    let events: [NewsEvent]
+    let onArticleTap: (NewsArticle) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Label("ひとつの出来事、多角的に", systemImage: "rectangle.3.group.bubble.left.fill")
+                    .font(FontScaler.headline())
+                    .fontWeight(.bold)
+                Spacer()
+                Text("重複を整理")
+                    .font(FontScaler.caption2())
+                    .foregroundColor(.secondary)
+            }
+            .padding(.horizontal, 16)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(events.prefix(5)) { event in
+                        Button { onArticleTap(event.headline) } label: {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(event.headline.title)
+                                    .font(FontScaler.font(size: 14, weight: .semibold))
+                                    .foregroundColor(.primary)
+                                    .lineLimit(3)
+                                Text(event.headline.instantInsight)
+                                    .font(FontScaler.caption2())
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(2)
+                                Spacer(minLength: 0)
+                                HStack(spacing: 5) {
+                                    Image(systemName: "newspaper.fill")
+                                    Text("\(event.sourceCount)媒体の報道")
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                }
+                                .font(FontScaler.caption2(weight: .medium))
+                                .foregroundColor(.red)
+                            }
+                            .padding(14)
+                            .frame(width: 250, height: 150, alignment: .topLeading)
+                            .background(Color(.secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 16)
             }
         }
     }

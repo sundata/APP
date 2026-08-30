@@ -23,10 +23,17 @@ struct TodayView: View {
                     } else if let fortune = viewModel.fortune {
                         cautionBanner
                         mainCard(fortune)
+                        moodCheckInCard
                         skySignCard(fortune)
+                        if let lifestyle = viewModel.lifestyleContent {
+                            lifestyleCard(lifestyle, luckyColor: fortune.luckyColor)
+                        }
                         categoryGrid(fortune)
                         luckyCard(fortune)
                         actionCard(fortune)
+                        if let lifestyle = viewModel.lifestyleContent {
+                            nightReflectionCard(lifestyle)
+                        }
                         buttons
                         Text(fortune.disclaimer)
                             .font(KoyomiTheme.captionFont)
@@ -135,6 +142,125 @@ struct TodayView: View {
                     .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
                     .fixedSize(horizontal: false, vertical: true)
             }
+        }
+    }
+
+    private var moodCheckInCard: some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
+                Text("今の気分は？")
+                    .font(KoyomiTheme.headlineFont)
+                    .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+                Text("今日のあなたを、ひとことだけ残してみて。")
+                    .font(KoyomiTheme.captionFont)
+                    .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+
+                HStack(spacing: KoyomiTheme.Spacing.xs) {
+                    ForEach(DailyMood.allCases) { mood in
+                        Button {
+                            withAnimation(.easeOut(duration: 0.2)) { viewModel.selectMood(mood) }
+                        } label: {
+                            VStack(spacing: 2) {
+                                Text(mood.emoji).font(.title2)
+                                Text(mood.japaneseName)
+                                    .font(.system(size: 10, weight: .medium))
+                                    .lineLimit(1)
+                            }
+                            .frame(maxWidth: .infinity, minHeight: 58)
+                            .background(
+                                RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small, style: .continuous)
+                                    .fill(viewModel.selectedMood == mood ? KoyomiTheme.mistPurple.opacity(0.35) : Color.white.opacity(0.18))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small, style: .continuous)
+                                    .stroke(viewModel.selectedMood == mood ? KoyomiTheme.mistPurple : Color.clear, lineWidth: 1.5)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("気分：\(mood.japaneseName)")
+                        .accessibilityAddTraits(viewModel.selectedMood == mood ? .isSelected : [])
+                    }
+                }
+
+                if let mood = viewModel.selectedMood {
+                    Text(mood.gentleMessage)
+                        .font(KoyomiTheme.bodyFont)
+                        .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+            }
+        }
+    }
+
+    private func lifestyleCard(_ content: DailyLifestyleContent, luckyColor: LuckyColor) -> some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
+                Label("今日を楽しむヒント", systemImage: "sparkles")
+                    .font(KoyomiTheme.headlineFont)
+
+                insightRow(icon: "heart", title: "恋のキーワード", text: content.loveKeyword)
+                insightRow(icon: "tshirt", title: "スタイルメモ", text: content.styleTip)
+                insightRow(icon: "bubble.left.and.bubble.right", title: "会話のきっかけ", text: "「\(content.conversationStarter)」")
+
+                HStack(spacing: KoyomiTheme.Spacing.s) {
+                    Circle()
+                        .fill(KoyomiTheme.color(hex: luckyColor.hex))
+                        .frame(width: 14, height: 14)
+                    Text("今日は \(luckyColor.name) を小物に取り入れてみて")
+                        .font(KoyomiTheme.captionFont)
+                }
+            }
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+        }
+    }
+
+    private func insightRow(icon: String, title: String, text: String) -> some View {
+        HStack(alignment: .top, spacing: KoyomiTheme.Spacing.s) {
+            Image(systemName: icon)
+                .frame(width: 22)
+                .foregroundStyle(KoyomiTheme.mistPurple)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(KoyomiTheme.captionFont)
+                    .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                Text(text)
+                    .font(KoyomiTheme.bodyFont.weight(.medium))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private func nightReflectionCard(_ content: DailyLifestyleContent) -> some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
+                Label("夜のひとこと", systemImage: "moon.stars")
+                    .font(KoyomiTheme.headlineFont)
+                Text(content.nightQuestion)
+                    .font(KoyomiTheme.bodyFont.weight(.medium))
+                TextField("160文字以内で、短く残してみて", text: $viewModel.reflectionDraft, axis: .vertical)
+                    .lineLimit(2...4)
+                    .textFieldStyle(.roundedBorder)
+                    .onChange(of: viewModel.reflectionDraft) { _, value in
+                        if value.count > 160 { viewModel.reflectionDraft = String(value.prefix(160)) }
+                        viewModel.reflectionSaved = false
+                    }
+                HStack {
+                    Text("\(viewModel.reflectionDraft.count)/160")
+                        .font(KoyomiTheme.captionFont)
+                        .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                    Spacer()
+                    if viewModel.reflectionSaved {
+                        Label("保存しました", systemImage: "checkmark.circle.fill")
+                            .font(KoyomiTheme.captionFont)
+                            .foregroundStyle(.green)
+                    }
+                    Button("残す") { viewModel.saveReflection() }
+                        .buttonStyle(.borderedProminent)
+                        .tint(KoyomiTheme.mistPurple)
+                        .disabled(viewModel.reflectionDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
+            }
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
         }
     }
 

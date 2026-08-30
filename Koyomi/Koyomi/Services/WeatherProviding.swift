@@ -100,7 +100,7 @@ struct WeatherKitWeatherProvider: WeatherProviding {
             return .cloudy
         case .drizzle, .rain, .heavyRain, .sunShowers, .freezingDrizzle, .freezingRain, .hail:
             return .rain
-        case .flurries, .snow, .heavySnow, .sleet, .blizzard, .blowingSnow, .wintryMix, .frigid:
+        case .flurries, .sunFlurries, .snow, .heavySnow, .sleet, .blizzard, .blowingSnow, .wintryMix, .frigid:
             return condition == .frigid ? .extremeCold : .snow
         case .thunderstorms, .isolatedThunderstorms, .scatteredThunderstorms, .strongStorms, .tropicalStorm, .hurricane:
             return .thunderstorm

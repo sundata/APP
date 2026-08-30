@@ -95,3 +95,25 @@ final class FortuneRecord {
         return try? JSONDecoder().decode(WeatherSnapshot.self, from: weatherData)
     }
 }
+
+/// その日に選んだ気分。位置情報や自由記述は持たず、端末内だけに保存する。
+@Model
+final class DailyMoodRecord {
+    @Attribute(.unique) var dayKey: String
+    var moodRawValue: String
+    /// その日の短い振り返り。端末内のみ、最大 160 文字で扱う。
+    var reflectionText: String
+    var updatedAt: Date
+
+    init(dayKey: String, mood: DailyMood? = nil, reflectionText: String = "", updatedAt: Date = Date()) {
+        self.dayKey = dayKey
+        self.moodRawValue = mood?.rawValue ?? ""
+        self.reflectionText = reflectionText
+        self.updatedAt = updatedAt
+    }
+
+    var mood: DailyMood? {
+        get { DailyMood(rawValue: moodRawValue) }
+        set { moodRawValue = newValue?.rawValue ?? "" }
+    }
+}

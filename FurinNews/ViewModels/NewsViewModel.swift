@@ -8,6 +8,8 @@ class NewsViewModel: ObservableObject {
     @Published var articles: [NewsArticle] = []
     @Published var filteredArticles: [NewsArticle] = []
     @Published var topStories: [NewsArticle] = []
+    @Published var todayEssentials: [NewsArticle] = []
+    @Published var newsEvents: [NewsEvent] = []
     @Published var isLoading = false
     @Published var isCategoryLoading = false
     @Published var isRefreshing = false
@@ -54,6 +56,7 @@ class NewsViewModel: ObservableObject {
                 self.restoreBookmarks()
                 self.applyFilter()
                 self.updateTopStories()
+                self.updateDiscoverySections()
                 self.updateBookmarks()
                 self.feedCache[self.activeFeedKey] = self.articles
             }
@@ -109,6 +112,15 @@ class NewsViewModel: ObservableObject {
         await service.fetchNews(category: category, page: 1)
         isRefreshing = false
     }
+
+    /// バックグラウンドから戻った時は、古い表示を待たずに更新する。
+    func refreshIfStale(maxAge: TimeInterval = 60) async {
+        guard !isLoading, !isRefreshing else { return }
+        if let lastUpdated, Date().timeIntervalSince(lastUpdated) < maxAge {
+            return
+        }
+        await refresh()
+    }
     
     func loadMore() async {
         guard !isLoading, hasMore else { return }
@@ -148,6 +160,7 @@ class NewsViewModel: ObservableObject {
             restoreBookmarks()
             applyFilter()
             updateTopStories()
+            updateDiscoverySections()
             updateBookmarks()
         }
 
@@ -273,6 +286,55 @@ class NewsViewModel: ObservableObject {
     private func updateTopStories() {
         // 只取有有效图片的文章作为 top stories
         topStories = Array(articles.filter { $0.validImageURL != nil }.prefix(5))
+    }
+
+    private func updateDiscoverySections() {
+        let sorted = articles.sorted { $0.publishedAt > $1.publishedAt }
+
+        // 同じカテゴリだけで埋まらない「今日の5件」。
+        var selected: [NewsArticle] = []
+        var usedCategories = Set<NewsCategory>()
+        for article in sorted where !usedCategories.contains(article.category) {
+            selected.append(article)
+            usedCategories.insert(article.category)
+            if selected.count == 5 { break }
+        }
+        if selected.count < 5 {
+            let selectedIDs = Set(selected.map(\.id))
+            selected.append(contentsOf: sorted.filter { !selectedIDs.contains($0.id) }.prefix(5 - selected.count))
+        }
+        todayEssentials = selected
+
+        // タイトルの3文字単位の特徴を比較し、同じ出来事を端末上で即時集約。
+        var remaining = Array(sorted.prefix(100))
+        var events: [NewsEvent] = []
+        while let headline = remaining.first, events.count < 8 {
+            remaining.removeFirst()
+            let base = titleFeatures(headline.title)
+            let related = remaining.filter { candidate in
+                candidate.source.name != headline.source.name &&
+                similarity(base, titleFeatures(candidate.title)) >= 0.24
+            }
+            if !related.isEmpty {
+                let relatedIDs = Set(related.map(\.id))
+                remaining.removeAll { relatedIDs.contains($0.id) }
+                events.append(NewsEvent(id: headline.id, headline: headline, relatedArticles: Array(related.prefix(5))))
+            }
+        }
+        newsEvents = events
+    }
+
+    private func titleFeatures(_ title: String) -> Set<String> {
+        let normalized = title.lowercased().filter { $0.isLetter || $0.isNumber }
+        let characters = Array(normalized)
+        guard characters.count >= 3 else { return [normalized] }
+        return Set((0...(characters.count - 3)).map { String(characters[$0...($0 + 2)]) })
+    }
+
+    private func similarity(_ lhs: Set<String>, _ rhs: Set<String>) -> Double {
+        guard !lhs.isEmpty, !rhs.isEmpty else { return 0 }
+        let intersection = lhs.intersection(rhs).count
+        return Double(intersection) / Double(min(lhs.count, rhs.count))
     }
     
     // MARK: - Bookmarks

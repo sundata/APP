@@ -14,6 +14,7 @@ struct ProfileView: View {
     @State private var reminderTime = Date()
     @State private var showDeleteConfirmation = false
     @State private var showCityPicker = false
+    @State private var adMob = AdMobProvider.shared
 
     private var zodiac: Zodiac { Zodiac.from(date: birthday, calendar: KoyomiCalendar.japan) }
 
@@ -53,6 +54,11 @@ struct ProfileView: View {
                 }
 
                 Section("Koyomi について") {
+                    if adMob.privacyOptionsRequired {
+                        Button("広告のプライバシー設定") {
+                            Task { await adMob.presentPrivacyOptions() }
+                        }
+                    }
                     NavigationLink("プライバシーポリシー") { PrivacyPolicyView() }
                     NavigationLink("免責事項") { DisclaimerView() }
                 }

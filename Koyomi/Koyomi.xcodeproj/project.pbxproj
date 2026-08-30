@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B00000000000000000000101 /* KoyomiCore in Frameworks */ = {isa = PBXBuildFile; productRef = B00000000000000000000100 /* KoyomiCore */; };
+		B00000000000000000000301 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = B00000000000000000000300 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B00000000000000000000101 /* KoyomiCore in Frameworks */,
+				B00000000000000000000301 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +98,7 @@
 			name = Koyomi;
 			packageProductDependencies = (
 				B00000000000000000000100 /* KoyomiCore */,
+				B00000000000000000000300 /* GoogleMobileAds */,
 			);
 			productName = Koyomi;
 			productReference = B00000000000000000000020 /* Koyomi.app */;
@@ -153,7 +156,9 @@
 			mainGroup = B00000000000000000000002;
 			packageReferences = (
 				B00000000000000000000110 /* XCLocalSwiftPackageReference "KoyomiCore" */,
+				B00000000000000000000310 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = B00000000000000000000003 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,13 +259,16 @@
 		B00000000000000000000072 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = Config/Koyomi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HQ9A6C8C3R;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/Koyomi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Koyomi;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "今いる場所のお天気を占いに重ねるために使います。位置情報は天気の取得のみに使い、保存も送信もしません。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -282,13 +290,16 @@
 		B00000000000000000000073 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = Config/Koyomi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = HQ9A6C8C3R;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Config/Koyomi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Koyomi;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "今いる場所のお天気を占いに重ねるために使います。位置情報は天気の取得のみに使い、保存も送信もしません。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -376,10 +387,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		B00000000000000000000310 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		B00000000000000000000100 /* KoyomiCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KoyomiCore;
+		};
+		B00000000000000000000300 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B00000000000000000000310 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

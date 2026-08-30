@@ -1,274 +1,601 @@
 {
   "sourceLanguage" : "ja",
   "strings" : {
+    " " : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@・%@ %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@・%2$@ %3$@"
+          }
+        }
+      }
+    },
+    "%@の予報です。最新の気象情報を確認して、無理のない行動を選んでください。" : {
+
+    },
+    "%lld/5" : {
+
+    },
+    "%lld日" : {
+
+    },
+    "•" : {
+
+    },
+    "♥" : {
+
+    },
+    "Koyomi" : {
+
+    },
+    "Koyomi について" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koyomi について"
+          }
+        }
+      }
+    },
     "あとで" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あとで" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あとで"
+          }
+        }
       }
     },
     "あなたのことを、少しだけ教えてください" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "あなたのことを、少しだけ教えてください" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あなたのことを、少しだけ教えてください"
+          }
+        }
+      }
+    },
+    "あなたの星座は%@です（%@）" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "あなたの星座は%1$@です（%2$@）"
+          }
+        }
       }
     },
     "おこのみの都市を選ぶ" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "おこのみの都市を選ぶ" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おこのみの都市を選ぶ"
+          }
+        }
       }
+    },
+    "お休みの日があっても大丈夫。またいつでも戻ってきてください。" : {
+
+    },
+    "お天気" : {
+
+    },
+    "お気に入りから外す" : {
+
     },
     "お気に入りだけ表示" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "お気に入りだけ表示" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お気に入りだけ表示"
+          }
+        }
       }
+    },
+    "お気に入りに追加" : {
+
     },
     "カレンダー" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "カレンダー" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カレンダー"
+          }
+        }
       }
     },
     "キャンセル" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        }
       }
+    },
+    "この日はお天気情報がありませんでした。" : {
+
     },
     "シェアカード" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "シェアカード" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シェアカード"
+          }
+        }
       }
     },
     "シェアカードをつくる" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "シェアカードをつくる" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シェアカードをつくる"
+          }
+        }
       }
     },
     "シェアする" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "シェアする" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "シェアする"
+          }
+        }
       }
     },
     "すべてのデータを削除" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータを削除" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのデータを削除"
+          }
+        }
       }
     },
     "すべてのデータを削除しますか？" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "すべてのデータを削除しますか？" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてのデータを削除しますか？"
+          }
+        }
       }
     },
     "つづけて見ている日数" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "つづけて見ている日数" } }
-      }
-    },
-    "はじめる" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "はじめる" } }
-      }
-    },
-    "プライバシーポリシー" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "プライバシーポリシー" } }
-      }
-    },
-    "リマインダーをオンにする" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "リマインダーをオンにする" } }
-      }
-    },
-    "リマインダーの時刻" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "リマインダーの時刻" } }
-      }
-    },
-    "今日" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日" } }
-      }
-    },
-    "今いる場所のお天気を、占いにそっと重ねます。" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今いる場所のお天気を、占いにそっと重ねます。" } }
-      }
-    },
-    "今日の運勢" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日の運勢" } }
-      }
-    },
-    "今日の小さなアクション" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日の小さなアクション" } }
-      }
-    },
-    "今日の空は、今日のあなたの味方。" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今日の空は、今日のあなたの味方。" } }
-      }
-    },
-    "免責事項" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "免責事項" } }
-      }
-    },
-    "削除する" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除する" } }
-      }
-    },
-    "対人運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "対人運" } }
-      }
-    },
-    "恋愛運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "恋愛運" } }
-      }
-    },
-    "仕事・勉強運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "仕事・勉強運" } }
-      }
-    },
-    "美容・健康運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "美容・健康運" } }
-      }
-    },
-    "位置情報を許可する" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "位置情報を許可する" } }
-      }
-    },
-    "毎日のお知らせ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎日のお知らせ" } }
-      }
-    },
-    "毎朝、そっとお知らせしましょうか？" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎朝、そっとお知らせしましょうか？" } }
-      }
-    },
-    "空からのサイン" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "空からのサイン" } }
-      }
-    },
-    "空と星から届く、わたしだけの毎日占い" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "空と星から届く、わたしだけの毎日占い" } }
-      }
-    },
-    "次へ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "次へ" } }
-      }
-    },
-    "現在地のお天気を使う" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "現在地のお天気を使う" } }
-      }
-    },
-    "生年月日" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "生年月日" } }
-      }
-    },
-    "都市" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "都市" } }
-      }
-    },
-    "都市を選ぶ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "都市を選ぶ" } }
-      }
-    },
-    "都市を自分で選ぶ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "都市を自分で選ぶ" } }
-      }
-    },
-    "閉じる" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "閉じる" } }
-      }
-    },
-    "読み込み中" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "読み込み中" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "つづけて見ている日数"
+          }
+        }
       }
     },
     "ニックネーム（任意）" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ニックネーム（任意）" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ニックネーム（任意）"
+          }
+        }
+      }
+    },
+    "はじめる" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "はじめる"
+          }
+        }
+      }
+    },
+    "プライバシーポリシー" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        }
+      }
+    },
+    "ラッキーアイテム：%@" : {
+
+    },
+    "ラッキーカラー：%@" : {
+
+    },
+    "ラッキータイム：%@" : {
+
+    },
+    "リマインダー" : {
+
+    },
+    "リマインダーの時刻" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダーの時刻"
+          }
+        }
+      }
+    },
+    "リマインダーをオンにする" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リマインダーをオンにする"
+          }
+        }
       }
     },
     "わたし" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "わたし" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "わたし"
+          }
+        }
       }
     },
-    "時刻" : {
+    "今いる場所のお天気を、占いにそっと重ねます。" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "時刻" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今いる場所のお天気を、占いにそっと重ねます。"
+          }
+        }
+      }
+    },
+    "今日" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        }
+      }
+    },
+    "今日の小さなアクション" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の小さなアクション"
+          }
+        }
+      }
+    },
+    "今日の小さなアクション：%@" : {
+
+    },
+    "今日の空は、今日のあなたの味方。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の空は、今日のあなたの味方。"
+          }
+        }
+      }
+    },
+    "今日の運勢" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の運勢"
+          }
+        }
+      }
+    },
+    "仕事・勉強運" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仕事・勉強運"
+          }
+        }
+      }
+    },
+    "位置情報が使えない設定になっています。iOS の設定から変更できます。" : {
+
+    },
+    "位置情報は「使用中のみ」お借りして、お天気の取得だけに使います。保存するのは都市名とお天気の要約だけです。" : {
+
+    },
+    "位置情報を許可する" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置情報を許可する"
+          }
+        }
+      }
+    },
+    "免責事項" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免責事項"
+          }
+        }
+      }
+    },
+    "削除する" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除する"
+          }
+        }
+      }
+    },
+    "前の月" : {
+
+    },
+    "対人運" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "対人運"
+          }
+        }
       }
     },
     "形式" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "形式" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "形式"
+          }
+        }
       }
     },
-    "Koyomi について" : {
+    "恋愛運" : {
       "extractionState" : "manual",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Koyomi について" } }
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恋愛運"
+          }
+        }
+      }
+    },
+    "星座：%@" : {
+
+    },
+    "時刻" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時刻"
+          }
+        }
+      }
+    },
+    "次の月" : {
+
+    },
+    "次へ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次へ"
+          }
+        }
+      }
+    },
+    "毎日のお知らせ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "毎日のお知らせ"
+          }
+        }
+      }
+    },
+    "毎朝、そっとお知らせしましょうか？" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "毎朝、そっとお知らせしましょうか？"
+          }
+        }
+      }
+    },
+    "現在地のお天気を使う" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在地のお天気を使う"
+          }
+        }
+      }
+    },
+    "生年月日" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生年月日"
+          }
+        }
+      }
+    },
+    "生年月日・履歴・お気に入り・都市の設定を、この端末から完全に削除します。" : {
+
+    },
+    "生年月日はこの端末の中だけに保存され、外部には送信されません。" : {
+
+    },
+    "空からのサイン" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空からのサイン"
+          }
+        }
+      }
+    },
+    "空と星から届く、わたしだけの毎日占い" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空と星から届く、わたしだけの毎日占い"
+          }
+        }
+      }
+    },
+    "美容・健康運" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美容・健康運"
+          }
+        }
+      }
+    },
+    "読み込み中" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "読み込み中"
+          }
+        }
+      }
+    },
+    "都市" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市"
+          }
+        }
+      }
+    },
+    "都市を自分で選ぶ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市を自分で選ぶ"
+          }
+        }
+      }
+    },
+    "都市を選ぶ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "都市を選ぶ"
+          }
+        }
+      }
+    },
+    "閉じる" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        }
       }
     }
   },

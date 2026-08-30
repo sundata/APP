@@ -24,6 +24,8 @@ class NewsService: ObservableObject {
     
     private lazy var urlSession: URLSession = {
         let config = URLSessionConfiguration.default
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        config.urlCache = nil
         config.timeoutIntervalForRequest = 15
         config.timeoutIntervalForResource = 30
         config.waitsForConnectivity = false
@@ -52,7 +54,13 @@ class NewsService: ObservableObject {
             }
             components.queryItems = queryItems
             
-            let request = URLRequest(url: components.url!)
+            var request = URLRequest(
+                url: components.url!,
+                cachePolicy: .reloadIgnoringLocalCacheData,
+                timeoutInterval: 15
+            )
+            request.setValue("no-cache, no-store", forHTTPHeaderField: "Cache-Control")
+            request.setValue("no-cache", forHTTPHeaderField: "Pragma")
             let (data, response) = try await urlSession.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse,

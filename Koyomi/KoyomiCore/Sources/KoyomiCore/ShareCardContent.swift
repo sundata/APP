@@ -8,6 +8,8 @@ public struct ShareCardContent: Hashable, Sendable {
     public let headline: String
     public let shortMessage: String
     public let luckyColor: LuckyColor
+    public let loveKeyword: String
+    public let styleTip: String
     public let brandName: String
     public let disclaimer: String
 
@@ -17,6 +19,9 @@ public struct ShareCardContent: Hashable, Sendable {
         self.headline = fortune.headline
         self.shortMessage = Self.shortMessage(from: fortune.overall)
         self.luckyColor = fortune.luckyColor
+        let lifestyle = DailyLifestyleContent(fortune: fortune)
+        self.loveKeyword = lifestyle.loveKeyword
+        self.styleTip = lifestyle.styleTip
         self.brandName = brandName
         self.disclaimer = fortune.disclaimer
     }

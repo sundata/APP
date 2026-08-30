@@ -5,11 +5,16 @@ import GoogleMobileAds
 @main
 struct FurinNewsApp: App {
     @StateObject private var viewModel = NewsViewModel()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
+                .onChange(of: scenePhase) { newPhase in
+                    guard newPhase == .active else { return }
+                    Task { await viewModel.refreshIfStale() }
+                }
         }
     }
 }

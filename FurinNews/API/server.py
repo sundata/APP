@@ -14,9 +14,11 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import logging
 import re
 import os
+import threading
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from typing import Optional, List
@@ -35,6 +37,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 # OpenAI API
 from openai import AsyncOpenAI
 from dotenv import load_dotenv
+from google.cloud import storage
 
 load_dotenv()
 
@@ -295,6 +298,8 @@ import os
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
 CLOUD_SQL_CONNECTION_NAME = os.environ.get("CLOUD_SQL_CONNECTION_NAME", "")
+ARTICLE_BUCKET = os.environ.get("ARTICLE_BUCKET", "")
+ARTICLE_OBJECT = os.environ.get("ARTICLE_OBJECT", "articles.json")
 
 if DATABASE_URL.startswith("postgresql"):
     # Cloud Run + Cloud SQL: 使用 psycopg2 + Unix socket
@@ -347,6 +352,104 @@ class ArticleAIAnalysisORM(Base):
 
 
 Base.metadata.create_all(bind=engine)
+
+
+class JSONArticleStore:
+    """Thread-safe article index persisted as one Cloud Storage JSON object."""
+
+    def __init__(self, bucket_name: str, object_name: str):
+        self.bucket_name = bucket_name
+        self.object_name = object_name
+        self._lock = threading.RLock()
+        self._articles: list[dict] = []
+        self._storage_client = None
+
+    def load(self) -> None:
+        if not self.bucket_name:
+            logging.getLogger("furinnews").warning("ARTICLE_BUCKET is empty; using memory-only article store")
+            return
+        try:
+            self._storage_client = storage.Client()
+            blob = self._storage_client.bucket(self.bucket_name).blob(self.object_name)
+            if blob.exists():
+                payload = json.loads(blob.download_as_text())
+                with self._lock:
+                    self._articles = payload.get("articles", payload if isinstance(payload, list) else [])
+            logging.getLogger("furinnews").info("Loaded %d articles from gs://%s/%s", len(self._articles), self.bucket_name, self.object_name)
+        except Exception as exc:
+            logging.getLogger("furinnews").warning("Could not load article JSON: %s", exc)
+
+    def _save(self) -> None:
+        if not self.bucket_name:
+            return
+        if self._storage_client is None:
+            self._storage_client = storage.Client()
+        payload = {"updated_at": datetime.now(timezone.utc).isoformat(), "articles": self._articles}
+        self._storage_client.bucket(self.bucket_name).blob(self.object_name).upload_from_string(
+            json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+            content_type="application/json",
+        )
+
+    @staticmethod
+    def _serializable(article: dict) -> dict:
+        item = dict(article)
+        published = item.get("published_at")
+        if isinstance(published, datetime):
+            item["published_at"] = published.astimezone(timezone.utc).isoformat()
+        item["id"] = item.get("id") or item["uid"]
+        item["is_active"] = item.get("is_active", True)
+        return item
+
+    @staticmethod
+    def published_at(article: dict) -> datetime:
+        value = article.get("published_at")
+        if isinstance(value, datetime):
+            return value
+        try:
+            return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            return datetime.now(timezone.utc)
+
+    def merge(self, incoming: list[dict], retention_days: int = 30) -> int:
+        cutoff = datetime.now(timezone.utc) - timedelta(days=retention_days)
+        with self._lock:
+            by_uid = {a["uid"]: a for a in self._articles if a.get("uid")}
+            before = len(by_uid)
+            for raw in incoming:
+                item = self._serializable(raw)
+                existing = by_uid.get(item["uid"])
+                if existing:
+                    if not item.get("image_url"):
+                        item["image_url"] = existing.get("image_url")
+                    if not item.get("summary"):
+                        item["summary"] = existing.get("summary", "")
+                by_uid[item["uid"]] = item
+            self._articles = sorted(
+                (a for a in by_uid.values() if self.published_at(a) >= cutoff),
+                key=self.published_at,
+                reverse=True,
+            )
+            new_count = max(0, len(by_uid) - before)
+            self._save()
+            return new_count
+
+    def all(self) -> list[dict]:
+        with self._lock:
+            return [dict(a) for a in self._articles]
+
+    def replace(self, articles: list[dict]) -> None:
+        with self._lock:
+            self._articles = [self._serializable(a) for a in articles]
+            self._articles.sort(key=self.published_at, reverse=True)
+            self._save()
+
+    def find(self, article_id: str) -> Optional[dict]:
+        with self._lock:
+            return next((dict(a) for a in self._articles if str(a.get("id")) == article_id or a.get("uid") == article_id), None)
+
+
+article_store = JSONArticleStore(ARTICLE_BUCKET, ARTICLE_OBJECT)
+article_store.load()
 
 # ─────────────────────── Pydantic ───────────────────────
 
@@ -915,27 +1018,8 @@ async def run_crawler():
         all_articles.extend([])  # no-op, just for clarity
         # remaining articles keep their empty image_url
 
-    # Step 3: DBに保存
-    db = SessionLocal()
-    new_count = 0
-    try:
-        for a in all_articles:
-            if not db.query(ArticleORM).filter_by(uid=a["uid"]).first():
-                db.add(ArticleORM(**a))
-                new_count += 1
-        db.commit()
-
-        # Step 4: 30日以上前の記事を自動削除（Neon無料版容量対策）
-        # 从 7 天改为 30 天，以保留更多历史新闻供用户查阅
-        cutoff = datetime.now(timezone.utc) - timedelta(days=30)
-        deleted = db.query(ArticleORM).filter(
-            ArticleORM.published_at < cutoff
-        ).delete()
-        if deleted:
-            db.commit()
-            logger.info(f"Auto-cleanup: deleted {deleted} articles older than 30 days")
-    finally:
-        db.close()
+    # Step 3: Merge and persist one JSON snapshot to Cloud Storage.
+    new_count = article_store.merge(all_articles, retention_days=30)
 
     # ログ：画像あり/なしの数
     with_img = sum(1 for a in all_articles if a["image_url"])
@@ -970,7 +1054,19 @@ async def shutdown():
     scheduler.shutdown()
 
 
-def _to_schema(a: ArticleORM) -> ArticleSchema:
+def _to_schema(a) -> ArticleSchema:
+    if isinstance(a, dict):
+        return ArticleSchema(
+            id=str(a.get("id") or a["uid"]),
+            title=a["title"],
+            summary=a.get("summary", ""),
+            source=SourceSchema(name=a["source_name"], logoURL=None, website=a["source_site"]),
+            author=a.get("author", ""),
+            publishedAt=JSONArticleStore.published_at(a).isoformat(),
+            url=a["url"],
+            imageURL=a.get("image_url"),
+            category=a.get("category", "general"),
+        )
     return ArticleSchema(
         id=str(a.id),
         title=a.title,
@@ -991,75 +1087,41 @@ def get_articles(
     limit: int = Query(20, ge=1, le=100),
     keyword: Optional[str] = Query(None),
 ):
-    db = SessionLocal()
-    try:
-        q = db.query(ArticleORM).filter(
-            ArticleORM.is_active == True,
-        )
-        if category:
-            q = q.filter(ArticleORM.category == category)
-        if keyword:
-            # 複合キーワードをスペースで分割し、いずれかが含まれる記事を検索
-            # 例: "芸能人 熱愛" → title LIKE '%芸能人%' OR title LIKE '%熱愛%'
-            # カテゴリ名のマッピング（日本語名→内部カテゴリ名）
-            CATEGORY_ALIASES = {
-                "芸能": "celebrity", "エンタメ": "celebrity", "セレブ": "celebrity",
-                "アイドル": "celebrity", "俳優": "celebrity", "女優": "celebrity",
-                "スポーツ": "sports", "野球": "sports", "サッカー": "sports",
-                "政治": "politician", "政治家": "politician", "国会": "politician",
-                "経済": "business", "ビジネス": "business", "株": "business",
-                "海外": "overseas", "国際": "overseas", "世界": "overseas",
-                "トレンド": "trending", "人気": "trending", "話題": "trending",
-            }
-            sub_keywords = [k.strip() for k in keyword.replace("　", " ").split() if k.strip()]
-            if sub_keywords:
-                from sqlalchemy import or_
-                keyword_filters = []
-                matched_categories = set()
-                for kw in sub_keywords:
-                    keyword_filters.append(ArticleORM.title.contains(kw))
-                    keyword_filters.append(ArticleORM.summary.contains(kw))
-                    # キーワードがカテゴリ名にマッチする場合、そのカテゴリも検索
-                    if kw in CATEGORY_ALIASES:
-                        matched_categories.add(CATEGORY_ALIASES[kw])
-                # カテゴリマッチがあれば条件に追加
-                if matched_categories:
-                    keyword_filters.append(ArticleORM.category.in_(matched_categories))
-                q = q.filter(or_(*keyword_filters))
-            else:
-                q = q.filter(
-                    ArticleORM.title.contains(keyword) |
-                    ArticleORM.summary.contains(keyword)
-                )
-        offset = (page - 1) * limit
-        rows_plus_one = (
-            q.order_by(ArticleORM.published_at.desc())
-            .offset(offset)
-            .limit(limit + 1)
-            .all()
-        )
-        has_more = len(rows_plus_one) > limit
-        rows = rows_plus_one[:limit]
-        return NewsResponse(
-            articles=[_to_schema(r) for r in rows],
-            total=offset + len(rows) + (1 if has_more else 0),
-            page=page,
-            hasMore=has_more,
-        )
-    finally:
-        db.close()
+    rows = [a for a in article_store.all() if a.get("is_active", True)]
+    if category:
+        rows = [a for a in rows if a.get("category") == category]
+    if keyword:
+        aliases = {
+            "芸能": "celebrity", "エンタメ": "celebrity", "セレブ": "celebrity",
+            "アイドル": "celebrity", "俳優": "celebrity", "女優": "celebrity",
+            "スポーツ": "sports", "野球": "sports", "サッカー": "sports",
+            "政治": "politician", "政治家": "politician", "国会": "politician",
+            "経済": "business", "ビジネス": "business", "株": "business",
+            "海外": "overseas", "国際": "overseas", "世界": "overseas",
+            "トレンド": "trending", "人気": "trending", "話題": "trending",
+        }
+        words = [w.strip().lower() for w in keyword.replace("　", " ").split() if w.strip()]
+        matched_categories = {aliases[w] for w in words if w in aliases}
+        rows = [a for a in rows if a.get("category") in matched_categories or any(
+            w in f'{a.get("title", "")} {a.get("summary", "")}'.lower() for w in words
+        )]
+    total = len(rows)
+    offset = (page - 1) * limit
+    page_rows = rows[offset:offset + limit]
+    return NewsResponse(
+        articles=[_to_schema(r) for r in page_rows],
+        total=total,
+        page=page,
+        hasMore=offset + limit < total,
+    )
 
 
 @app.get("/v1/articles/{article_id}", response_model=ArticleSchema)
-def get_article(article_id: int):
-    db = SessionLocal()
-    try:
-        a = db.query(ArticleORM).filter(ArticleORM.id == article_id).first()
-        if not a:
-            raise HTTPException(status_code=404, detail="Not found")
-        return _to_schema(a)
-    finally:
-        db.close()
+def get_article(article_id: str):
+    a = article_store.find(str(article_id))
+    if not a:
+        raise HTTPException(status_code=404, detail="Not found")
+    return _to_schema(a)
 
 
 @app.post("/v1/crawl")
@@ -1070,15 +1132,17 @@ async def manual_crawl():
 
 @app.get("/v1/stats")
 def stats():
-    db = SessionLocal()
-    try:
-        total = db.query(ArticleORM).count()
-        from sqlalchemy import func
-        by_cat = db.query(ArticleORM.category, func.count()).group_by(ArticleORM.category).all()
-        with_img = db.query(func.count(ArticleORM.id)).filter(ArticleORM.image_url != None, ArticleORM.image_url != "").scalar()
-        return {"total": total, "with_image": with_img, "by_category": dict(by_cat)}
-    finally:
-        db.close()
+    rows = article_store.all()
+    by_cat = {}
+    for row in rows:
+        key = row.get("category", "general")
+        by_cat[key] = by_cat.get(key, 0) + 1
+    return {
+        "total": len(rows),
+        "with_image": sum(1 for row in rows if row.get("image_url")),
+        "by_category": by_cat,
+        "storage": f"gs://{ARTICLE_BUCKET}/{ARTICLE_OBJECT}" if ARTICLE_BUCKET else "memory",
+    }
 
 
 @app.post("/v1/backfill-images")
@@ -1586,24 +1650,18 @@ async def send_test_notification(
         raise HTTPException(status_code=500, detail="Test notification failed")
 
 
-@app.get("/v1/health")
-
-
 @app.post("/v1/cleanup-bad-images")
 def cleanup_bad_images():
-    """清理数据库中无效的图片URL（Google logo等）"""
-    db = SessionLocal()
-    try:
-        rows = db.query(ArticleORM).filter(ArticleORM.image_url != None).all()
-        cleaned = 0
-        for row in rows:
-            if _is_bad_image(row.image_url or ""):
-                row.image_url = None
-                cleaned += 1
-        db.commit()
-        return {"checked": len(rows), "cleaned": cleaned}
-    finally:
-        db.close()
+    """清理 JSON 文章库中的无效图片 URL（Google logo 等）"""
+    rows = article_store.all()
+    cleaned = 0
+    for row in rows:
+        if row.get("image_url") and _is_bad_image(row["image_url"]):
+            row["image_url"] = None
+            cleaned += 1
+    if cleaned:
+        article_store.replace(rows)
+    return {"checked": len(rows), "cleaned": cleaned}
 
 
 if __name__ == "__main__":

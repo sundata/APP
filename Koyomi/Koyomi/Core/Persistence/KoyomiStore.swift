@@ -77,6 +77,48 @@ final class KoyomiStore {
         save()
     }
 
+    // MARK: - 気分チェックイン
+
+    func moodRecord(dayKey: String) -> DailyMoodRecord? {
+        var descriptor = FetchDescriptor<DailyMoodRecord>(predicate: #Predicate { $0.dayKey == dayKey })
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+
+    func mood(dayKey: String) -> DailyMood? {
+        moodRecord(dayKey: dayKey)?.mood
+    }
+
+    func saveMood(_ mood: DailyMood, dayKey: String) {
+        if let existing = moodRecord(dayKey: dayKey) {
+            existing.mood = mood
+            existing.updatedAt = Date()
+        } else {
+            context.insert(DailyMoodRecord(dayKey: dayKey, mood: mood))
+        }
+        save()
+    }
+
+    func reflection(dayKey: String) -> String {
+        moodRecord(dayKey: dayKey)?.reflectionText ?? ""
+    }
+
+    func saveReflection(_ text: String, dayKey: String) {
+        let value = String(text.trimmingCharacters(in: .whitespacesAndNewlines).prefix(160))
+        if let existing = moodRecord(dayKey: dayKey) {
+            existing.reflectionText = value
+            existing.updatedAt = Date()
+        } else {
+            context.insert(DailyMoodRecord(dayKey: dayKey, reflectionText: value))
+        }
+        save()
+    }
+
+    func allMoodRecords() -> [DailyMoodRecord] {
+        let descriptor = FetchDescriptor<DailyMoodRecord>(sortBy: [SortDescriptor(\.dayKey, order: .reverse)])
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
     /// 連続して結果を見た日数。途切れても負の表現はしない（数字だけを扱う）。
     func currentStreak(today: Date, calendar: Calendar) -> Int {
         let keys = Set(allRecords().map(\.dayKey))
@@ -100,6 +142,10 @@ final class KoyomiStore {
         let descriptor = FetchDescriptor<UserPreferencesRecord>()
         for preferences in (try? context.fetch(descriptor)) ?? [] {
             context.delete(preferences)
+        }
+        let moodDescriptor = FetchDescriptor<DailyMoodRecord>()
+        for mood in (try? context.fetch(moodDescriptor)) ?? [] {
+            context.delete(mood)
         }
         save()
     }

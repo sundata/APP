@@ -25,10 +25,29 @@ final class ShareCardContentTests: XCTestCase {
     // 受入シナリオ 6: 個人情報がシェアカードに入らない。
     func testShareCardContainsNoPersonalInformation() {
         let card = ShareCardContent(fortune: fortune(), dateText: "2026.08.29")
-        let rendered = [card.dateText, card.zodiacName, card.headline, card.shortMessage, card.luckyColor.name, card.brandName, card.disclaimer]
+        let rendered = [card.dateText, card.zodiacName, card.headline, card.shortMessage, card.luckyColor.name, card.loveKeyword, card.styleTip, card.brandName, card.disclaimer]
             .joined(separator: " ")
         for personal in ["さくら", "東京", "1998", "生年月日", "ニックネーム"] {
             XCTAssertFalse(rendered.contains(personal), "個人情報が含まれている: \(personal)")
+        }
+    }
+
+    func testLifestyleContentIsStableAndUseful() {
+        let first = DailyLifestyleContent(fortune: fortune())
+        let second = DailyLifestyleContent(fortune: fortune())
+        XCTAssertEqual(first, second)
+        XCTAssertFalse(first.loveKeyword.isEmpty)
+        XCTAssertFalse(first.styleTip.isEmpty)
+        XCTAssertFalse(first.conversationStarter.isEmpty)
+        XCTAssertFalse(first.nightQuestion.isEmpty)
+    }
+
+    func testEveryMoodHasDisplayContent() {
+        XCTAssertEqual(DailyMood.allCases.count, 5)
+        for mood in DailyMood.allCases {
+            XCTAssertFalse(mood.emoji.isEmpty)
+            XCTAssertFalse(mood.japaneseName.isEmpty)
+            XCTAssertFalse(mood.gentleMessage.isEmpty)
         }
     }
 
