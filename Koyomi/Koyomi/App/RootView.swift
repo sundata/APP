@@ -46,6 +46,7 @@ struct RootView: View {
                     }
                     .tabItem { Label("わたし", systemImage: "person") }
                 }
+                .tint(KoyomiTheme.strawberryMilk)
             } else {
                 OnboardingView(environment: environment) {
                     onboardingCompleted = true

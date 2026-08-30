@@ -28,6 +28,9 @@ struct TodayView: View {
                         if let lifestyle = viewModel.lifestyleContent {
                             lifestyleCard(lifestyle, luckyColor: fortune.luckyColor)
                         }
+                        if let ritual = viewModel.ritualContent {
+                            ritualCard(ritual)
+                        }
                         categoryGrid(fortune)
                         luckyCard(fortune)
                         actionCard(fortune)
@@ -66,7 +69,7 @@ struct TodayView: View {
         VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.xs) {
             Text(viewModel.displayDate)
                 .font(KoyomiTheme.titleFont)
-                .foregroundStyle(KoyomiTheme.moonBeige)
+                .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
             HStack(spacing: KoyomiTheme.Spacing.s) {
                 if let snapshot = viewModel.weather.snapshot {
                     Image(systemName: snapshot.category.symbolName)
@@ -79,17 +82,17 @@ struct TodayView: View {
                 }
             }
             .font(KoyomiTheme.bodyFont)
-            .foregroundStyle(KoyomiTheme.moonBeige.opacity(0.9))
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme).opacity(0.9))
 
             if let notice = viewModel.weatherNotice {
                 Text(notice)
                     .font(KoyomiTheme.captionFont)
-                    .foregroundStyle(KoyomiTheme.moonBeige.opacity(0.8))
+                    .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
             }
             if viewModel.needsCityChoice {
                 Button("都市を選ぶ") { showCityPicker = true }
                     .font(KoyomiTheme.bodyFont.weight(.semibold))
-                    .foregroundStyle(KoyomiTheme.moonBeige)
+                    .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
                     .frame(minHeight: KoyomiTheme.minimumTapTarget, alignment: .leading)
                     .accessibilityIdentifier("today.selectCity")
             }
@@ -264,6 +267,68 @@ struct TodayView: View {
         }
     }
 
+    private func ritualCard(_ content: DailyRitualContent) -> some View {
+        GlassCard {
+            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("今日の星願リスト")
+                            .font(KoyomiTheme.headlineFont)
+                        Text("ひとつできたら、今日のチャームが開きます")
+                            .font(KoyomiTheme.captionFont)
+                            .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                    }
+                    Spacer()
+                    Text(viewModel.charmUnlocked ? content.charm.emoji : "🔒")
+                        .font(.largeTitle)
+                        .contentTransition(.symbolEffect(.replace))
+                }
+
+                ForEach(content.tasks) { task in
+                    let completed = viewModel.completedRitualTaskIDs.contains(task.id)
+                    Button {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                            viewModel.toggleRitualTask(task)
+                        }
+                    } label: {
+                        HStack(spacing: KoyomiTheme.Spacing.s) {
+                            Image(systemName: completed ? "checkmark.circle.fill" : "circle")
+                                .font(.title3)
+                                .foregroundStyle(completed ? KoyomiTheme.mistPurple : KoyomiTheme.secondaryText(colorScheme))
+                            Image(systemName: task.symbolName)
+                                .frame(width: 24)
+                            Text(task.title)
+                                .font(KoyomiTheme.bodyFont)
+                                .strikethrough(completed, color: KoyomiTheme.secondaryText(colorScheme))
+                            Spacer()
+                        }
+                        .frame(minHeight: KoyomiTheme.minimumTapTarget)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(task.title)、\(completed ? "完了" : "未完了")")
+                }
+
+                if viewModel.charmUnlocked {
+                    HStack(spacing: KoyomiTheme.Spacing.m) {
+                        Text(content.charm.emoji).font(.system(size: 42))
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("今日のチャーム：\(content.charm.name)")
+                                .font(KoyomiTheme.bodyFont.weight(.bold))
+                            Text(content.charm.message)
+                                .font(KoyomiTheme.captionFont)
+                        }
+                    }
+                    .padding(KoyomiTheme.Spacing.s)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(KoyomiTheme.mistPurple.opacity(0.18), in: RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small))
+                    .transition(.scale.combined(with: .opacity))
+                }
+            }
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+        }
+    }
+
     private func categoryGrid(_ fortune: DailyFortune) -> some View {
         VStack(spacing: KoyomiTheme.Spacing.s) {
             categoryCard("恋愛運", fortune.love)
@@ -329,10 +394,10 @@ struct TodayView: View {
             } label: {
                 Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
                     .frame(width: KoyomiTheme.minimumTapTarget, height: KoyomiTheme.minimumTapTarget)
-                    .foregroundStyle(KoyomiTheme.moonBeige)
+                    .foregroundStyle(.white)
                     .background(
                         RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small, style: .continuous)
-                            .fill(KoyomiTheme.nightSky)
+                            .fill(LinearGradient(colors: [KoyomiTheme.strawberryMilk, KoyomiTheme.mistPurple], startPoint: .leading, endPoint: .trailing))
                     )
             }
             .buttonStyle(.plain)

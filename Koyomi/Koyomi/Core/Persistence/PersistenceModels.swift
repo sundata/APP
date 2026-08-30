@@ -117,3 +117,28 @@ final class DailyMoodRecord {
         set { moodRawValue = newValue?.rawValue ?? "" }
     }
 }
+
+/// その日の星願達成状況と、解放したチャーム。
+@Model
+final class DailyRitualRecord {
+    @Attribute(.unique) var dayKey: String
+    var completedTaskIDsData: Data
+    var charmEmoji: String
+    var charmName: String
+    var updatedAt: Date
+
+    init(dayKey: String, completedTaskIDs: Set<String> = [], charm: DailyCharm? = nil, updatedAt: Date = Date()) {
+        self.dayKey = dayKey
+        self.completedTaskIDsData = (try? JSONEncoder().encode(completedTaskIDs)) ?? Data()
+        self.charmEmoji = charm?.emoji ?? ""
+        self.charmName = charm?.name ?? ""
+        self.updatedAt = updatedAt
+    }
+
+    var completedTaskIDs: Set<String> {
+        get { (try? JSONDecoder().decode(Set<String>.self, from: completedTaskIDsData)) ?? [] }
+        set { completedTaskIDsData = (try? JSONEncoder().encode(newValue)) ?? Data() }
+    }
+
+    var hasCharm: Bool { !charmEmoji.isEmpty }
+}

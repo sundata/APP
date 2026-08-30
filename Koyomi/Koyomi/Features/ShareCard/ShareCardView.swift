@@ -16,6 +16,7 @@ struct ShareCardView: View {
 
     enum Style: String, CaseIterable, Identifiable {
         case nightSky
+        case candy
         case rose
         case journal
 
@@ -23,6 +24,7 @@ struct ShareCardView: View {
         var title: String {
             switch self {
             case .nightSky: return "夜空"
+            case .candy: return "キャンディ"
             case .rose: return "ローズ"
             case .journal: return "手帳"
             }
@@ -34,45 +36,56 @@ struct ShareCardView: View {
     let content: ShareCardContent
 
     @State private var format: Format = .story
-    @State private var style: Style = .nightSky
+    @State private var style: Style = .candy
     @State private var renderedImage: Image?
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: KoyomiTheme.Spacing.m) {
-                Picker("形式", selection: $format) {
-                    ForEach(Format.allCases) { format in
-                        Text(format.title).tag(format)
-                    }
-                }
-                .pickerStyle(.segmented)
+            GeometryReader { proxy in
+                let horizontalPadding = KoyomiTheme.Spacing.m * 2
+                let maximumPreviewWidth: CGFloat = format == .story ? 280 : 360
+                let previewWidth = min(max(proxy.size.width - horizontalPadding, 0), maximumPreviewWidth)
 
-                Picker("デザイン", selection: $style) {
-                    ForEach(Style.allCases) { style in
-                        Text(style.title).tag(style)
-                    }
-                }
-                .pickerStyle(.segmented)
+                ScrollView {
+                    VStack(spacing: KoyomiTheme.Spacing.m) {
+                        Picker("形式", selection: $format) {
+                            ForEach(Format.allCases) { format in
+                                Text(format.title).tag(format)
+                            }
+                        }
+                        .pickerStyle(.segmented)
 
-                ShareCardCanvas(content: content, format: format, style: style)
-                    .aspectRatio(format.aspectRatio, contentMode: .fit)
-                    .clipShape(RoundedRectangle(cornerRadius: KoyomiTheme.Radius.card, style: .continuous))
-                    .accessibilityIdentifier("share.preview")
+                        Picker("デザイン", selection: $style) {
+                            ForEach(Style.allCases) { style in
+                                Text(style.title).tag(style)
+                            }
+                        }
+                        .pickerStyle(.segmented)
 
-                if let renderedImage {
-                    ShareLink(
-                        item: renderedImage,
-                        preview: SharePreview("Koyomi", image: renderedImage)
-                    ) {
-                        Text("シェアする")
-                            .font(KoyomiTheme.bodyFont.weight(.semibold))
-                            .frame(maxWidth: .infinity, minHeight: KoyomiTheme.minimumTapTarget)
+                        ShareCardCanvas(content: content, format: format, style: style)
+                            .frame(width: previewWidth, height: previewWidth / format.aspectRatio)
+                            .clipShape(RoundedRectangle(cornerRadius: KoyomiTheme.Radius.card, style: .continuous))
+                            .shadow(color: KoyomiTheme.mistPurple.opacity(0.18), radius: 16, y: 8)
+                            .accessibilityIdentifier("share.preview")
+
+                        if let renderedImage {
+                            ShareLink(
+                                item: renderedImage,
+                                subject: Text("今日のKoyomiをシェア"),
+                                message: Text("今日の運勢、見せ合わない？ ✨ #Koyomi"),
+                                preview: SharePreview("Koyomi", image: renderedImage)
+                            ) {
+                                Text("シェアする")
+                                    .font(KoyomiTheme.bodyFont.weight(.semibold))
+                                    .frame(maxWidth: .infinity, minHeight: KoyomiTheme.minimumTapTarget)
+                            }
+                            .accessibilityIdentifier("share.link")
+                        }
                     }
-                    .accessibilityIdentifier("share.link")
+                    .frame(maxWidth: .infinity)
+                    .padding(KoyomiTheme.Spacing.m)
                 }
-                Spacer()
             }
-            .padding(KoyomiTheme.Spacing.m)
             .navigationTitle("シェアカード")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -107,7 +120,7 @@ struct ShareCardCanvas: View {
     var body: some View {
         ZStack {
             background
-            if style != .journal { StarField(opacity: style == .nightSky ? 0.6 : 0.25) }
+            if style != .journal { StarField(opacity: style == .nightSky ? 0.6 : 0.3) }
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
                 Spacer(minLength: 0)
                 Text(content.dateText)
@@ -142,6 +155,8 @@ struct ShareCardCanvas: View {
                 Spacer(minLength: 0)
                 Text(content.brandName)
                     .font(.system(.headline, design: .serif))
+                Text("友だちと今日の運勢を見せ合おう ✦")
+                    .font(.system(.caption, design: .rounded).weight(.semibold))
                 Text(content.disclaimer)
                     .font(.system(.caption2, design: .default))
                     .opacity(0.85)
@@ -161,6 +176,12 @@ struct ShareCardCanvas: View {
                 startPoint: .top,
                 endPoint: .bottom
             )
+        case .candy:
+            LinearGradient(
+                colors: [KoyomiTheme.lavenderMilk, KoyomiTheme.peachCream, KoyomiTheme.strawberryMilk],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
         case .rose:
             LinearGradient(
                 colors: [Color(red: 0.34, green: 0.16, blue: 0.28), Color(red: 0.78, green: 0.48, blue: 0.57), Color(red: 0.96, green: 0.78, blue: 0.72)],
@@ -177,6 +198,6 @@ struct ShareCardCanvas: View {
     }
 
     private var foregroundColor: Color {
-        style == .journal ? KoyomiTheme.nightSky : KoyomiTheme.moonBeige
+        (style == .journal || style == .candy) ? KoyomiTheme.berryInk : KoyomiTheme.moonBeige
     }
 }

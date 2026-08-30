@@ -51,6 +51,16 @@ final class ShareCardContentTests: XCTestCase {
         }
     }
 
+    func testDailyRitualIsStableAndHasThreeUniqueTasks() {
+        let first = DailyRitualContent(fortune: fortune())
+        let second = DailyRitualContent(fortune: fortune())
+        XCTAssertEqual(first, second)
+        XCTAssertEqual(first.tasks.count, 3)
+        XCTAssertEqual(Set(first.tasks.map(\.title)).count, 3)
+        XCTAssertFalse(first.charm.emoji.isEmpty)
+        XCTAssertFalse(first.charm.name.isEmpty)
+    }
+
     func testShortMessageIsASingleSentence() {
         let card = ShareCardContent(fortune: fortune(), dateText: "2026.08.29")
         XCTAssertTrue(card.shortMessage.hasSuffix("。"))

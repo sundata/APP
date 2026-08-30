@@ -7,7 +7,7 @@ struct KoyomiApp: App {
     private let container: ModelContainer
 
     init() {
-        let schema = Schema([UserPreferencesRecord.self, FortuneRecord.self, DailyMoodRecord.self])
+        let schema = Schema([UserPreferencesRecord.self, FortuneRecord.self, DailyMoodRecord.self, DailyRitualRecord.self])
         // UI テストではディスクを汚さないため、インメモリで動かす。
         let arguments = ProcessInfo.processInfo.arguments
         let usesEphemeralStore = arguments.contains("-uiTesting") || arguments.contains("-screenshotTesting")

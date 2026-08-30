@@ -72,6 +72,15 @@ struct ProfileView: View {
                     Text("生年月日・履歴・お気に入り・都市の設定を、この端末から完全に削除します。")
                 }
             }
+            .tint(KoyomiTheme.strawberryMilk)
+            .scrollContentBackground(.hidden)
+            .background(
+                LinearGradient(
+                    colors: [KoyomiTheme.lavenderMilk.opacity(0.55), KoyomiTheme.vanilla],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
             .navigationTitle("わたし")
             .onAppear(perform: loadPreferences)
             .onDisappear { Task { await savePreferences() } }

@@ -58,7 +58,7 @@ struct OnboardingView: View {
                 .font(KoyomiTheme.headlineFont)
                 .multilineTextAlignment(.center)
         }
-        .foregroundStyle(KoyomiTheme.moonBeige)
+        .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
         .accessibilityIdentifier("onboarding.welcome")
     }
 
@@ -137,7 +137,7 @@ struct OnboardingView: View {
             HStack(spacing: KoyomiTheme.Spacing.xs) {
                 ForEach(0..<4, id: \.self) { index in
                     Circle()
-                        .fill(index == page ? KoyomiTheme.moonBeige : KoyomiTheme.moonBeige.opacity(0.35))
+                        .fill(index == page ? KoyomiTheme.strawberryMilk : KoyomiTheme.berryInk.opacity(0.2))
                         .frame(width: 6, height: 6)
                 }
             }

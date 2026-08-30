@@ -28,6 +28,8 @@ final class TodayViewModel {
     var selectedMood: DailyMood?
     var reflectionDraft = ""
     var reflectionSaved = false
+    var completedRitualTaskIDs: Set<String> = []
+    var charmUnlocked = false
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -64,6 +66,9 @@ final class TodayViewModel {
         selectedMood = environment.store.mood(dayKey: key)
         reflectionDraft = environment.store.reflection(dayKey: key)
         reflectionSaved = !reflectionDraft.isEmpty
+        let ritualRecord = environment.store.ritualRecord(dayKey: key)
+        completedRitualTaskIDs = ritualRecord?.completedTaskIDs ?? []
+        charmUnlocked = ritualRecord?.hasCharm ?? false
 
         let availability = await loadWeather(place: place, now: now, dayKey: key)
         weather = availability
@@ -125,6 +130,17 @@ final class TodayViewModel {
 
     var lifestyleContent: DailyLifestyleContent? {
         fortune.map(DailyLifestyleContent.init(fortune:))
+    }
+
+    var ritualContent: DailyRitualContent? {
+        fortune.map(DailyRitualContent.init(fortune:))
+    }
+
+    func toggleRitualTask(_ task: DailyRitualTask) {
+        guard !dayKey.isEmpty, let ritualContent else { return }
+        let record = environment.store.toggleRitualTask(id: task.id, dayKey: dayKey, charm: ritualContent.charm)
+        completedRitualTaskIDs = record.completedTaskIDs
+        charmUnlocked = record.hasCharm
     }
 
     func selectCity(_ city: City) async {

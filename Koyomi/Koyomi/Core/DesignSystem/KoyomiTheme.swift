@@ -13,21 +13,31 @@ enum KoyomiTheme {
     static let moonBeige = Color(red: 0xFA / 255, green: 0xF7 / 255, blue: 0xF2 / 255)
     /// ダークモードは純黒ではなく深い藍を使う。
     static let deepIndigo = Color(red: 0x14 / 255, green: 0x14 / 255, blue: 0x28 / 255)
+    /// ストロベリーミルク #F3A9BC
+    static let strawberryMilk = Color(red: 0xF3 / 255, green: 0xA9 / 255, blue: 0xBC / 255)
+    /// ピーチクリーム #FFD6C8
+    static let peachCream = Color(red: 0xFF / 255, green: 0xD6 / 255, blue: 0xC8 / 255)
+    /// ラベンダーミルク #D9C9F2
+    static let lavenderMilk = Color(red: 0xD9 / 255, green: 0xC9 / 255, blue: 0xF2 / 255)
+    /// バニラ #FFF8E8
+    static let vanilla = Color(red: 0xFF / 255, green: 0xF8 / 255, blue: 0xE8 / 255)
+    /// ベリー文字色。淡色背景でも十分なコントラストを保つ。
+    static let berryInk = Color(red: 0x4B / 255, green: 0x2D / 255, blue: 0x46 / 255)
 
     static func primaryText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? moonBeige : nightSky
+        scheme == .dark ? moonBeige : berryInk
     }
 
     static func secondaryText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? moonBeige.opacity(0.72) : nightSky.opacity(0.68)
+        scheme == .dark ? moonBeige.opacity(0.72) : berryInk.opacity(0.68)
     }
 
     static func cardFill(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.08) : Color.white.opacity(0.62)
+        scheme == .dark ? Color.white.opacity(0.08) : Color.white.opacity(0.76)
     }
 
     static func cardStroke(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.16) : Color.white.opacity(0.9)
+        scheme == .dark ? Color.white.opacity(0.16) : Color.white.opacity(0.94)
     }
 
     // MARK: - 余白と角丸

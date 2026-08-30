@@ -9,6 +9,7 @@ struct CalendarView: View {
     @State private var month: Date = Date()
     @State private var records: [String: FortuneRecord] = [:]
     @State private var moodRecords: [String: DailyMoodRecord] = [:]
+    @State private var ritualRecords: [String: DailyRitualRecord] = [:]
     @State private var streak = 0
     @State private var selectedDayKey: String?
     @State private var showFavoritesOnly = false
@@ -21,9 +22,10 @@ struct CalendarView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
                     streakCard
+                    charmCollectionCard
                     monthCard
                     Toggle("お気に入りだけ表示", isOn: $showFavoritesOnly)
-                        .foregroundStyle(KoyomiTheme.moonBeige)
+                        .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
                     listCard
                 }
                 .padding(KoyomiTheme.Spacing.m)
@@ -123,6 +125,7 @@ struct CalendarView: View {
     private func dayCell(_ cell: DayCell) -> some View {
         let record = cell.dayKey.flatMap { records[$0] }
         let mood = cell.dayKey.flatMap { moodRecords[$0]?.mood }
+        let charm = cell.dayKey.flatMap { ritualRecords[$0] }.flatMap { $0.hasCharm ? $0.charmEmoji : nil }
         return Button {
             if record != nil { selectedDayKey = cell.dayKey }
         } label: {
@@ -130,7 +133,7 @@ struct CalendarView: View {
                 Text(cell.day.map(String.init) ?? "")
                     .font(KoyomiTheme.bodyFont)
                 // 色だけでなく記号で状態を表す。
-                Text(mood?.emoji ?? (record == nil ? " " : (record?.isFavorite == true ? "♥" : "•")))
+                Text(charm ?? mood?.emoji ?? (record == nil ? " " : (record?.isFavorite == true ? "♥" : "•")))
                     .font(.caption2)
             }
             .frame(minWidth: KoyomiTheme.minimumTapTarget, minHeight: KoyomiTheme.minimumTapTarget)
@@ -172,6 +175,10 @@ struct CalendarView: View {
                                 Text("\(mood.emoji) \(mood.japaneseName)")
                                     .font(KoyomiTheme.captionFont)
                             }
+                            if let ritual = ritualRecords[record.dayKey], ritual.hasCharm {
+                                Text("\(ritual.charmEmoji) \(ritual.charmName)")
+                                    .font(KoyomiTheme.captionFont.weight(.semibold))
+                            }
                             if let weather = record.weather {
                                 Text("\(record.cityName)・\(weather.category.japaneseName) \(weather.temperatureText)")
                                     .font(KoyomiTheme.captionFont)
@@ -199,7 +206,43 @@ struct CalendarView: View {
     private func reload() {
         records = Dictionary(uniqueKeysWithValues: environment.store.allRecords().map { ($0.dayKey, $0) })
         moodRecords = Dictionary(uniqueKeysWithValues: environment.store.allMoodRecords().map { ($0.dayKey, $0) })
+        ritualRecords = Dictionary(uniqueKeysWithValues: environment.store.allRitualRecords().map { ($0.dayKey, $0) })
         streak = environment.store.currentStreak(today: environment.clock.now, calendar: calendar)
+    }
+
+    private var charmCollectionCard: some View {
+        let charms = ritualRecords.values.filter(\.hasCharm).sorted { $0.dayKey > $1.dayKey }
+        return GlassCard {
+            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
+                HStack {
+                    Label("星のチャーム", systemImage: "sparkles")
+                        .font(KoyomiTheme.headlineFont)
+                    Spacer()
+                    Text("\(charms.count)個")
+                        .font(KoyomiTheme.captionFont.weight(.bold))
+                }
+                if charms.isEmpty {
+                    Text("今日の星願をひとつ叶えると、ここにチャームが増えます。")
+                        .font(KoyomiTheme.captionFont)
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: KoyomiTheme.Spacing.s) {
+                            ForEach(charms.prefix(14), id: \.dayKey) { charm in
+                                VStack(spacing: 2) {
+                                    Text(charm.charmEmoji).font(.title)
+                                    Text(charm.dayKey.suffix(5))
+                                        .font(.system(size: 9))
+                                }
+                                .frame(width: 52, height: 58)
+                                .background(Color.white.opacity(0.18), in: RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small))
+                                .accessibilityLabel("\(charm.dayKey)、\(charm.charmName)")
+                            }
+                        }
+                    }
+                }
+            }
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+        }
     }
 
     private var streakMessage: String {

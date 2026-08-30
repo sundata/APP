@@ -119,6 +119,35 @@ final class KoyomiStore {
         return (try? context.fetch(descriptor)) ?? []
     }
 
+    // MARK: - 星願リスト
+
+    func ritualRecord(dayKey: String) -> DailyRitualRecord? {
+        var descriptor = FetchDescriptor<DailyRitualRecord>(predicate: #Predicate { $0.dayKey == dayKey })
+        descriptor.fetchLimit = 1
+        return try? context.fetch(descriptor).first
+    }
+
+    @discardableResult
+    func toggleRitualTask(id: String, dayKey: String, charm: DailyCharm) -> DailyRitualRecord {
+        let record = ritualRecord(dayKey: dayKey) ?? DailyRitualRecord(dayKey: dayKey)
+        if record.modelContext == nil { context.insert(record) }
+        var completed = record.completedTaskIDs
+        if completed.contains(id) { completed.remove(id) } else { completed.insert(id) }
+        record.completedTaskIDs = completed
+        if !completed.isEmpty {
+            record.charmEmoji = charm.emoji
+            record.charmName = charm.name
+        }
+        record.updatedAt = Date()
+        save()
+        return record
+    }
+
+    func allRitualRecords() -> [DailyRitualRecord] {
+        let descriptor = FetchDescriptor<DailyRitualRecord>(sortBy: [SortDescriptor(\.dayKey, order: .reverse)])
+        return (try? context.fetch(descriptor)) ?? []
+    }
+
     /// 連続して結果を見た日数。途切れても負の表現はしない（数字だけを扱う）。
     func currentStreak(today: Date, calendar: Calendar) -> Int {
         let keys = Set(allRecords().map(\.dayKey))
@@ -146,6 +175,9 @@ final class KoyomiStore {
         let moodDescriptor = FetchDescriptor<DailyMoodRecord>()
         for mood in (try? context.fetch(moodDescriptor)) ?? [] {
             context.delete(mood)
+        }
+        for ritual in allRitualRecords() {
+            context.delete(ritual)
         }
         save()
     }

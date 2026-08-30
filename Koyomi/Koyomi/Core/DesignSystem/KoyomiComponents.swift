@@ -10,14 +10,26 @@ struct NightSkyBackground: View {
     private var gradient: LinearGradient {
         let colors: [Color] = colorScheme == .dark
             ? [KoyomiTheme.deepIndigo, KoyomiTheme.nightSky, KoyomiTheme.mistPurple.opacity(0.35)]
-            : [KoyomiTheme.nightSky.opacity(0.92), KoyomiTheme.mistPurple.opacity(0.55), KoyomiTheme.moonBeige]
+            : [KoyomiTheme.lavenderMilk, KoyomiTheme.peachCream, KoyomiTheme.vanilla]
         return LinearGradient(colors: colors, startPoint: .top, endPoint: .bottom)
     }
 
     var body: some View {
         ZStack {
             gradient
-            StarField(opacity: breathing ? 0.85 : 0.5)
+            if colorScheme == .light {
+                Circle()
+                    .fill(KoyomiTheme.strawberryMilk.opacity(0.28))
+                    .frame(width: 260, height: 260)
+                    .blur(radius: 8)
+                    .offset(x: -150, y: -260)
+                Circle()
+                    .fill(KoyomiTheme.lavenderMilk.opacity(0.55))
+                    .frame(width: 220, height: 220)
+                    .blur(radius: 10)
+                    .offset(x: 160, y: 210)
+            }
+            StarField(opacity: colorScheme == .dark ? (breathing ? 0.85 : 0.5) : (breathing ? 0.48 : 0.28))
                 .blendMode(.screen)
         }
         .ignoresSafeArea()
@@ -81,6 +93,7 @@ struct GlassCard<Content: View>: View {
                 RoundedRectangle(cornerRadius: KoyomiTheme.Radius.card, style: .continuous)
                     .stroke(KoyomiTheme.cardStroke(colorScheme), lineWidth: 1)
             )
+            .shadow(color: colorScheme == .dark ? .clear : KoyomiTheme.strawberryMilk.opacity(0.14), radius: 14, y: 7)
     }
 }
 
@@ -94,7 +107,7 @@ struct ScoreStars: View {
             ForEach(1...5, id: \.self) { index in
                 Image(systemName: index <= score ? "star.fill" : "star")
                     .font(.system(size: size))
-                    .foregroundStyle(index <= score ? KoyomiTheme.mistPurple : Color.secondary.opacity(0.5))
+                    .foregroundStyle(index <= score ? KoyomiTheme.strawberryMilk : Color.secondary.opacity(0.35))
             }
             Text("\(score)/5")
                 .font(KoyomiTheme.captionFont)
@@ -126,8 +139,15 @@ struct KoyomiPrimaryButton: View {
                 .frame(maxWidth: .infinity, minHeight: KoyomiTheme.minimumTapTarget)
                 .background(
                     RoundedRectangle(cornerRadius: KoyomiTheme.Radius.small, style: .continuous)
-                        .fill(KoyomiTheme.nightSky)
+                        .fill(
+                            LinearGradient(
+                                colors: [KoyomiTheme.strawberryMilk, KoyomiTheme.mistPurple],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
                 )
+                .shadow(color: KoyomiTheme.strawberryMilk.opacity(0.28), radius: 10, y: 5)
         }
         .buttonStyle(.plain)
     }
