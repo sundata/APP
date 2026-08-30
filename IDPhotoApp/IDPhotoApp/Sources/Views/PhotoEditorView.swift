@@ -15,7 +15,9 @@ struct PhotoEditorView: View {
     private enum EditorSheet: String, CaseIterable, Identifiable {
         case size       = "サイズ"
         case background = "背景"
-        case beauty     = "美し"
+        case beauty     = "自然補正"
+        case crop       = "構図"
+        case repair     = "境界修正"
 
         var id: String { rawValue }
     }
@@ -265,6 +267,11 @@ struct PhotoEditorView: View {
                     activeSheet = .size
                 }
 
+                toolbarButton(icon: "crop", label: "構図", isActive: activeSheet == .crop) {
+                    HapticFeedback.light()
+                    activeSheet = .crop
+                }
+
                 // 背景按钮
                 toolbarButton(
                     icon: "paintpalette.fill",
@@ -385,6 +392,13 @@ struct PhotoEditorView: View {
             backgroundSheetContent
         case .beauty:
             beautySheetContent
+        case .crop:
+            VStack(spacing: 0) {
+                sheetInlineHeader(title: "構図を調整") { activeSheet = nil }
+                CropView(viewModel: viewModel)
+            }
+        case .repair:
+            BackgroundRepairView(viewModel: viewModel)
         }
     }
 

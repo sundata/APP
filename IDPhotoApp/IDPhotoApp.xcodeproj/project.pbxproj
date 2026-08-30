@@ -27,6 +27,10 @@
 		A1000018 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000018 /* CropView.swift */; };
 		A1000019 /* AdjustmentControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000019 /* AdjustmentControlView.swift */; };
 		A1000020 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000020 /* ExportService.swift */; };
+		A1000021 /* ProjectStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000021 /* ProjectStore.swift */; };
+		A1000025 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4000025 /* Localizable.strings */; };
+		A1000026 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4000026 /* InfoPlist.strings */; };
+		A1000023 /* BackgroundRepairView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000023 /* BackgroundRepairView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,8 +54,12 @@
 		A2000018 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
 		A2000019 /* AdjustmentControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentControlView.swift; sourceTree = "<group>"; };
 		A2000020 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		A2000021 /* ProjectStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStore.swift; sourceTree = "<group>"; };
 		A3000001 /* IDPhotoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IDPhotoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2000025 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "en-AU.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A2000026 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "en-AU.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		A2000023 /* BackgroundRepairView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRepairView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +89,8 @@
 				A3000002 /* Info.plist */,
 				A2000016 /* Assets.xcassets */,
 				A2000017 /* LaunchScreen.storyboard */,
+				A4000025 /* Localizable.strings */,
+				A4000026 /* InfoPlist.strings */,
 				A5000003 /* Sources */,
 			);
 			path = IDPhotoApp;
@@ -109,6 +119,7 @@
 				A2000008 /* BeautyControlView.swift */,
 				A2000018 /* CropView.swift */,
 				A2000019 /* AdjustmentControlView.swift */,
+				A2000023 /* BackgroundRepairView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -136,6 +147,7 @@
 				A2000012 /* BeautyService.swift */,
 				A2000013 /* BackgroundService.swift */,
 				A2000020 /* ExportService.swift */,
+				A2000021 /* ProjectStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -201,6 +213,7 @@
 			knownRegions = (
 				ja,
 				en,
+				"en-AU",
 				Base,
 			);
 			mainGroup = A5000001;
@@ -222,10 +235,27 @@
 			files = (
 				A1000016 /* Assets.xcassets in Resources */,
 				A1000017 /* LaunchScreen.storyboard in Resources */,
+				A1000025 /* Localizable.strings in Resources */,
+				A1000026 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A4000025 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = ( A2000025 /* Localizable.strings */, );
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		A4000026 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = ( A2000026 /* InfoPlist.strings */, );
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A8000001 /* Sources */ = {
@@ -246,6 +276,8 @@
 				A1000012 /* BeautyService.swift in Sources */,
 				A1000013 /* BackgroundService.swift in Sources */,
 				A1000020 /* ExportService.swift in Sources */,
+				A1000021 /* ProjectStore.swift in Sources */,
+				A1000023 /* BackgroundRepairView.swift in Sources */,
 				A1000014 /* ImageExtensions.swift in Sources */,
 				A1000015 /* ColorExtensions.swift in Sources */,
 				A1000018 /* CropView.swift in Sources */,

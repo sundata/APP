@@ -41,12 +41,19 @@ struct IDPhotoSize: Identifiable, Hashable {
     }
 }
 
+struct OfficialPhotoGuidance {
+    let title: String
+    let requirements: [String]
+    let sourceURL: URL
+}
+
 // MARK: - 日本標準証明写真サイズ定義
 
 extension IDPhotoSize {
     static let allSizes: [IDPhotoSize] = [
         // ── パスポート・ビザ ──
         IDPhotoSize(id: "passport_jp",    name: "パスポート",        widthMM: 35, heightMM: 45, category: .passport,   description: "旅券申請用（35×45mm）",            dpi: 300),
+        IDPhotoSize(id: "passport_au",    name: "Australian passport", widthMM: 35, heightMM: 45, category: .passport, description: "Australian passport (35×45mm crop)", dpi: 300),
         IDPhotoSize(id: "visa_eu",        name: "欧州ビザ",           widthMM: 35, heightMM: 45, category: .passport,   description: "ヨーロッパビザ用（35×45mm）",       dpi: 300),
         IDPhotoSize(id: "visa_us",        name: "米国ビザ",           widthMM: 51, heightMM: 51, category: .passport,   description: "アメリカビザ用（51×51mm）",         dpi: 300),
         IDPhotoSize(id: "visa_cn",        name: "中国ビザ",           widthMM: 33, heightMM: 48, category: .passport,   description: "中国ビザ用（33×48mm）",             dpi: 300),
@@ -90,11 +97,32 @@ extension IDPhotoSize {
 
 
     static var popularSizes: [IDPhotoSize] {
-        allSizes.filter {
+        if Locale.current.region?.identifier == "AU" {
+            let order = ["passport_au", "visa_au", "passport_jp", "visa_us", "ca_35x45"]
+            return order.compactMap { id in allSizes.first { $0.id == id } }
+        }
+        return allSizes.filter {
             ["passport_jp", "visa_us", "visa_eu", "visa_cn",
              "exam_standard",
              "mynumber", "resume_l", "resume_s",
              "us_2x3", "cn_1寸", "cn_2寸"].contains($0.id)
+        }
+    }
+
+    var officialGuidance: OfficialPhotoGuidance? {
+        switch id {
+        case "passport_au":
+            return OfficialPhotoGuidance(title: "Australian Passport Office guidance", requirements: [
+                "Final photo must be 35–40 mm wide and 45–50 mm high.",
+                "Chin-to-crown height must be 32–36 mm; face centred and looking straight ahead.",
+                "Use a plain white or light-grey background, even lighting and a photo less than 6 months old.",
+                "Do not digitally retouch facial features, moles, wrinkles or scars. Acceptance is decided by the issuing authority."
+            ], sourceURL: URL(string: "https://www.passports.gov.au/passports-explained/how-apply/passport-photo-guidelines")!)
+        case "passport_jp":
+            return OfficialPhotoGuidance(title: "外務省 パスポート写真規格", requirements: ["縦45mm・横35mm", "申請日前6か月以内に撮影", "正面・無帽・無背景で鮮明な写真"], sourceURL: URL(string: "https://www.mofa.go.jp/mofaj/toko/passport/ic_photo.html")!)
+        case "mynumber":
+            return OfficialPhotoGuidance(title: "マイナンバーカード顔写真のチェックポイント", requirements: ["縦4.5cm・横3.5cm", "最近6か月以内に撮影", "正面・無帽・無背景"], sourceURL: URL(string: "https://www.kojinbango-card.go.jp/apprec/abroad/procedure/photo/")!)
+        default: return nil
         }
     }
 }

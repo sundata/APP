@@ -9,6 +9,28 @@ import CoreImage.CIFilterBuiltins
 /// - 単色・グラデーション・カスタムカラー・チェッカーパターン対応
 class BackgroundService {
 
+    func repairAlpha(current: UIImage, originalCutout: UIImage, points: [CGPoint], normalizedRadius: CGFloat, restore: Bool) -> UIImage {
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = current.scale
+        return UIGraphicsImageRenderer(size: current.size, format: format).image { context in
+            current.draw(in: CGRect(origin: .zero, size: current.size))
+            let radius = max(2, normalizedRadius * min(current.size.width, current.size.height))
+            for point in points {
+                let center = CGPoint(x: point.x * current.size.width, y: point.y * current.size.height)
+                let rect = CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2)
+                context.cgContext.saveGState()
+                context.cgContext.addEllipse(in: rect)
+                context.cgContext.clip()
+                if restore {
+                    originalCutout.draw(in: CGRect(origin: .zero, size: current.size))
+                } else {
+                    context.cgContext.clear(rect)
+                }
+                context.cgContext.restoreGState()
+            }
+        }
+    }
+
     private lazy var ciContext = CIContext(options: [.useSoftwareRenderer: false])
 
     // MARK: - AI背景除去（精細化版）

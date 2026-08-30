@@ -5,6 +5,7 @@ import PhotosUI
 
 struct HomeView: View {
     @StateObject private var editorVM = PhotoEditorViewModel()
+    @ObservedObject private var projectStore = ProjectStore.shared
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var showCamera        = false
     @State private var navigateToEditor  = false
@@ -42,6 +43,11 @@ struct HomeView: View {
                                 .padding(.top, 22)
                                 .opacity(badgeAppeared ? 1 : 0)
                                 .offset(y: badgeAppeared ? 0 : 20)
+
+                            if !projectStore.projects.isEmpty {
+                                recentProjectsSection
+                                    .padding(.top, 28)
+                            }
 
                             // ── よく使うサイズ ──
                             quickSizeSection
@@ -104,10 +110,39 @@ struct HomeView: View {
                     }
             }
         }
+	    }
+	}
+
+    private var recentProjectsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Recent projects").font(.system(size: 20, weight: .bold))
+                Spacer()
+                Text("Saved on this device").font(.caption).foregroundColor(Color.appTextSecondary)
+            }.padding(.horizontal, 20)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(projectStore.projects.prefix(6)) { project in
+                        Button {
+                            if editorVM.restoreProject(project) { navigateToEditor = true }
+                        } label: {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Group {
+                                    if let image = projectStore.thumbnail(for: project.id) { Image(uiImage: image).resizable().scaledToFill() }
+                                    else { Color.appSurface.overlay(Image(systemName: "person.crop.rectangle").foregroundColor(.secondary)) }
+                                }
+                                .frame(width: 112, height: 138).clipped().cornerRadius(12)
+                                Text(project.title).font(.caption.weight(.semibold)).lineLimit(1)
+                                Text(project.updatedAt, style: .relative).font(.caption2).foregroundColor(.secondary)
+                            }.frame(width: 112, alignment: .leading)
+                        }
+                        .buttonStyle(.plain)
+                        .contextMenu { Button(role: .destructive) { projectStore.delete(project.id) } label: { Label("Delete", systemImage: "trash") } }
+                    }
+                }.padding(.horizontal, 20)
+            }
+        }
     }
-}
-
-
     // ─────────────────────────────────────
     // MARK: 入場アニメーション
     // ─────────────────────────────────────

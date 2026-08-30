@@ -1,0 +1,4 @@
+"CFBundleDisplayName" = "ID Photo Studio";
+"NSCameraUsageDescription" = "The camera is used to take an ID photo. Face guidance runs on your device.";
+"NSPhotoLibraryUsageDescription" = "Photo access lets you select a portrait to create an ID photo.";
+"NSPhotoLibraryAddUsageDescription" = "Photo access lets you save the finished ID photo.";

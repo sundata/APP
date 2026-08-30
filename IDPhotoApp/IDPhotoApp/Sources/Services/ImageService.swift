@@ -9,7 +9,9 @@ class ImageService {
 
     // MARK: - リサイズ
     func resizeImage(_ image: UIImage, to size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
         return renderer.image { _ in
             image.draw(in: CGRect(origin: .zero, size: size))
         }
@@ -64,7 +66,7 @@ class ImageService {
         let viewAspect  = viewSize.width / viewSize.height
         let fitW: CGFloat
         let fitH: CGFloat
-        if imgAspect > viewAspect {
+        if imgAspect < viewAspect {
             fitW = viewSize.width
             fitH = viewSize.width / imgAspect
         } else {
@@ -78,8 +80,8 @@ class ImageService {
         // 中心を offset だけずらした後のクロップ矩形（view座標）
         let cropViewW = fitW / cropState.scale
         let cropViewH = fitH / cropState.scale
-        let originX   = (viewSize.width  - cropViewW) / 2 - cropState.offset.width  / cropState.scale
-        let originY   = (viewSize.height - cropViewH) / 2 - cropState.offset.height / cropState.scale
+        let originX   = (fitW - cropViewW) / 2 - cropState.offset.width / cropState.scale
+        let originY   = (fitH - cropViewH) / 2 - cropState.offset.height / cropState.scale
 
         // 画像座標へ変換
         let imgX = max(0, originX / displayScale)
