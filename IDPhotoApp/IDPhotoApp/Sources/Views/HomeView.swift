@@ -207,9 +207,9 @@ struct HomeView: View {
 
                     // 実績バッジ
                     HStack(spacing: 8) {
-                        StatBadge(value: "14+", label: "サイズ対応")
+                        StatBadge(value: "25+", label: "サイズ対応")
                         StatBadge(value: "AI", label: "背景除去")
-                        StatBadge(value: "1分", label: "で完成")
+                        StatBadge(value: "300", label: "DPI出力")
                     }
                     .padding(.top, 4)
                     .opacity(heroAnimated ? 1 : 0)
@@ -336,7 +336,7 @@ struct HomeView: View {
     // ─────────────────────────────────────
     private var howToUseSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            SectionHeader(title: "かんたん3ステップ", subtitle: "最短1分で証明写真が完成")
+            SectionHeader(title: "かんたん3ステップ", subtitle: "端末内で写真を安全に仕上げます")
 
             VStack(spacing: 0) {
                 ForEach(HowToStep.steps.indices, id: \.self) { i in

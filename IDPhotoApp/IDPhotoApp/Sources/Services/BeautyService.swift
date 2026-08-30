@@ -132,6 +132,8 @@ enum BeautyPreset: String, CaseIterable {
     case formal     = "フォーマル"
     case vivid      = "ビビッド"
 
+    static let safeCases: [BeautyPreset] = [.none, .natural, .bright, .formal]
+
     var icon: String {
         switch self {
         case .none:    return "circle.slash"
@@ -149,10 +151,10 @@ enum BeautyPreset: String, CaseIterable {
             return BeautyParameters()
         case .natural:
             var p = BeautyParameters()
-            p.skinSmoothing = 0.25
-            p.brightness    = 0.08
-            p.saturation    = 0.08
-            p.warmth        = 0.1
+            p.skinSmoothing = 0.12
+            p.brightness    = 0.05
+            p.saturation    = 0.03
+            p.warmth        = 0.04
             return p
         case .soft:
             var p = BeautyParameters()
@@ -164,18 +166,18 @@ enum BeautyPreset: String, CaseIterable {
             return p
         case .bright:
             var p = BeautyParameters()
-            p.brightness    = 0.22
-            p.contrast      = 0.12
-            p.saturation    = 0.15
-            p.sharpness     = 0.2
-            p.highlights    = 0.1
+            p.brightness    = 0.10
+            p.contrast      = 0.05
+            p.saturation    = 0.04
+            p.sharpness     = 0.10
+            p.highlights    = 0.04
             return p
         case .formal:
             var p = BeautyParameters()
-            p.contrast      = 0.18
-            p.sharpness     = 0.3
-            p.saturation    = -0.12
-            p.shadows       = 0.1
+            p.contrast      = 0.08
+            p.sharpness     = 0.12
+            p.saturation    = -0.04
+            p.shadows       = 0.05
             return p
         case .vivid:
             var p = BeautyParameters()

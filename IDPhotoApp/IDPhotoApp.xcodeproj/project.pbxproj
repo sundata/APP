@@ -31,6 +31,7 @@
 		A1000025 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4000025 /* Localizable.strings */; };
 		A1000026 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A4000026 /* InfoPlist.strings */; };
 		A1000023 /* BackgroundRepairView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000023 /* BackgroundRepairView.swift */; };
+		A1000027 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A2000027 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		A2000025 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = "en-AU.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A2000026 /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "en-AU.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		A2000023 /* BackgroundRepairView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRepairView.swift; sourceTree = "<group>"; };
+		A2000027 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				A2000001 /* IDPhotoAppApp.swift */,
 				A2000002 /* ContentView.swift */,
 				A3000002 /* Info.plist */,
+				A2000027 /* PrivacyInfo.xcprivacy */,
 				A2000016 /* Assets.xcassets */,
 				A2000017 /* LaunchScreen.storyboard */,
 				A4000025 /* Localizable.strings */,
@@ -237,6 +240,7 @@
 				A1000017 /* LaunchScreen.storyboard in Resources */,
 				A1000025 /* Localizable.strings in Resources */,
 				A1000026 /* InfoPlist.strings in Resources */,
+				A1000027 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,6 +36,10 @@ struct ExportView: View {
                         .padding(.horizontal, 20)
                         .padding(.bottom, 20)
 
+                    complianceSection
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 20)
+
                     // ③ 印刷レイアウト選択
                     layoutSection
                         .padding(.bottom, 20)
@@ -110,6 +114,31 @@ struct ExportView: View {
         .task {
             await generateLayoutPreview()
         }
+    }
+
+    private var complianceSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("Pre-submission check", systemImage: "checkmark.seal.fill")
+                .font(.headline).foregroundColor(Color.appTextPrimary)
+            if viewModel.isCheckingPhoto { ProgressView() }
+            ForEach(viewModel.photoChecks) { check in
+                HStack(alignment: .top) {
+                    Image(systemName: check.passed ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                        .foregroundColor(check.passed ? .green : .orange)
+                    VStack(alignment: .leading, spacing: 2) { Text(check.title).font(.subheadline.weight(.semibold)); Text(check.detail).font(.caption).foregroundColor(Color.appTextSecondary) }
+                }
+            }
+            if let guidance = viewModel.editState.selectedSize.officialGuidance {
+                Divider()
+                Text(guidance.requirements.joined(separator: "\n• ")).font(.caption).foregroundColor(Color.appTextSecondary)
+                Link("Open official requirements", destination: guidance.sourceURL).font(.caption.weight(.semibold))
+            }
+            Text("This app assists with sizing and composition. Acceptance is determined by the issuing authority. Do not digitally retouch facial features for Australian passport photos.")
+                .font(.caption2).foregroundColor(Color.appTextSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading).padding(14)
+        .background(Color.appSurface).cornerRadius(14)
+        .task { await viewModel.checkPhoto() }
     }
 
     // ─────────────────────────────

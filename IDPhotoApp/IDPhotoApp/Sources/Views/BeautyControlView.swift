@@ -133,7 +133,7 @@ struct BeautyControlView: View {
     private var presetRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                ForEach(BeautyPreset.allCases, id: \.self) { preset in
+                ForEach(BeautyPreset.safeCases, id: \.self) { preset in
                     PresetChip(title: preset.rawValue,
                                icon: preset.icon,
                                isSelected: selectedPreset == preset) {

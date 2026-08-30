@@ -31,6 +31,10 @@ struct SizePickerView: View {
             // サイズリスト
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 10, pinnedViews: []) {
+                    if let guidance = viewModel.editState.selectedSize.officialGuidance {
+                        officialGuidanceCard(guidance)
+                            .padding(.horizontal, 16)
+                    }
                     ForEach(filteredSizes) { size in
                         SizeCard(
                             size: size,
@@ -60,6 +64,17 @@ struct SizePickerView: View {
                 .padding(.bottom, 100)
             }
         }
+    }
+
+    private func officialGuidanceCard(_ guidance: OfficialPhotoGuidance) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(guidance.title, systemImage: "checkmark.shield.fill")
+                .font(.system(size: 14, weight: .semibold)).foregroundColor(Color.appPrimary)
+            ForEach(guidance.requirements, id: \.self) { Text("• \($0)").font(.caption).foregroundColor(Color.appTextSecondary) }
+            Link(destination: guidance.sourceURL) { Label("Open official requirements", systemImage: "arrow.up.right.square") .font(.caption.weight(.semibold)) }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading).padding(14)
+        .background(Color.appPrimary.opacity(0.08)).cornerRadius(12)
     }
 
     // MARK: - 検索バー

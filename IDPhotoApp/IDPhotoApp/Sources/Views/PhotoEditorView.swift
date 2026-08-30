@@ -285,7 +285,7 @@ struct PhotoEditorView: View {
                 // 美肌按钮
                 toolbarButton(
                     icon: "sparkles",
-                    label: "肌を美しく",
+                    label: "自然補正",
                     isActive: activeSheet == .beauty
                 ) {
                     HapticFeedback.light()
@@ -748,7 +748,7 @@ struct PhotoEditorView: View {
     private var presetRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
-                ForEach(BeautyPreset.allCases, id: \.self) { preset in
+                ForEach(BeautyPreset.safeCases, id: \.self) { preset in
                     PresetChip(
                         title: preset.rawValue,
                         icon: preset.icon,
