@@ -1,603 +1,144 @@
 {
-  "sourceLanguage" : "ja",
-  "strings" : {
-    " " : {
-
-    },
-    "%@ %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ %2$@"
-          }
-        }
-      }
-    },
-    "%@・%@ %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@・%2$@ %3$@"
-          }
-        }
-      }
-    },
-    "%@の予報です。最新の気象情報を確認して、無理のない行動を選んでください。" : {
-
-    },
-    "%lld/5" : {
-
-    },
-    "%lld日" : {
-
-    },
-    "•" : {
-
-    },
-    "♥" : {
-
-    },
-    "Koyomi" : {
-
-    },
-    "Koyomi について" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Koyomi について"
-          }
-        }
-      }
-    },
-    "あとで" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "あとで"
-          }
-        }
-      }
-    },
-    "あなたのことを、少しだけ教えてください" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "あなたのことを、少しだけ教えてください"
-          }
-        }
-      }
-    },
-    "あなたの星座は%@です（%@）" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "あなたの星座は%1$@です（%2$@）"
-          }
-        }
-      }
-    },
-    "おこのみの都市を選ぶ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "おこのみの都市を選ぶ"
-          }
-        }
-      }
-    },
-    "お休みの日があっても大丈夫。またいつでも戻ってきてください。" : {
-
-    },
-    "お天気" : {
-
-    },
-    "お気に入りから外す" : {
-
-    },
-    "お気に入りだけ表示" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "お気に入りだけ表示"
-          }
-        }
-      }
-    },
-    "お気に入りに追加" : {
-
-    },
-    "カレンダー" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "カレンダー"
-          }
-        }
-      }
-    },
-    "キャンセル" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "キャンセル"
-          }
-        }
-      }
-    },
-    "この日はお天気情報がありませんでした。" : {
-
-    },
-    "シェアカード" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "シェアカード"
-          }
-        }
-      }
-    },
-    "シェアカードをつくる" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "シェアカードをつくる"
-          }
-        }
-      }
-    },
-    "シェアする" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "シェアする"
-          }
-        }
-      }
-    },
-    "すべてのデータを削除" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "すべてのデータを削除"
-          }
-        }
-      }
-    },
-    "すべてのデータを削除しますか？" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "すべてのデータを削除しますか？"
-          }
-        }
-      }
-    },
-    "つづけて見ている日数" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "つづけて見ている日数"
-          }
-        }
-      }
-    },
-    "ニックネーム（任意）" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ニックネーム（任意）"
-          }
-        }
-      }
-    },
-    "はじめる" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "はじめる"
-          }
-        }
-      }
-    },
-    "プライバシーポリシー" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "プライバシーポリシー"
-          }
-        }
-      }
-    },
-    "ラッキーアイテム：%@" : {
-
-    },
-    "ラッキーカラー：%@" : {
-
-    },
-    "ラッキータイム：%@" : {
-
-    },
-    "リマインダー" : {
-
-    },
-    "リマインダーの時刻" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "リマインダーの時刻"
-          }
-        }
-      }
-    },
-    "リマインダーをオンにする" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "リマインダーをオンにする"
-          }
-        }
-      }
-    },
-    "わたし" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "わたし"
-          }
-        }
-      }
-    },
-    "今いる場所のお天気を、占いにそっと重ねます。" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今いる場所のお天気を、占いにそっと重ねます。"
-          }
-        }
-      }
-    },
-    "今日" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日"
-          }
-        }
-      }
-    },
-    "今日の小さなアクション" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日の小さなアクション"
-          }
-        }
-      }
-    },
-    "今日の小さなアクション：%@" : {
-
-    },
-    "今日の空は、今日のあなたの味方。" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日の空は、今日のあなたの味方。"
-          }
-        }
-      }
-    },
-    "今日の運勢" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日の運勢"
-          }
-        }
-      }
-    },
-    "仕事・勉強運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仕事・勉強運"
-          }
-        }
-      }
-    },
-    "位置情報が使えない設定になっています。iOS の設定から変更できます。" : {
-
-    },
-    "位置情報は「使用中のみ」お借りして、お天気の取得だけに使います。保存するのは都市名とお天気の要約だけです。" : {
-
-    },
-    "位置情報を許可する" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "位置情報を許可する"
-          }
-        }
-      }
-    },
-    "免責事項" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "免責事項"
-          }
-        }
-      }
-    },
-    "削除する" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "削除する"
-          }
-        }
-      }
-    },
-    "前の月" : {
-
-    },
-    "対人運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "対人運"
-          }
-        }
-      }
-    },
-    "形式" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "形式"
-          }
-        }
-      }
-    },
-    "恋愛運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "恋愛運"
-          }
-        }
-      }
-    },
-    "星座：%@" : {
-
-    },
-    "時刻" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "時刻"
-          }
-        }
-      }
-    },
-    "次の月" : {
-
-    },
-    "次へ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次へ"
-          }
-        }
-      }
-    },
-    "毎日のお知らせ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "毎日のお知らせ"
-          }
-        }
-      }
-    },
-    "毎朝、そっとお知らせしましょうか？" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "毎朝、そっとお知らせしましょうか？"
-          }
-        }
-      }
-    },
-    "現在地のお天気を使う" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "現在地のお天気を使う"
-          }
-        }
-      }
-    },
-    "生年月日" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "生年月日"
-          }
-        }
-      }
-    },
-    "生年月日・履歴・お気に入り・都市の設定を、この端末から完全に削除します。" : {
-
-    },
-    "生年月日はこの端末の中だけに保存され、外部には送信されません。" : {
-
-    },
-    "空からのサイン" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空からのサイン"
-          }
-        }
-      }
-    },
-    "空と星から届く、わたしだけの毎日占い" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空と星から届く、わたしだけの毎日占い"
-          }
-        }
-      }
-    },
-    "美容・健康運" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "美容・健康運"
-          }
-        }
-      }
-    },
-    "読み込み中" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "読み込み中"
-          }
-        }
-      }
-    },
-    "都市" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "都市"
-          }
-        }
-      }
-    },
-    "都市を自分で選ぶ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "都市を自分で選ぶ"
-          }
-        }
-      }
-    },
-    "都市を選ぶ" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "都市を選ぶ"
-          }
-        }
-      }
-    },
-    "閉じる" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "閉じる"
-          }
-        }
-      }
-    }
+  "sourceLanguage": "ja",
+  "strings": {
+    "あすのシフト": {},
+    "あすのシフト通知": {},
+    "あとで設定してもかまいません。金額は端末内にだけ保存されます。": {},
+    "あとで設定する": {},
+    "いまのデータに追加する": {},
+    "いまのデータを消して置き換えます": {},
+    "うまくいきませんでした": {},
+    "このアプリについて": {},
+    "このシフトを削除": {},
+    "この操作は取り消せません。": {},
+    "この月にはシフトがありません。空のカレンダーを共有します。": {},
+    "この期間に登録": {},
+    "すでに登録したシフトに使われているテンプレートは削除できません。アーカイブすると新規登録の候補から外れ、過去の記録はそのまま残ります。": {},
+    "すべてのデータを削除": {},
+    "すべてのデータを削除しますか？": {},
+    "すべて置き換える": {},
+    "はじめる": {},
+    "まだシフトがありません": {},
+    "まとめて登録": {},
+    "よく使うシフトです。あとから設定でいつでも変更できます。": {},
+    "アプリスイッチャーのスナップショットなどで金額が見えないようにします。": {},
+    "アーカイブ": {},
+    "カレンダー": {},
+    "キャンセル": {},
+    "シフト": {},
+    "シフトがありません。右上の＋から追加しましょう。": {},
+    "シフトを、もっとかんたんに。": {},
+    "シフトを共有": {},
+    "シフトを削除しました": {},
+    "シフトを更新しました": {},
+    "シフトを用意しましょう": {},
+    "シフトを登録": {},
+    "シフトを登録しました": {},
+    "シフトを編集": {},
+    "シフトを追加": {},
+    "シフトテンプレート": {},
+    "シフト・テンプレート・設定がすべて消えます。": {},
+    "シフト・テンプレート・設定をすべて消し、初回起動の状態に戻します。": {},
+    "スキップ": {},
+    "タップしてシフトを編集。長押しでまとめて登録。": {},
+    "データ": {},
+    "バックアップと削除": {},
+    "バックアップを書き出す": {},
+    "バックアップを書き出せませんでした。空き容量を確認してもう一度お試しください。": {},
+    "バックアップを読み込む": {},
+    "バックグラウンドで金額を隠す": {},
+    "バージョン": {},
+    "ファイルにはシフト・メモ・給与設定が含まれます。保管と共有にはご注意ください。": {},
+    "ファイルを読み込めませんでした。Koyomi で書き出した JSON を選んでください。": {},
+    "ファイルを開けませんでした。もう一度選び直してください。": {},
+    "プライバシー": {},
+    "プライバシーについて": {},
+    "メモ（任意・端末内のみ）": {},
+    "リマインダー": {},
+    "上書きする": {},
+    "予想合計": {},
+    "交通費": {},
+    "交通費（円／勤務日）": {},
+    "今日": {},
+    "休み": {},
+    "休みの日数": {},
+    "休み・給与なし": {},
+    "例：夜勤": {},
+    "保存": {},
+    "元に戻す": {},
+    "共有画像のプレビュー。給与とメモは含まれません。": {},
+    "円": {},
+    "削除": {},
+    "削除する": {},
+    "前の月": {},
+    "前日の通知時刻": {},
+    "割増": {},
+    "勤務日 1 日あたりの固定額として計算します。": {},
+    "勤務日数": {},
+    "勤務時間": {},
+    "名前": {},
+    "名称未設定": {},
+    "基本給": {},
+    "基礎時給": {},
+    "実働": {},
+    "対象日数": {},
+    "広告": {},
+    "戻す": {},
+    "日付をタップしてシフトを登録しましょう": {},
+    "早番・夜勤・休みをタップで登録して、その月の勤務時間と概算の給与をひと目で確認できます。": {},
+    "時給を設定しますか？": {},
+    "時給を設定すると表示されます": {},
+    "時給（円）": {},
+    "時間": {},
+    "時間未設定": {},
+    "書き出し": {},
+    "書き出したファイルを共有": {},
+    "期間": {},
+    "未設定": {},
+    "未設定の日数": {},
+    "本当に削除しますか？": {},
+    "来月のシフトを登録しましょう。": {},
+    "概算給与": {},
+    "次の月": {},
+    "次へ": {},
+    "残業手当": {},
+    "残業時間": {},
+    "毎月の入力リマインダー": {},
+    "深夜手当": {},
+    "深夜時間": {},
+    "深夜終了": {},
+    "深夜開始": {},
+    "画像には時給・予想給与・メモは含まれません。": {},
+    "画像を作成": {},
+    "画像を共有": {},
+    "登録後は「元に戻す」で 1 回だけ取り消せます。": {},
+    "種類": {},
+    "空欄のままでも勤務時間は集計されます。": {},
+    "終了": {},
+    "終了日": {},
+    "給与": {},
+    "給与ルール": {},
+    "置き換える": {},
+    "翌日にまたぐ": {},
+    "翌月のシフトを入力し忘れないようにお知らせします。": {},
+    "色": {},
+    "表示金額は概算です。実際の給与・税金・社会保険料とは異なる場合があります。": {},
+    "計上時間": {},
+    "設定": {},
+    "設定を開く": {},
+    "設定タブでシフトテンプレートを追加してください。": {},
+    "読み込み": {},
+    "読み込み前に「追加」か「置き換え」を選べます。読み込みに失敗した場合、現在のデータは変更されません。": {},
+    "読み込み方法を選んでください": {},
+    "通知": {},
+    "通知が許可されていません。iOS の「設定」＞「通知」＞ Koyomi で許可してください。": {},
+    "通知には給与とメモは表示されません。夜勤は開始日を本文でお知らせします。": {},
+    "通知時刻": {},
+    "閉じる": {},
+    "開始": {},
+    "開始日": {},
+    "集計": {},
+    "（翌日まで）": {}
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

@@ -26,8 +26,6 @@
 	<string>ca-app-pub-7019246421185381~9281563371</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>現在地のお天気を表示するため、使用中のみ位置情報を利用します。位置情報は Apple WeatherKit への天気リクエストに使用し、本アプリや開発者のサーバーには保存しません。</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

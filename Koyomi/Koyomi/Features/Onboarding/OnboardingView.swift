@@ -1,207 +1,174 @@
 import SwiftUI
 import KoyomiCore
 
-/// 4 画面の onboarding。アカウント登録は求めない。
-/// 位置情報と通知は、目的を説明したあとユーザーの操作で初めて要求する。
+/// 初回ガイド（最大 3 ページ）。通知と位置情報の許可はここでは求めない。
+@MainActor
 struct OnboardingView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    let environment: AppEnvironment
-    let onFinish: () -> Void
+    private let environment: AppEnvironment
+    private let onFinished: () -> Void
 
     @State private var page = 0
-    @State private var nickname = ""
-    @State private var birthday = Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1)) ?? Date()
-    @State private var reminderTime = Calendar(identifier: .gregorian).date(from: DateComponents(year: 2000, month: 1, day: 1, hour: 7, minute: 30)) ?? Date()
-    @State private var showCityPicker = false
+    @State private var templates: [ShiftTemplate] = ShiftTemplate.defaults
+    @State private var draft: ShiftTemplateDraft?
+    @State private var wageText = ""
 
-    private var zodiac: Zodiac {
-        Zodiac.from(date: birthday, calendar: KoyomiCalendar.japan)
+    init(environment: AppEnvironment, onFinished: @escaping () -> Void) {
+        self.environment = environment
+        self.onFinished = onFinished
     }
 
     var body: some View {
         ZStack {
-            NightSkyBackground()
+            KoyomiBackground()
             VStack(spacing: KoyomiTheme.Spacing.l) {
-                Spacer(minLength: KoyomiTheme.Spacing.xl)
-                content
-                Spacer()
+                TabView(selection: $page) {
+                    valuePage.tag(0)
+                    templatePage.tag(1)
+                    wagePage.tag(2)
+                }
+                .tabViewStyle(.page(indexDisplayMode: .always))
+
                 footer
             }
-            .padding(KoyomiTheme.Spacing.l)
+            .padding(KoyomiTheme.Spacing.m)
         }
-        .sheet(isPresented: $showCityPicker) {
-            CityPickerView { city in
-                showCityPicker = false
-                selectCity(city)
-                page = 3
+        .sheet(item: $draft) { draft in
+            ShiftTemplateEditorView(draft: draft) { updated in
+                apply(updated)
             }
         }
     }
 
-    @ViewBuilder
-    private var content: some View {
-        switch page {
-        case 0: welcomePage
-        case 1: profilePage
-        case 2: locationPage
-        default: reminderPage
-        }
-    }
+    // MARK: - ページ
 
-    private var welcomePage: some View {
+    private var valuePage: some View {
         VStack(spacing: KoyomiTheme.Spacing.m) {
-            Text("Koyomi")
-                .font(.system(.largeTitle, design: .serif).weight(.semibold))
-            Text("空と星から届く、わたしだけの毎日占い")
-                .font(KoyomiTheme.bodyFont)
-            Text("今日の空は、今日のあなたの味方。")
-                .font(KoyomiTheme.headlineFont)
+            Spacer()
+            Text("シフトを、もっとかんたんに。")
+                .font(KoyomiTheme.titleFont)
                 .multilineTextAlignment(.center)
+                .accessibilityIdentifier("onboardingTitle")
+            Text("早番・夜勤・休みをタップで登録して、その月の勤務時間と概算の給与をひと目で確認できます。")
+                .font(KoyomiTheme.bodyFont)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Spacer()
         }
-        .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
-        .accessibilityIdentifier("onboarding.welcome")
+        .padding(KoyomiTheme.Spacing.m)
     }
 
-    private var profilePage: some View {
-        GlassCard {
+    private var templatePage: some View {
+        ScrollView {
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
-                Text("あなたのことを、少しだけ教えてください")
-                    .font(KoyomiTheme.headlineFont)
-                TextField("ニックネーム（任意）", text: $nickname)
-                    .textFieldStyle(.roundedBorder)
-                    .accessibilityIdentifier("onboarding.nickname")
-                DatePicker(
-                    "生年月日",
-                    selection: $birthday,
-                    in: ...Date(),
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.compact)
-                .accessibilityIdentifier("onboarding.birthday")
-                Text("あなたの星座は\(zodiac.japaneseName)です（\(zodiac.periodDescription)）")
-                    .font(KoyomiTheme.bodyFont)
-                Text("生年月日はこの端末の中だけに保存され、外部には送信されません。")
+                Text("シフトを用意しましょう")
+                    .font(KoyomiTheme.titleFont)
+                Text("よく使うシフトです。あとから設定でいつでも変更できます。")
                     .font(KoyomiTheme.captionFont)
-                    .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                    .foregroundStyle(.secondary)
+
+                ForEach(templates) { template in
+                    Button {
+                        draft = ShiftTemplateDraft(templateID: template.id, definition: template.definition, isNew: false)
+                    } label: {
+                        KoyomiCard {
+                            ShiftTemplateRow(definition: template.definition)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Button {
+                    draft = ShiftTemplateDraft.newWorkShift()
+                } label: {
+                    Label("シフトを追加", systemImage: "plus.circle")
+                        .frame(minHeight: KoyomiTheme.minimumTapTarget)
+                }
+                .disabled(templates.count >= ShiftTemplate.activeLimit)
+                .accessibilityIdentifier("onboardingAddTemplate")
             }
-            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+            .padding(.horizontal, KoyomiTheme.Spacing.xs)
         }
     }
 
-    private var locationPage: some View {
-        GlassCard {
-            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
-                Text("今いる場所のお天気を、占いにそっと重ねます。")
-                    .font(KoyomiTheme.headlineFont)
-                Text("位置情報は「使用中のみ」お借りして、お天気の取得だけに使います。保存するのは都市名とお天気の要約だけです。")
-                    .font(KoyomiTheme.bodyFont)
-                KoyomiPrimaryButton(title: "位置情報を許可する") {
-                    Task { await requestLocation() }
+    private var wagePage: some View {
+        VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
+            Text("時給を設定しますか？")
+                .font(KoyomiTheme.titleFont)
+            Text("あとで設定してもかまいません。金額は端末内にだけ保存されます。")
+                .font(KoyomiTheme.captionFont)
+                .foregroundStyle(.secondary)
+            KoyomiCard {
+                HStack {
+                    Text("基礎時給")
+                    Spacer()
+                    TextField("1200", text: $wageText)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.trailing)
+                        .frame(maxWidth: 120)
+                        .accessibilityIdentifier("onboardingWageField")
+                    Text("円")
                 }
-                .accessibilityIdentifier("onboarding.allowLocation")
-                Button("都市を自分で選ぶ") { showCityPicker = true }
-                    .frame(minHeight: KoyomiTheme.minimumTapTarget)
-                    .accessibilityIdentifier("onboarding.chooseCity")
+                .frame(minHeight: KoyomiTheme.minimumTapTarget)
             }
-            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
+            Text("表示金額は概算です。実際の給与・税金・社会保険料とは異なる場合があります。")
+                .font(KoyomiTheme.captionFont)
+                .foregroundStyle(.secondary)
+            Spacer()
         }
+        .padding(KoyomiTheme.Spacing.xs)
     }
 
-    private var reminderPage: some View {
-        GlassCard {
-            VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
-                Text("毎朝、そっとお知らせしましょうか？")
-                    .font(KoyomiTheme.headlineFont)
-                DatePicker("リマインダーの時刻", selection: $reminderTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(.compact)
-                KoyomiPrimaryButton(title: "リマインダーをオンにする") {
-                    Task { await enableReminder() }
-                }
-                .accessibilityIdentifier("onboarding.enableReminder")
-                Button("あとで") { finish(reminderEnabled: false) }
-                    .frame(minHeight: KoyomiTheme.minimumTapTarget)
-                    .accessibilityIdentifier("onboarding.skipReminder")
-            }
-            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
-        }
-    }
+    // MARK: - フッター
 
     private var footer: some View {
         VStack(spacing: KoyomiTheme.Spacing.s) {
-            if page < 2 {
-                KoyomiPrimaryButton(title: page == 0 ? "はじめる" : "次へ") {
-                    page += 1
-                }
-                .accessibilityIdentifier("onboarding.next")
-            }
-            HStack(spacing: KoyomiTheme.Spacing.xs) {
-                ForEach(0..<4, id: \.self) { index in
-                    Circle()
-                        .fill(index == page ? KoyomiTheme.strawberryMilk : KoyomiTheme.berryInk.opacity(0.2))
-                        .frame(width: 6, height: 6)
+            KoyomiPrimaryButton(title: page == 2 ? "はじめる" : "次へ") {
+                if page < 2 {
+                    withAnimation { page += 1 }
+                } else {
+                    finish(savingWage: true)
                 }
             }
-            .accessibilityHidden(true)
+            .accessibilityIdentifier("onboardingPrimaryButton")
+
+            Button(page == 2 ? "あとで設定する" : "スキップ") {
+                finish(savingWage: false)
+            }
+            .font(KoyomiTheme.captionFont)
+            .frame(minHeight: KoyomiTheme.minimumTapTarget)
+            .accessibilityIdentifier("onboardingSkip")
         }
     }
 
-    // MARK: - 保存と権限
+    // MARK: - 保存
 
-    private func savePreferencesBase() -> UserPreferencesRecord {
-        let preferences = environment.store.preferences()
-        preferences.nickname = nickname
-        preferences.birthday = birthday
-        preferences.zodiac = zodiac
-        environment.store.save()
-        return preferences
-    }
-
-    private func requestLocation() async {
-        let status = await environment.locationProvider.requestWhenInUseAuthorization()
-        let preferences = savePreferencesBase()
-        if status == .authorized {
-            preferences.usesCurrentLocation = true
-            preferences.selectedCityID = nil
-            environment.store.save()
-            page = 3
-        } else {
-            // 拒否されたときは権限を再要求せず、都市選択に切り替える。
-            showCityPicker = true
-        }
-    }
-
-    private func selectCity(_ city: City) {
-        let preferences = savePreferencesBase()
-        preferences.usesCurrentLocation = false
-        preferences.selectedCityID = city.id
-        environment.store.save()
-    }
-
-    private func enableReminder() async {
-        let granted = await environment.notificationScheduler.requestAuthorization()
-        let components = Calendar(identifier: .gregorian).dateComponents([.hour, .minute], from: reminderTime)
-        if granted {
-            await environment.notificationScheduler.scheduleDailyReminder(
-                hour: components.hour ?? 7,
-                minute: components.minute ?? 30
+    private func apply(_ updated: ShiftTemplateDraft) {
+        guard updated.definition.hasValidName else { return }
+        if let index = templates.firstIndex(where: { $0.id == updated.templateID }) {
+            templates[index].definition = updated.definition
+        } else if templates.count < ShiftTemplate.activeLimit {
+            templates.append(
+                ShiftTemplate(id: updated.templateID, definition: updated.definition, sortOrder: templates.count)
             )
         }
-        finish(reminderEnabled: granted, components: components)
     }
 
-    private func finish(reminderEnabled: Bool, components: DateComponents? = nil) {
-        let preferences = savePreferencesBase()
-        preferences.reminderEnabled = reminderEnabled
-        if let components {
-            preferences.reminderHour = components.hour ?? 7
-            preferences.reminderMinute = components.minute ?? 30
+    private func finish(savingWage: Bool) {
+        let store = environment.store
+        for (index, template) in templates.enumerated() {
+            if let existing = store.template(id: template.id) {
+                existing.definition = template.definition
+                existing.sortOrder = index
+            } else {
+                _ = store.addTemplate(template.definition, id: template.id)
+            }
         }
-        if preferences.selectedCityID == nil && !preferences.usesCurrentLocation {
-            // 位置も都市も未設定なら、天気なしでも使えるよう東京を既定にする。
-            preferences.selectedCityID = City.tokyo.id
+        if savingWage, let wage = Int(wageText.trimmingCharacters(in: .whitespaces)), wage >= 0 {
+            var settings = store.settings().payrollSettings
+            settings.hourlyWageYen = wage
+            store.updatePayrollSettings(settings)
         }
-        preferences.onboardingCompleted = true
-        environment.store.save()
-        onFinish()
+        store.completeOnboarding()
+        onFinished()
     }
 }

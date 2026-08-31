@@ -2,14 +2,14 @@ import SwiftUI
 import SwiftData
 import KoyomiCore
 
-/// onboarding と 3 タブの切り替え。
+/// 初回ガイドと 3 タブの切り替え。
+@MainActor
 struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     private let environment: AppEnvironment
     @State private var adMob = AdMobProvider.shared
     @State private var onboardingCompleted: Bool
-    @State private var todayViewModel: TodayViewModel
 
     init(container: ModelContainer) {
         let store = KoyomiStore(context: ModelContext(container))
@@ -20,56 +20,54 @@ struct RootView: View {
             ? AppEnvironment.uiTesting(store: store)
             : AppEnvironment.live(store: store)
         if isScreenshotTesting {
-            let preferences = store.preferences()
-            preferences.nickname = "さくら"
-            preferences.birthday = Date(timeIntervalSince1970: 946_684_800)
-            preferences.zodiac = .capricorn
-            preferences.selectedCityID = City.tokyo.id
-            preferences.onboardingCompleted = true
-            store.save()
+            // スクリーンショット用にテンプレートと数日分のシフトだけを用意する。
+            let templates = store.seedDefaultTemplatesIfNeeded()
+            store.updatePayrollSettings(PayrollSettings(hourlyWageYen: 1_300))
+            let month = CalendarMonth.containing(environment.clock.now)
+            for (index, dayKey) in month.dayKeys.enumerated() where index % 3 != 2 {
+                let template = templates[index % templates.count]
+                store.assign(dayKey: dayKey, templateID: template.id, definition: template.definition)
+            }
+            store.completeOnboarding()
         }
         self.environment = environment
-        _onboardingCompleted = State(initialValue: store.preferences().onboardingCompleted)
-        _todayViewModel = State(initialValue: TodayViewModel(environment: environment))
+        _onboardingCompleted = State(initialValue: store.settings().onboardingCompleted)
     }
 
     var body: some View {
         Group {
             if onboardingCompleted {
                 TabView {
-                    TodayView(viewModel: todayViewModel)
-                        .tabItem { Label("今日", systemImage: "sun.and.horizon") }
-                    CalendarView(environment: environment)
+                    CalendarTabView(environment: environment)
                         .tabItem { Label("カレンダー", systemImage: "calendar") }
-                    ProfileView(environment: environment) {
+                    PayrollSummaryView(environment: environment)
+                        .tabItem { Label("集計", systemImage: "yensign.circle") }
+                    SettingsView(environment: environment) {
                         onboardingCompleted = false
                     }
-                    .tabItem { Label("わたし", systemImage: "person") }
+                    .tabItem { Label("設定", systemImage: "gearshape") }
                 }
-                .tint(KoyomiTheme.strawberryMilk)
+                .tint(KoyomiTheme.accent)
             } else {
                 OnboardingView(environment: environment) {
                     onboardingCompleted = true
-                    Task { await todayViewModel.load() }
                 }
             }
         }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active, onboardingCompleted else { return }
-            // 設定から戻ったときの権限変化と、ローカル日付の切り替わりを反映する。
-            Task { await todayViewModel.load() }
+            // 設定から戻ったときの権限変化を通知登録に反映する。
+            Task { await environment.refreshNotifications() }
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
-            if onboardingCompleted, adMob.canShowAds,
-               !ProcessInfo.processInfo.arguments.contains("-uiTesting"),
-               !ProcessInfo.processInfo.arguments.contains("-screenshotTesting") {
+            // 広告はタブバーとシートを遮らない位置に置く。ガイド・共有・削除確認では表示しない。
+            if onboardingCompleted, adMob.canShowAds, !environment.isTestingMode {
                 AdMobBannerView(adUnitID: AdMobProvider.bannerAdUnitID)
                     .background(.ultraThinMaterial)
             }
         }
         .task {
-            let arguments = ProcessInfo.processInfo.arguments
-            guard !arguments.contains("-uiTesting"), !arguments.contains("-screenshotTesting") else { return }
+            guard !environment.isTestingMode else { return }
             await adMob.prepare()
         }
     }
