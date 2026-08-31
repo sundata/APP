@@ -45,11 +45,71 @@ final class KoyomiCalendarTests: XCTestCase {
         )
     }
 
-    func testSeasonMapping() {
-        XCTAssertEqual(Season.from(month: 4), .spring)
-        XCTAssertEqual(Season.from(month: 7), .summer)
-        XCTAssertEqual(Season.from(month: 10), .autumn)
-        XCTAssertEqual(Season.from(month: 1), .winter)
+    func testDayKeyRoundTrip() {
+        let date = KoyomiCalendar.date(fromDayKey: "2026-02-28")
+        XCTAssertNotNil(date)
+        XCTAssertEqual(KoyomiCalendar.dayKey(for: date!), "2026-02-28")
+        XCTAssertEqual(KoyomiCalendar.components(fromDayKey: "2026-02-28")?.month, 2)
+    }
+
+    func testInvalidDayKeysAreRejected() {
+        XCTAssertNil(KoyomiCalendar.date(fromDayKey: "2026-02-30"))
+        XCTAssertNil(KoyomiCalendar.date(fromDayKey: "2026-13-01"))
+        XCTAssertNil(KoyomiCalendar.date(fromDayKey: "2026-2-1"))
+        XCTAssertNil(KoyomiCalendar.date(fromDayKey: ""))
+    }
+
+    func testLeapYearFebruary() {
+        XCTAssertNotNil(KoyomiCalendar.date(fromDayKey: "2024-02-29"))
+        XCTAssertNil(KoyomiCalendar.date(fromDayKey: "2026-02-29"))
+        XCTAssertEqual(CalendarMonth(year: 2024, month: 2).dayKeys.count, 29)
+        XCTAssertEqual(CalendarMonth(year: 2026, month: 2).dayKeys.count, 28)
+    }
+
+    func testDayKeysRangeIsInclusiveAndOrderAgnostic() {
+        let start = tokyo.date(from: DateComponents(year: 2026, month: 4, day: 28, hour: 22))!
+        let end = tokyo.date(from: DateComponents(year: 2026, month: 5, day: 2, hour: 3))!
+        XCTAssertEqual(
+            KoyomiCalendar.dayKeys(from: start, to: end, calendar: tokyo),
+            ["2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02"]
+        )
+        XCTAssertEqual(
+            KoyomiCalendar.dayKeys(from: end, to: start, calendar: tokyo).count,
+            5
+        )
+    }
+
+    func testTimeTextWrapsPastMidnight() {
+        XCTAssertEqual(KoyomiCalendar.timeText(minuteOfDay: 0), "00:00")
+        XCTAssertEqual(KoyomiCalendar.timeText(minuteOfDay: 22 * 60), "22:00")
+        XCTAssertEqual(KoyomiCalendar.timeText(minuteOfDay: 25 * 60), "01:00")
+    }
+
+    func testMonthGridStartsOnSundayAndFillsFullWeeks() {
+        // 2026-03-01 は日曜なので先頭に空白マスはない。
+        let march = CalendarMonth(year: 2026, month: 3)
+        XCTAssertEqual(march.days.first?.dayKey, "2026-03-01")
+        XCTAssertEqual(march.days.count % 7, 0)
+        XCTAssertEqual(march.title, "2026年3月")
+
+        // 2026-04-01 は水曜なので日〜火の 3 マスが空白になる。
+        let april = CalendarMonth(year: 2026, month: 4)
+        XCTAssertEqual(april.days.prefix(3).filter(\.isPlaceholder).count, 3)
+        XCTAssertEqual(april.days[3].dayKey, "2026-04-01")
+        XCTAssertEqual(april.dayKeys.count, 30)
+        XCTAssertEqual(april.adding(months: 1).month, 5)
+        XCTAssertEqual(april.adding(months: -4).year, 2025)
+    }
+
+    func testTokyoDayKeysAreStableWithoutDaylightSaving() {
+        // 日本には夏時間がないため、3 月・11 月の境界でも 0 時ちょうどで日付が変わる。
+        for month in [3, 11] {
+            let midnight = tokyo.date(from: DateComponents(year: 2026, month: month, day: 8, hour: 0, minute: 0))!
+            let justBefore = midnight.addingTimeInterval(-60)
+            XCTAssertEqual(KoyomiCalendar.dayKey(for: midnight, calendar: tokyo), "2026-\(String(format: "%02d", month))-08")
+            XCTAssertEqual(KoyomiCalendar.dayKey(for: justBefore, calendar: tokyo), "2026-\(String(format: "%02d", month))-07")
+            XCTAssertEqual(tokyo.timeZone.secondsFromGMT(for: midnight), 9 * 3600)
+        }
     }
 
     func testDisplayDateIsJapanese() {

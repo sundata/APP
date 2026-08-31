@@ -1,6 +1,6 @@
 # Koyomi（こよみ）
 
-空と星から届く、わたしだけの毎日占い。星座・当日の天気・日付・季節から、日本語の「今日のおまもり占い」を生成する iOS アプリ（MVP）。
+日本のシフト勤務者向けのミニマルな勤務カレンダー。早番・日勤・遅番・夜勤・休みを数タップで登録し、月間の勤務時間と概算給与を確認して、金額を含まない月間シフト画像を家族やパートナーに共有できる iOS アプリ（MVP）。
 
 ## 環境要件
 
@@ -9,61 +9,70 @@
 | Xcode | 16.0 以降（`objectVersion = 77` / file system synchronized groups を使用） |
 | iOS | 17.0 以降 |
 | Swift | 6.0 |
-| 依存 | ローカル SwiftPM パッケージ `KoyomiCore` のみ（外部ライブラリなし） |
+| 依存 | ローカル SwiftPM パッケージ `KoyomiCore` + Google Mobile Ads / UMP のみ |
 
 構成:
 
 ```text
 Koyomi/
-  Koyomi.xcodeproj        アプリ本体 + UI テストターゲット
-  Config/Koyomi.entitlements  WeatherKit の entitlement
-  Koyomi/App/             エントリポイント、DI コンテナ、RootView
-  Koyomi/Core/DesignSystem/   色・タイポ・共通コンポーネント
-  Koyomi/Core/Persistence/    SwiftData モデルとストア
-  Koyomi/Features/        Onboarding / Today / Calendar / Profile / ShareCard
-  Koyomi/Services/        天気・位置情報・通知・時計の protocol と実装
-  Koyomi/Resources/       Localizable.xcstrings（日本語 String Catalog）
-  KoyomiUITests/          onboarding → 今日ページの UI テスト
-  KoyomiCore/             プラットフォーム非依存のロジック（SwiftPM、Linux でもテスト可）
+  Koyomi.xcodeproj              アプリ本体 + UI テストターゲット
+  Config/Koyomi-Info.plist      Info.plist（位置情報の権限文言なし）
+  Koyomi/App/                   エントリポイント、DI（AppEnvironment）、RootView（3 タブ）
+  Koyomi/Core/DesignSystem/     色・タイポ・共通コンポーネント
+  Koyomi/Core/Persistence/      SwiftData モデルと KoyomiStore
+  Koyomi/Features/              Onboarding / Calendar / ShiftEditor / ShiftTemplates /
+                                PayrollSummary / Sharing / Settings
+  Koyomi/Services/              通知・バックアップ・エンタイトルメント・時計の protocol と実装
+  Koyomi/Resources/             Localizable.xcstrings（日本語 String Catalog）
+  KoyomiUITests/                主要フローの UI テストとスクリーンショット取得
+  KoyomiCore/                   プラットフォーム非依存のロジック（SwiftPM、Linux でもテスト可）
 ```
 
-## WeatherKit の設定
+## 機能（MVP）
 
-WeatherKit はクライアントに API キーを埋め込まず、Apple Developer アカウントの capability で認証する。
+- **カレンダー**：日曜始まりの月表示、日本の祝日、スワイプと前月/次月ボタン、今日に戻る、1 日 1 シフト。
+- **単日登録**：日付タップでボトムシート。テンプレート選択・メモ（100 文字）・保存・削除・Undo。
+- **一括登録**：連続した日付範囲に 1 つのテンプレートを適用（最大 62 日、上書き件数を確認してから実行、Undo 可）。
+- **集計**：勤務/休み/未設定の日数、計上時間・深夜時間・残業時間、基本給・深夜手当・残業手当・交通費・概算合計。時給未設定時は `時給を設定すると表示されます`。
+- **共有**：1080 × 1350 の縦型 PNG。年月・グリッド・シフト略称・凡例・`Koyomi` の小さなブランド表記のみで、時給・概算給与・メモ・氏名・端末識別子・広告は含まない。プレビュー後に標準共有シートへ。
+- **通知**：毎月の入力リマインダーと翌日のシフト通知。スイッチを ON にしたときだけ権限を要求し、拒否時は設定アプリへの案内を出す。
+- **データ**：JSON バックアップの書き出し/読み込み（schema version 検証、追加 or 置き換え、置き換えは二重確認）、すべてのデータ削除（二重確認 → 初回起動状態へ）。
 
-1. Apple Developer で App ID `jp.co.sundata.koyomi`（任意の Bundle ID に変更可）を作成し、**WeatherKit** を有効化する。
-2. [developer.apple.com](https://developer.apple.com/account/resources/services/list) の Services で対象アプリの WeatherKit を有効化する。
-3. Xcode で `Koyomi` ターゲット → Signing & Capabilities に開発チームを設定する（`Config/Koyomi.entitlements` に `com.apple.developer.weatherkit` が入っている）。
-4. Bundle ID を変更した場合は `PRODUCT_BUNDLE_IDENTIFIER` も合わせて変更する。
+将来の Pro 版に備えて `EntitlementProviding` を用意しているが、購入 UI は実装していない。
 
-WeatherKit の設定前でもアプリは動作する。天気の取得に失敗した場合は、天気を偽装せず「お天気情報を取得できませんでした」と明示し、季節と日付から占いを生成する。
+## 給与計算のルール
 
-位置情報は `When In Use` のみを要求し、バックグラウンド測位は使わない。緯度経度は天気取得のためだけに使用し、永続化・ログ出力はしない（保存するのは都市名と天気の要約のみ）。
+1. シフト時間 = 終了 − 開始（跨日は +24 時間）
+2. 計上時間 = max(0, シフト時間 − 休憩)
+3. 深夜時間 = シフトと深夜時間帯（既定 22:00–05:00）の実際の交差
+4. 残業時間 = 1 日の計上時間が所定労働（既定 8 時間）を超えた分
+5. 基本給は全計上時間、深夜手当と残業手当はそれぞれ加算（重複時は両方加算）
+6. 交通費は勤務日数分を加算
+7. 計算は整数の「分」で行い、円は最後に四捨五入
+
+集計画面には `表示金額は概算です。実際の給与・税金・社会保険料とは異なる場合があります。` を常に表示する。
 
 ## AdMob の設定
 
 Google Mobile Ads SDK と User Messaging Platform（UMP）は Swift Package Manager で導入している。AdMob App ID とバナー広告ユニット ID は Koyomi の正式な値を設定している。
 
-公開前に以下を変更する:
-
-1. AdMob の「プライバシーとメッセージ」で対象地域向けメッセージを作成する。アプリは起動ごとに UMP の同意状態を更新し、同意後のみ広告を要求する。
-2. 公開構成の Info.plist に、利用する広告配信元の最新 `SKAdNetworkItems` を Google の公式手順に従って追加する。
-
-シミュレータは自動的にテスト端末として扱われる。実機開発では正式広告をクリックせず、必要に応じて Google のテスト端末設定またはテスト広告ユニット ID を使う。
+- 初回ガイド、共有プレビュー、共有画像、削除確認では広告を出さない。バナーはタブバーやシートを遮らない位置に置く。
+- UI テスト（`-uiTesting`）とスクリーンショット取得（`-screenshotTesting`）では広告を完全に無効化する。
+- 同意が必要な地域では UMP の同意取得後にのみ広告を要求する。
 
 ## 実行
 
 ```bash
 open Koyomi/Koyomi.xcodeproj
-# スキーム: Koyomi / 実行先: iPhone 15 以降のシミュレータまたは実機
+# スキーム: Koyomi / 実行先: iPhone SE (3rd gen) 以降のシミュレータまたは実機
 ```
 
 ## テスト
 
-ロジック（星座・日付境界・決定性・内容安全）は `KoyomiCore` にあり、macOS でも Linux でも実行できる。
+給与・シフト時間・深夜交差・残業・祝日・バックアップのロジックは `KoyomiCore` にあり、macOS でも Linux でも実行できる。
 
 ```bash
-cd Koyomi/KoyomiCore && swift test          # 41 tests
+cd Koyomi/KoyomiCore && swift test
 ```
 
 UI テスト（要 Xcode / macOS）:
@@ -71,45 +80,35 @@ UI テスト（要 Xcode / macOS）:
 ```bash
 cd Koyomi
 xcodebuild test -project Koyomi.xcodeproj -scheme Koyomi \
-  -destination 'platform=iOS Simulator,name=iPhone 15'
+  -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)'
 ```
 
-UI テストは起動引数 `-uiTesting` で、mock 天気・固定時計・権限ダイアログなし・インメモリ DB の構成に切り替わるため、結果が日によって変わらない。
+UI テストは起動引数 `-uiTesting` で、広告なし・ネットワークなし・固定時計（2026-03-01 JST）・インメモリ DB の構成に切り替わるため、結果が日によって変わらない。
 
 ## アーキテクチャ
 
-- **KoyomiCore（純ロジック）**: `Zodiac`、`KoyomiCalendar`/`Season`、`WeatherCategory`/`City`/`WeatherSnapshot`、`DailyFortune`、`StableSeed`、`ContentLibrary`、`TemplateFortuneGenerator`、`ContentSafety`、`ShareCardContent`。UI・ネットワーク・端末 API に依存しない。
-- **決定的な生成**: `localDate + zodiac + weatherCategory + contentVersion` から FNV-1a でシードを作る（Swift の `Hasher` はプロセスごとに変わるため使わない）。同じ入力なら常に同じ結果になる。日番号による回転で、7 日間は headline・総評・アクションが重複しない。
-- **天気の抽象化**: WeatherKit の詳細な condition は 9 種類の `WeatherCategory` に写像する。占いは天気そのものではなくカテゴリに依存するため、気温の小さな変動で結果が変わらない。
-- **依存性注入**: `WeatherProviding`、`FortuneGenerating`、`LocationProviding`、`NotificationScheduling`、`ClockProviding` を `AppEnvironment` が束ねる。View は WeatherKit・Core Location・SwiftData を直接触らない。
-- **永続化**: `FortuneRecord` に当日の `DailyFortune` を JSON で保存し、履歴は後から書き換えない（生成ロジックを更新しても過去の記録は変化しない）。天気は要約のみを保存し、座標は保存しない。
-- **状態と例外**: 天気取得は 4 秒でタイムアウト（無限ローディングにしない）→ 当日キャッシュがあれば取得時刻付きで表示 → なければ天気なしの fallback。位置情報が拒否された場合は再要求せず都市選択に切り替える。前面復帰時に権限とローカル日付を再評価する。
-- **荒天時**: 雷雨・猛暑・厳寒などは占いで危険をぼかさず、客観的な注意文を先に表示する。
+- **KoyomiCore（純ロジック）**: `KoyomiCalendar`（Gregorian + `Asia/Tokyo`、`dayKey` 生成の単一入口）、`CalendarMonth`（日曜始まりのグリッド）、`JapaneseHolidayCalendar`（固定祝日・ハッピーマンデー・春分/秋分・振替休日・国民の休日・2019/2020/2021 の特例）、`ShiftDefinition`/`ShiftTemplate`/`ShiftAssignment`、`PayrollSettings`/`PayrollCalculator`、`BackupDocument`/`BackupCodec`、`ShiftShareContent`。SwiftUI・SwiftData・UIKit・UserNotifications に依存しない。
+- **永続化**: `UserSettingsRecord` / `ShiftTemplateRecord` / `ShiftEntryRecord`（`dayKey` は一意）。書き込みはすべて `KoyomiStore`（`@MainActor`）経由で、View は `ModelContext` を直接触らない。
+- **テンプレートのスナップショット**: `ShiftEntryRecord` は名称・時間・休憩・色をコピーして保持するため、後からテンプレートを変更しても過去の勤務時間と給与は変わらない。
+- **整数分での計算**: 給与は分と円の整数で計算し、浮動小数の時間を事実の源にしない。
+- **依存性注入**: `AppEnvironment` が `KoyomiStore`・`NotificationScheduling`・`BackupProviding`・`EntitlementProviding`・`ClockProviding` を束ねる。UI テストでは固定時計とスタブ通知に差し替える。
+- **旧データの移行**: 旧バージョン（占い）のストアは移行対象がないため、開けない場合は起動を止めずに新しいストアを作り直す。
 
-## 前提と割り切り（Assumptions and Trade-offs）
+## プライバシー
 
-- **天文情報**: 月相は WeatherKit の日次予報から取得できたときのみ使う。取得できない場合は推測せず、文面から月相の言及を外す（偽の天文情報を作らない）。
-- **コンテンツ**: 占い文は「規則エンジン + 審査済みテンプレート」で生成し、オンライン LLM を初期表示の依存先にしない。文面は `ContentLibrary` にあり、`ContentSafety` のテストで禁止表現（断定・医療・妊娠・事故・投資など）を検査している。
-- **String Catalog**: 画面の UI 文言は `Localizable.xcstrings`（ja）に登録した。占いコンテンツ本体は日本語前提の文体設計のため `KoyomiCore` の Swift コードに置いている（他言語対応時はロケール別のコンテンツプールを追加する想定）。
-- **通知**: ユーザーがリマインダーをオンにするまで `UNUserNotificationCenter` の権限要求を行わない。通知文は不安をあおらない文面のみ。
-- **共有**: シェアカードは `ImageRenderer` でオフライン生成し、日付・星座・短い総評・ラッキーカラー・ブランド名のみを含む（ニックネーム・位置・生年月日は含めない）。
-- **アカウント**: 登録不要。生年月日・履歴・お気に入りは端末内のみ。「わたし」タブから全削除できる。
+アカウント登録なし、位置情報なし、連絡先なし、クラウド送信なし。通知は端末内のローカル通知のみ、共有は標準共有シートのみ。詳細は `PRIVACY_POLICY.md` とアプリ内の `KoyomiLegalText`（同じ内容で管理）を参照。
 
 ## 既知の制限・未完了項目
 
-- **Apple 環境での検証が未実施**: 本 MVP は Linux 環境で実装したため、`KoyomiCore` の 41 テストのみ実行済み。Xcode でのビルド、UI テスト、シミュレータでのスクリーンショット取得（浅色/深色）は未実行。macOS + Xcode 16 での初回ビルド時に、WeatherKit API 名や SwiftData のスキーマ調整が必要になる可能性がある。
-- **スクリーンショット未添付**: 上記のため、ライト/ダークの画面キャプチャは未取得。
-- **アプリ層のテスト**: `TodayViewModel` のキャッシュ・fallback 判定は現状 UI テストと手動確認に依存する（ロジックの決定性・境界値は KoyomiCore 側でカバー）。ViewModel 単体テスト用の XCTest ターゲットは未追加。
-- **App アイコン / アセットカタログ**: 未作成（システム既定のまま）。
-- **プライバシーポリシー**: アプリ内の `KoyomiLegalText.privacyPolicy` と公開用 `PRIVACY_POLICY.md` を同じ内容で管理する。
-- **カレンダー**: 月表示は自作の簡易グリッド。祝日表示や月をまたぐスワイプは未対応。
-- **iPhone SE / 最大 Dynamic Type**: レイアウトは可変対応で組んでいるが、実機・シミュレータでの目視確認は未実施。
+- **Apple 環境での検証が未実施**: 本リファクタは Linux 環境で実装したため、`KoyomiCore` の単体テストのみ実行済み。Xcode でのビルド、UI テスト、シミュレータ（iPhone SE / Pro / Pro Max、ライト/ダーク、Dynamic Type、VoiceOver）での目視確認は未実行。
+- **App Store 用スクリーンショット**: `Submission/Screenshots` には旧デザインの画像が残っている。`-screenshotTesting` の UI テストで撮り直す必要がある。
+- **App アイコン**: 未更新。
+- **交通費**: 「勤務日ごとの固定額」のみ対応（距離・経路・定期券は非対応）。
+- **税・社会保険**: 計算しない（概算給与のみ）。
 
 ## 次のステップ
 
-1. macOS + Xcode 16 でビルドし、WeatherKit の API 差分を解消。UI テストとアクセシビリティ検査（Dynamic Type 最大 / VoiceOver）を実行する。
-2. ライト/ダークのスクリーンショットを取得し、README に添付する。
-3. `TodayViewModel` の単体テスト（キャッシュ表示・タイムアウト・日付跨ぎ）を追加する。
-4. App アイコンとアセットカタログ、ローンチ体験の作り込み。
-5. コンテンツプールをネイティブライターがレビューし、`contentVersion` を上げて拡充する。
-6. App Store のプライバシーラベルを実装と突き合わせ、審査用の説明文を用意する。
+1. macOS + Xcode 16 でビルドし、UI テストを iPhone SE と大画面 iPhone で実行する。
+2. `-screenshotTesting` でスクリーンショットを撮り直し、`Submission/Screenshots` を差し替える。
+3. App Store のプライバシーラベル（アカウントなし・位置情報なし・広告 SDK のみ）を実装と突き合わせる。
+4. アクセシビリティ（Dynamic Type 最大 / VoiceOver）の目視確認と調整。
