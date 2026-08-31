@@ -1,50 +1,43 @@
 import SwiftUI
-import KoyomiCore
 
 /// 色・余白・タイポグラフィの一元管理。
-/// 和紙のようなやわらかい地色と、読みやすい藍色の文字を基調にする。
+/// 夜空ブルー / ミストパープル / 月光ベージュを基調にする。
 enum KoyomiTheme {
     // MARK: - 色
 
-    /// 藍色の文字 #1E2A3A
-    static let ink = Color(red: 0x1E / 255, green: 0x2A / 255, blue: 0x3A / 255)
-    /// 和紙クリーム #FBF8F3
-    static let washi = Color(red: 0xFB / 255, green: 0xF8 / 255, blue: 0xF3 / 255)
-    /// 夜の地色（純黒ではなく少し青みのある濃紺）#12151C
-    static let midnight = Color(red: 0x12 / 255, green: 0x15 / 255, blue: 0x1C / 255)
-    /// アクセント（藍） #2F5D8C
-    static let accent = Color(red: 0x2F / 255, green: 0x5D / 255, blue: 0x8C / 255)
-    /// 日曜の強調色（暗い赤。白背景で 4.5:1 以上）#B3261E
-    static let sunday = Color(red: 0xB3 / 255, green: 0x26 / 255, blue: 0x1E / 255)
-    /// 土曜の強調色 #1F5FA8
-    static let saturday = Color(red: 0x1F / 255, green: 0x5F / 255, blue: 0xA8 / 255)
-
-    static func background(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? midnight : washi
-    }
+    /// 夜空ブルー #252544
+    static let nightSky = Color(red: 0x25 / 255, green: 0x25 / 255, blue: 0x44 / 255)
+    /// ミストパープル #8D83B8
+    static let mistPurple = Color(red: 0x8D / 255, green: 0x83 / 255, blue: 0xB8 / 255)
+    /// 月光ベージュ #FAF7F2
+    static let moonBeige = Color(red: 0xFA / 255, green: 0xF7 / 255, blue: 0xF2 / 255)
+    /// ダークモードは純黒ではなく深い藍を使う。
+    static let deepIndigo = Color(red: 0x14 / 255, green: 0x14 / 255, blue: 0x28 / 255)
+    /// ストロベリーミルク #F3A9BC
+    static let strawberryMilk = Color(red: 0xF3 / 255, green: 0xA9 / 255, blue: 0xBC / 255)
+    /// ピーチクリーム #FFD6C8
+    static let peachCream = Color(red: 0xFF / 255, green: 0xD6 / 255, blue: 0xC8 / 255)
+    /// ラベンダーミルク #D9C9F2
+    static let lavenderMilk = Color(red: 0xD9 / 255, green: 0xC9 / 255, blue: 0xF2 / 255)
+    /// バニラ #FFF8E8
+    static let vanilla = Color(red: 0xFF / 255, green: 0xF8 / 255, blue: 0xE8 / 255)
+    /// ベリー文字色。淡色背景でも十分なコントラストを保つ。
+    static let berryInk = Color(red: 0x4B / 255, green: 0x2D / 255, blue: 0x46 / 255)
 
     static func primaryText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.94) : ink
+        scheme == .dark ? moonBeige : berryInk
     }
 
     static func secondaryText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.7) : ink.opacity(0.66)
+        scheme == .dark ? moonBeige.opacity(0.72) : berryInk.opacity(0.68)
     }
 
     static func cardFill(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.07) : Color.white
+        scheme == .dark ? Color.white.opacity(0.08) : Color.white.opacity(0.76)
     }
 
     static func cardStroke(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color.white.opacity(0.14) : ink.opacity(0.08)
-    }
-
-    static func sundayText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color(red: 0xFF / 255, green: 0x8A / 255, blue: 0x80 / 255) : sunday
-    }
-
-    static func saturdayText(_ scheme: ColorScheme) -> Color {
-        scheme == .dark ? Color(red: 0x8A / 255, green: 0xB8 / 255, blue: 0xFF / 255) : saturday
+        scheme == .dark ? Color.white.opacity(0.16) : Color.white.opacity(0.94)
     }
 
     // MARK: - 余白と角丸
@@ -58,8 +51,8 @@ enum KoyomiTheme {
     }
 
     enum Radius {
-        static let card: CGFloat = 18
-        static let small: CGFloat = 10
+        static let card: CGFloat = 24
+        static let small: CGFloat = 14
     }
 
     /// タップ領域の最小サイズ（44×44pt）。
@@ -67,25 +60,20 @@ enum KoyomiTheme {
 
     // MARK: - タイポグラフィ（システム日本語フォント + Dynamic Type）
 
-    static let titleFont = Font.system(.title2).weight(.semibold)
-    static let headlineFont = Font.system(.headline)
-    static let bodyFont = Font.system(.body)
-    static let captionFont = Font.system(.caption)
+    static let titleFont = Font.system(.title2, design: .serif).weight(.semibold)
+    static let headlineFont = Font.system(.title3, design: .serif).weight(.semibold)
+    static let bodyFont = Font.system(.body, design: .default)
+    static let captionFont = Font.system(.caption, design: .default)
 
-    /// HEX を Color に変換する。不正な値ではアクセント色にフォールバックする。
+    /// 幸運色の HEX を Color に変換する。不正な値ではミストパープルにフォールバックする。
     static func color(hex: String) -> Color {
         var value = hex.trimmingCharacters(in: .whitespaces)
         if value.hasPrefix("#") { value.removeFirst() }
-        guard value.count == 6, let intValue = Int(value, radix: 16) else { return accent }
+        guard value.count == 6, let intValue = Int(value, radix: 16) else { return mistPurple }
         return Color(
             red: Double((intValue >> 16) & 0xFF) / 255,
             green: Double((intValue >> 8) & 0xFF) / 255,
             blue: Double(intValue & 0xFF) / 255
         )
-    }
-
-    /// シフト色。ラベル背景に使い、文字は白で表示する。
-    static func color(_ shiftColor: ShiftColor) -> Color {
-        color(hex: shiftColor.hex)
     }
 }
