@@ -6,82 +6,66 @@ import KoyomiCore
 @MainActor
 final class AppEnvironment {
     let store: KoyomiStore
+    let weatherProvider: WeatherProviding
+    let fortuneGenerator: any FortuneGenerating
+    let locationProvider: any LocationProviding
     let notificationScheduler: NotificationScheduling
-    let backupProvider: BackupProviding
-    let entitlements: EntitlementProviding
     let clock: ClockProviding
-    /// UI テスト・スクリーンショット時は広告とネットワークを使わない。
-    let isTestingMode: Bool
 
     init(
         store: KoyomiStore,
+        weatherProvider: WeatherProviding,
+        fortuneGenerator: any FortuneGenerating = TemplateFortuneGenerator(),
+        locationProvider: any LocationProviding,
         notificationScheduler: NotificationScheduling,
-        backupProvider: BackupProviding = FileBackupProvider(),
-        entitlements: EntitlementProviding = FreeEntitlementProvider(),
-        clock: ClockProviding = SystemClock(),
-        isTestingMode: Bool = false
+        clock: ClockProviding = SystemClock()
     ) {
         self.store = store
+        self.weatherProvider = weatherProvider
+        self.fortuneGenerator = fortuneGenerator
+        self.locationProvider = locationProvider
         self.notificationScheduler = notificationScheduler
-        self.backupProvider = backupProvider
-        self.entitlements = entitlements
         self.clock = clock
-        self.isTestingMode = isTestingMode
     }
 
     /// 実機・シミュレータ用の既定構成。
     static func live(store: KoyomiStore) -> AppEnvironment {
+        #if canImport(WeatherKit) && canImport(CoreLocation)
+        let weather: WeatherProviding = WeatherKitWeatherProvider()
+        #else
+        let weather: WeatherProviding = MockWeatherProvider()
+        #endif
+
+        #if canImport(CoreLocation)
+        let location: any LocationProviding = CoreLocationProvider()
+        #else
+        let location: any LocationProviding = StubLocationProvider(authorization: .notDetermined, place: nil)
+        #endif
+
         #if canImport(UserNotifications)
         let notifications: NotificationScheduling = LocalNotificationScheduler()
         #else
         let notifications: NotificationScheduling = StubNotificationScheduler()
         #endif
-        return AppEnvironment(store: store, notificationScheduler: notifications)
+
+        return AppEnvironment(
+            store: store,
+            weatherProvider: weather,
+            locationProvider: location,
+            notificationScheduler: notifications
+        )
     }
 
-    /// UI テスト用。権限ダイアログと広告を使わず、時計も固定する。
+    /// UI テスト用。ネットワークと権限ダイアログを使わず、時計も固定する。
     /// 起動引数 `-uiTesting` で有効になる。
     static func uiTesting(store: KoyomiStore) -> AppEnvironment {
         let fixed = Date(timeIntervalSince1970: 1_772_323_200) // 2026-03-01 09:00 JST
         return AppEnvironment(
             store: store,
-            notificationScheduler: StubNotificationScheduler(granted: false),
-            clock: FixedClock(fixed),
-            isTestingMode: true
+            weatherProvider: MockWeatherProvider(category: .clear, temperature: 18),
+            locationProvider: StubLocationProvider(authorization: .notDetermined, place: nil),
+            notificationScheduler: StubNotificationScheduler(),
+            clock: FixedClock(fixed)
         )
-    }
-
-    /// 今日（Asia/Tokyo）の dayKey。
-    var todayDayKey: String {
-        KoyomiCalendar.dayKey(for: clock.now)
-    }
-
-    /// 通知の再登録。シフトを変更したあとに呼ぶ。
-    func refreshNotifications() async {
-        let settings = store.settings()
-        let reminders = settings.reminderSettings
-
-        if reminders.monthlyReminderEnabled {
-            await notificationScheduler.scheduleMonthlyReminder(
-                day: reminders.monthlyReminderDay,
-                minuteOfDay: reminders.monthlyReminderMinuteOfDay
-            )
-        } else {
-            await notificationScheduler.cancelMonthlyReminder()
-        }
-
-        if reminders.nextShiftReminderEnabled {
-            let today = todayDayKey
-            let upcoming = store.allEntries()
-                .filter { $0.dayKey >= today && $0.definition.kind == .work }
-                .prefix(NotificationLimits.nextShiftHorizonDays)
-                .map { UpcomingShift(assignment: $0.assignment) }
-            await notificationScheduler.scheduleNextShiftReminders(
-                Array(upcoming),
-                minuteOfDay: reminders.nextShiftReminderMinuteOfDay
-            )
-        } else {
-            await notificationScheduler.cancelNextShiftReminders()
-        }
     }
 }

@@ -270,6 +270,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Config/Koyomi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Koyomi;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "今いる場所のお天気を占いに重ねるために使います。位置情報は天気の取得のみに使い、保存も送信もしません。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -300,6 +301,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Config/Koyomi-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Koyomi;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "今いる場所のお天気を占いに重ねるために使います。位置情報は天気の取得のみに使い、保存も送信もしません。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
