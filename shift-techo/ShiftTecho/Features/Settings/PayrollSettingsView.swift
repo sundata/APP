@@ -4,6 +4,7 @@ import ShiftTechoCore
 /// 給与ルールの編集。金額は非負整数、割増は 0〜200%。
 @MainActor
 struct PayrollSettingsView: View {
+    @Environment(\.dismiss) private var dismiss
     private let store: ShiftTechoStore
 
     @State private var wageText: String
@@ -14,6 +15,10 @@ struct PayrollSettingsView: View {
     @State private var standardDailyMinutes: Int
     @State private var transportText: String
     @State private var hidesAmountsWhenInactive: Bool
+    @FocusState private var focusedField: Field?
+    @State private var saveErrorMessage: String?
+
+    private enum Field { case wage, transport }
 
     init(store: ShiftTechoStore) {
         self.store = store
@@ -34,6 +39,7 @@ struct PayrollSettingsView: View {
             Section {
                 TextField("時給（円）", text: $wageText)
                     .keyboardType(.numberPad)
+                    .focused($focusedField, equals: .wage)
                     .accessibilityIdentifier("hourlyWageField")
             } header: {
                 Text("基礎時給")
@@ -70,6 +76,7 @@ struct PayrollSettingsView: View {
             Section {
                 TextField("交通費（円／勤務日）", text: $transportText)
                     .keyboardType(.numberPad)
+                    .focused($focusedField, equals: .transport)
                     .accessibilityIdentifier("transportField")
             } header: {
                 Text("交通費")
@@ -89,13 +96,47 @@ struct PayrollSettingsView: View {
                     .font(ShiftTechoTheme.captionFont)
                     .foregroundStyle(.secondary)
             }
+
+            Section {
+                ShiftTechoPrimaryButton(title: "保存する") { saveAndDismiss() }
+                    .accessibilityIdentifier("savePayrollSettingsBottomButton")
+            }
         }
         .navigationTitle("給与ルール")
+        .onAppear { loadSavedValues() }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("保存") {
+                    saveAndDismiss()
+                }
+                .fontWeight(.semibold)
+                .accessibilityIdentifier("savePayrollSettingsButton")
+            }
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("完了") { focusedField = nil }
+            }
+        }
         .onDisappear { persist() }
+        .alert("保存できませんでした", isPresented: Binding(
+            get: { saveErrorMessage != nil },
+            set: { if !$0 { saveErrorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) { saveErrorMessage = nil }
+        } message: {
+            Text(saveErrorMessage ?? "もう一度お試しください。")
+        }
     }
 
-    private func persist() {
-        let wage = Int(wageText.filter(\.isNumber))
+    private func saveAndDismiss() {
+        focusedField = nil
+        if persist() { dismiss() }
+    }
+
+    @discardableResult
+    private func persist() -> Bool {
+        let wage = integer(from: wageText)
+        let transport = integer(from: transportText) ?? 0
         store.updatePayrollSettings(
             PayrollSettings(
                 hourlyWageYen: wage,
@@ -104,11 +145,42 @@ struct PayrollSettingsView: View {
                 nightStartMinute: nightStartMinute,
                 nightEndMinute: nightEndMinute,
                 standardDailyMinutes: standardDailyMinutes,
-                transportAllowancePerWorkdayYen: Int(transportText.filter(\.isNumber)) ?? 0
+                transportAllowancePerWorkdayYen: transport
             )
         )
         let record = store.settings()
         record.hidesAmountsWhenInactive = hidesAmountsWhenInactive
-        store.save()
+        let saved = store.settings().payrollSettings
+        guard store.save(),
+              saved.hourlyWageYen == wage,
+              saved.transportAllowancePerWorkdayYen == transport else {
+            saveErrorMessage = store.lastSaveError ?? "入力した時給を確認できませんでした。"
+            return false
+        }
+        return true
+    }
+
+    /// ASCII・全角など、数字として認識できる文字を安全に整数へ変換する。
+    private func integer(from text: String) -> Int? {
+        let digits = text.compactMap(\.wholeNumberValue)
+        guard !digits.isEmpty else { return nil }
+        return digits.reduce(0) { partial, digit in
+            let (multiplied, overflow1) = partial.multipliedReportingOverflow(by: 10)
+            let (added, overflow2) = multiplied.addingReportingOverflow(digit)
+            return overflow1 || overflow2 ? Int.max : added
+        }
+    }
+
+    private func loadSavedValues() {
+        let record = store.settings()
+        let settings = record.payrollSettings
+        wageText = settings.hourlyWageYen.map(String.init) ?? ""
+        nightPremiumPercent = settings.nightPremiumBasisPoints / 100
+        overtimePremiumPercent = settings.overtimePremiumBasisPoints / 100
+        nightStartMinute = settings.nightStartMinute
+        nightEndMinute = settings.nightEndMinute
+        standardDailyMinutes = settings.standardDailyMinutes
+        transportText = String(settings.transportAllowancePerWorkdayYen)
+        hidesAmountsWhenInactive = record.hidesAmountsWhenInactive
     }
 }

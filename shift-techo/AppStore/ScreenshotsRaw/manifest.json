@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A5F94563-C0C5-46F0-A51C-8893F6F3FE21",
+        "deviceName" : "iPhone 17",
+        "exportedFileName" : "06E2E3BB-5736-43EC-B3F2-CE73E312EC02.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-share_0_263A9B37-BF58-4048-9960-17CD1E889637.png",
+        "timestamp" : 1788336066.202
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A5F94563-C0C5-46F0-A51C-8893F6F3FE21",
+        "deviceName" : "iPhone 17",
+        "exportedFileName" : "9F2860B6-702A-4C4E-9CBF-551CAB360A6C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-summary_0_3A89D10E-3208-4D10-AACB-C5979657F52E.png",
+        "timestamp" : 1788336062.13
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A5F94563-C0C5-46F0-A51C-8893F6F3FE21",
+        "deviceName" : "iPhone 17",
+        "exportedFileName" : "69255DB6-B676-4BDA-B634-E72C101CDB4B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-calendar_0_AB869170-CE78-4653-905F-F9CEBC13CC0F.png",
+        "timestamp" : 1788336059.569
+      }
+    ],
+    "testIdentifier" : "ShiftCalendarUITests/testCaptureAppStoreScreenshots()",
+    "testIdentifierURL" : "test://com.apple.xcode/ShiftTecho/ShiftTechoUITests/ShiftCalendarUITests/testCaptureAppStoreScreenshots"
+  }
+]

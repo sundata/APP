@@ -20,7 +20,9 @@ struct PayrollSummaryView: View {
     private var store: ShiftTechoStore { environment.store }
 
     private var summary: MonthlyPayrollSummary {
-        PayrollCalculator.monthlySummary(
+        // 設定やシフト保存後に必ず再計算する。
+        _ = store.revision
+        return PayrollCalculator.monthlySummary(
             assignments: Array(store.assignments(dayKeys: month.dayKeys).values),
             daysInMonth: month.dayKeys.count,
             settings: store.settings().payrollSettings

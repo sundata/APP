@@ -8,7 +8,7 @@ final class AppEnvironment {
     let store: ShiftTechoStore
     let notificationScheduler: NotificationScheduling
     let backupProvider: BackupProviding
-    let entitlements: EntitlementProviding
+    let entitlements: StoreKitEntitlementProvider
     let clock: ClockProviding
     /// UI テスト・スクリーンショット時は広告とネットワークを使わない。
     let isTestingMode: Bool
@@ -17,7 +17,7 @@ final class AppEnvironment {
         store: ShiftTechoStore,
         notificationScheduler: NotificationScheduling,
         backupProvider: BackupProviding = FileBackupProvider(),
-        entitlements: EntitlementProviding = FreeEntitlementProvider(),
+        entitlements: StoreKitEntitlementProvider = StoreKitEntitlementProvider(),
         clock: ClockProviding = SystemClock(),
         isTestingMode: Bool = false
     ) {
@@ -46,6 +46,7 @@ final class AppEnvironment {
         return AppEnvironment(
             store: store,
             notificationScheduler: StubNotificationScheduler(granted: false),
+            entitlements: StoreKitEntitlementProvider(isTesting: true),
             clock: FixedClock(fixed),
             isTestingMode: true
         )

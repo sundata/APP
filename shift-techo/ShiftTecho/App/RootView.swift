@@ -59,16 +59,16 @@ struct RootView: View {
             // 設定から戻ったときの権限変化を通知登録に反映する。
             Task { await environment.refreshNotifications() }
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            // 広告はタブバーとシートを遮らない位置に置く。ガイド・共有・削除確認では表示しない。
-            if onboardingCompleted, adMob.canShowAds, !environment.isTestingMode {
-                AdMobBannerView(adUnitID: AdMobProvider.bannerAdUnitID)
-                    .background(.ultraThinMaterial)
-            }
-        }
         .task {
             guard !environment.isTestingMode else { return }
-            await adMob.prepare()
+            async let ads: Void = adMob.prepare()
+            async let purchases: Void = environment.entitlements.prepare()
+            _ = await (ads, purchases)
         }
+        .task {
+            await environment.entitlements.observeTransactions()
+        }
+        // カレンダーの和紙色とシフト色を常に明るく読みやすく保つ。
+        .preferredColorScheme(.light)
     }
 }

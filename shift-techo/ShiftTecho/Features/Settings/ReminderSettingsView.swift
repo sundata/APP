@@ -9,6 +9,7 @@ struct ReminderSettingsView: View {
 
     @State private var settings: ReminderSettings
     @State private var permission: NotificationPermission = .notDetermined
+    @State private var didInteractWithPermission = false
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -57,7 +58,11 @@ struct ReminderSettingsView: View {
             }
         }
         .navigationTitle("リマインダー")
-        .task { permission = await environment.notificationScheduler.permission() }
+        .task {
+            let loadedPermission = await environment.notificationScheduler.permission()
+            // 画面表示時の非同期取得が、直後のユーザー操作結果を上書きしないようにする。
+            if !didInteractWithPermission { permission = loadedPermission }
+        }
         .onChange(of: settings) { _, _ in persist() }
     }
 
@@ -77,6 +82,7 @@ struct ReminderSettingsView: View {
 
     /// オンにするときだけ権限を要求する。拒否されたらスイッチは戻す。
     private func enable(_ newValue: Bool, keyPath: WritableKeyPath<ReminderSettings, Bool>) {
+        didInteractWithPermission = true
         guard newValue else {
             settings[keyPath: keyPath] = false
             return

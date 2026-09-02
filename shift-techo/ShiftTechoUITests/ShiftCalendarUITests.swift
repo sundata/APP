@@ -47,7 +47,7 @@ final class ShiftCalendarUITests: XCTestCase {
         dayCell(app, day: day).tap()
         XCTAssertTrue(app.staticTexts["editorDateText"].waitForExistence(timeout: 5))
         app.descendants(matching: .any)["templateOption-\(template)"].tap()
-        app.buttons["saveShiftButton"].tap()
+        app.buttons["saveShiftToolbarButton"].tap()
     }
 
     // MARK: - 引導とカレンダー
@@ -122,6 +122,35 @@ final class ShiftCalendarUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["時給を設定すると表示されます"].waitForExistence(timeout: 5))
     }
 
+    func testPayrollSettingsSaveWageAndTransportAndRefreshSummary() {
+        let app = launchApp()
+        completeOnboarding(app)
+
+        assignShift(app, day: 2, template: "日勤")
+        app.tabBars.buttons["設定"].tap()
+        app.buttons["settingsPayrollLink"].tap()
+
+        let wage = app.textFields["hourlyWageField"]
+        XCTAssertTrue(wage.waitForExistence(timeout: 5))
+        wage.tap()
+        wage.typeText("1200")
+
+        let transport = app.textFields["transportField"]
+        transport.tap()
+        transport.typeText("500")
+        app.buttons["savePayrollSettingsButton"].tap()
+
+        app.tabBars.buttons["集計"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["summaryEstimatedTotal"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["summaryTransport"].label.contains("500"))
+        XCTAssertTrue(app.descendants(matching: .any)["summaryEstimatedTotal"].label.contains("10,100"))
+
+        app.tabBars.buttons["設定"].tap()
+        app.buttons["settingsPayrollLink"].tap()
+        XCTAssertEqual(app.textFields["hourlyWageField"].value as? String, "1200")
+        XCTAssertEqual(app.textFields["transportField"].value as? String, "500")
+    }
+
     // MARK: - 共有
 
     func testSharePreviewHasNoWageOrNote() {
@@ -140,6 +169,10 @@ final class ShiftCalendarUITests: XCTestCase {
         XCTAssertTrue(app.descendants(matching: .any)["sharePreview"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["himitsu"].exists)
         XCTAssertFalse(app.staticTexts.containing(NSPredicate(format: "label CONTAINS '1500'")).element.exists)
+
+        app.buttons["shareRenderButton"].tap()
+        XCTAssertTrue(app.buttons["shareSheetButton"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.images["作成した共有画像"].exists)
     }
 
     // MARK: - 通知
@@ -157,8 +190,11 @@ final class ShiftCalendarUITests: XCTestCase {
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
         toggle.tap()
         // StubNotificationScheduler は拒否を返すので、スイッチは戻り案内が出る。
-        XCTAssertTrue(app.staticTexts["openSystemSettingsLink"].waitForExistence(timeout: 5)
-            || app.buttons["openSystemSettingsLink"].waitForExistence(timeout: 5))
+        // Link は OS バージョンにより accessibilityIdentifier を子ラベルへ移すため、
+        // ユーザーに表示されるラベルで確認する。
+        XCTAssertTrue(app.buttons["設定を開く"].waitForExistence(timeout: 5)
+            || app.links["設定を開く"].waitForExistence(timeout: 5)
+            || app.staticTexts["設定を開く"].waitForExistence(timeout: 5))
     }
 
     // MARK: - データ削除
@@ -172,7 +208,9 @@ final class ShiftCalendarUITests: XCTestCase {
         app.buttons["settingsDataLink"].tap()
         app.buttons["deleteAllDataButton"].tap()
         app.alerts.buttons["次へ"].tap()
-        app.alerts.buttons["削除する"].tap()
+        // SwiftUI の destructive alert は識別子を子要素にも複製する場合があるため、
+        // 表示ラベルで実際のボタンだけを選ぶ。
+        app.alerts.firstMatch.buttons["削除する"].tap()
 
         XCTAssertTrue(app.staticTexts["シフトを、もっとかんたんに。"].waitForExistence(timeout: 10))
     }

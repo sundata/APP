@@ -8,6 +8,7 @@ struct ShiftTemplateListView: View {
 
     @State private var draft: ShiftTemplateDraft?
     @State private var revision = 0
+    @State private var showsPremium = false
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -21,6 +22,10 @@ struct ShiftTemplateListView: View {
 
     private var archived: [ShiftTemplate] {
         store.allTemplates().filter(\.isArchived).map(\.template)
+    }
+
+    private var canAddForPlan: Bool {
+        store.canAddTemplate && (environment.entitlements.isPro || active.count < 5)
     }
 
     var body: some View {
@@ -53,7 +58,7 @@ struct ShiftTemplateListView: View {
                     revision += 1
                 }
             } header: {
-                Text("使用中（最大 \(ShiftTemplate.activeLimit) 件）")
+                Text(environment.entitlements.isPro ? "使用中（プレミアム）" : "使用中（無料版は5件まで）")
             } footer: {
                 Text("すでに登録したシフトに使われているテンプレートは削除できません。アーカイブすると新規登録の候補から外れ、過去の記録はそのまま残ります。")
             }
@@ -65,8 +70,12 @@ struct ShiftTemplateListView: View {
                             ShiftTemplateRow(definition: template.definition, isArchived: true)
                             Spacer(minLength: 0)
                             Button("戻す") {
-                                store.unarchiveTemplate(id: template.id)
-                                revision += 1
+                                if canAddForPlan {
+                                    store.unarchiveTemplate(id: template.id)
+                                    revision += 1
+                                } else if !environment.entitlements.isPro {
+                                    showsPremium = true
+                                }
                             }
                             .font(ShiftTechoTheme.captionFont)
                             .disabled(!store.canAddTemplate)
@@ -86,7 +95,11 @@ struct ShiftTemplateListView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    draft = ShiftTemplateDraft.newWorkShift()
+                    if canAddForPlan {
+                        draft = ShiftTemplateDraft.newWorkShift()
+                    } else if !environment.entitlements.isPro {
+                        showsPremium = true
+                    }
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -106,6 +119,9 @@ struct ShiftTemplateListView: View {
                 }
                 revision += 1
             }
+        }
+        .sheet(isPresented: $showsPremium) {
+            PremiumPaywallView(entitlements: environment.entitlements)
         }
     }
 }

@@ -107,9 +107,15 @@ struct DayShiftEditorView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("閉じる") { dismiss() }
                 }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("保存") { save() }
+                        .disabled(selectedTemplateID == nil)
+                        .accessibilityIdentifier("saveShiftToolbarButton")
+                }
             }
         }
-        .presentationDetents([.medium, .large])
+        // テンプレート・メモ・保存操作を小型端末でも確実に表示する。
+        .presentationDetents([.large])
     }
 
     private func save() {

@@ -72,7 +72,7 @@ struct ShareCardView: View {
                             ShareLink(
                                 item: renderedImage,
                                 subject: Text("今日のKoyomiをシェア"),
-                                message: Text("今日の運勢、見せ合わない？ ✨ #Koyomi"),
+                                message: Text("今日の気分と小さな一歩、見せ合わない？ ✨ #Koyomi"),
                                 preview: SharePreview("Koyomi", image: renderedImage)
                             ) {
                                 Text("シェアする")
@@ -155,7 +155,7 @@ struct ShareCardCanvas: View {
                 Spacer(minLength: 0)
                 Text(content.brandName)
                     .font(.system(.headline, design: .serif))
-                Text("友だちと今日の運勢を見せ合おう ✦")
+                Text("友だちと今日の気分や小さな一歩を見せ合おう ✦")
                     .font(.system(.caption, design: .rounded).weight(.semibold))
                 Text(content.disclaimer)
                     .font(.system(.caption2, design: .default))

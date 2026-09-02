@@ -38,7 +38,7 @@ shift-techo/
 - **通知**：毎月の入力リマインダーと翌日のシフト通知。スイッチを ON にしたときだけ権限を要求し、拒否時は設定アプリへの案内を出す。
 - **データ**：JSON バックアップの書き出し/読み込み（schema version 検証、追加 or 置き換え、置き換えは二重確認）、すべてのデータ削除（二重確認 → 初回起動状態へ）。
 
-将来の Pro 版に備えて `EntitlementProviding` を用意しているが、購入 UI は実装していない。
+StoreKit 2 による「シフト手帳プレミアム」（月額・年額・買い切り）、購入復元、広告非表示、無料版のテンプレート5件制限を実装済み。商品 ID は `jp.co.sundata.shifttecho.premium.monthly` / `.yearly` / `.lifetime`。価格と3日間トライアルは App Store Connect 側で設定する。
 
 ## 給与計算のルール
 

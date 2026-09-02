@@ -30,6 +30,7 @@ final class TodayViewModel {
     var reflectionSaved = false
     var completedRitualTaskIDs: Set<String> = []
     var charmUnlocked = false
+    private var reloadRequested = false
 
     init(environment: AppEnvironment) {
         self.environment = environment
@@ -83,19 +84,13 @@ final class TodayViewModel {
             return
         }
 
-        let moonPhase: KoyomiCore.MoonPhase?
-        if let place {
-            moonPhase = await environment.weatherProvider.moonPhase(latitude: place.latitude, longitude: place.longitude)
-        } else {
-            moonPhase = nil
-        }
-
         let input = FortuneInput(
             zodiac: preferences.zodiac,
             date: now,
             calendar: calendar,
             weather: availability.snapshot,
-            moonPhase: moonPhase
+            // 月相のためだけにWeatherKitを再度呼ぶと表示が遅くなるため、初期表示では取得しない。
+            moonPhase: nil
         )
         let generated = environment.fortuneGenerator.fortune(for: input)
         fortune = generated
@@ -106,7 +101,20 @@ final class TodayViewModel {
 
     /// 引っぱって更新：天気だけを取り直す。核となる占いは同じ日なら変えない。
     func refreshWeather() async {
-        await load()
+        await reload()
+    }
+
+    /// タブ復帰・設定変更後は、読み込み中以外の状態を明示的に更新する。
+    func reload() async {
+        if state == .loading {
+            reloadRequested = true
+            return
+        }
+        repeat {
+            reloadRequested = false
+            state = .idle
+            await load()
+        } while reloadRequested
     }
 
     func toggleFavorite() {
@@ -181,6 +189,7 @@ final class TodayViewModel {
             )
             return .fresh(snapshot)
         } catch {
+            // 自動再試行で操作を待たせず、ユーザーが「再取得」を選べるようにする。
             return cachedWeather(dayKey: dayKey)
         }
     }

@@ -2,13 +2,22 @@ import SwiftUI
 import KoyomiCore
 
 struct TodayView: View {
+    private struct ShareCardSheet: Identifiable {
+        let id = UUID()
+        let content: ShareCardContent
+    }
+
     @Environment(\.colorScheme) private var colorScheme
     @State private var viewModel: TodayViewModel
-    @State private var showShareCard = false
+    @State private var shareCardSheet: ShareCardSheet?
     @State private var showCityPicker = false
+    @State private var showDailyInspiration = false
+    @FocusState private var isReflectionFocused: Bool
+    private let onShareCardDismissed: () -> Void
 
-    init(viewModel: TodayViewModel) {
+    init(viewModel: TodayViewModel, onShareCardDismissed: @escaping () -> Void = {}) {
         _viewModel = State(initialValue: viewModel)
+        self.onShareCardDismissed = onShareCardDismissed
     }
 
     var body: some View {
@@ -22,25 +31,16 @@ struct TodayView: View {
                         SkeletonCard(lines: 2)
                     } else if let fortune = viewModel.fortune {
                         cautionBanner
-                        mainCard(fortune)
                         moodCheckInCard
-                        skySignCard(fortune)
-                        if let lifestyle = viewModel.lifestyleContent {
-                            lifestyleCard(lifestyle, luckyColor: fortune.luckyColor)
-                        }
                         if let ritual = viewModel.ritualContent {
                             ritualCard(ritual)
                         }
-                        categoryGrid(fortune)
-                        luckyCard(fortune)
                         actionCard(fortune)
                         if let lifestyle = viewModel.lifestyleContent {
                             nightReflectionCard(lifestyle)
                         }
+                        dailyInspiration(fortune)
                         buttons
-                        Text(fortune.disclaimer)
-                            .font(KoyomiTheme.captionFont)
-                            .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
                     } else {
                         SkeletonCard(lines: 3)
                     }
@@ -50,10 +50,8 @@ struct TodayView: View {
             .refreshable { await viewModel.refreshWeather() }
         }
         .task { await viewModel.load() }
-        .sheet(isPresented: $showShareCard) {
-            if let content = viewModel.shareCardContent {
-                ShareCardView(content: content)
-            }
+        .sheet(item: $shareCardSheet, onDismiss: onShareCardDismissed) { sheet in
+            ShareCardView(content: sheet.content)
         }
         .sheet(isPresented: $showCityPicker) {
             CityPickerView { city in
@@ -85,8 +83,18 @@ struct TodayView: View {
             .foregroundStyle(KoyomiTheme.primaryText(colorScheme).opacity(0.9))
 
             if let notice = viewModel.weatherNotice {
-                Text(notice)
-                    .font(KoyomiTheme.captionFont)
+                HStack(alignment: .firstTextBaseline) {
+                    Text(notice)
+                        .font(KoyomiTheme.captionFont)
+                        .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                    Spacer()
+                    Button("再取得") { Task { await viewModel.refreshWeather() } }
+                        .font(KoyomiTheme.captionFont.weight(.semibold))
+                        .accessibilityIdentifier("today.retryWeather")
+                }
+            }
+            if viewModel.weather.snapshot != nil {
+                AppleWeatherAttributionView()
                     .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
             }
             if viewModel.needsCityChoice {
@@ -118,7 +126,7 @@ struct TodayView: View {
     private func mainCard(_ fortune: DailyFortune) -> some View {
         GlassCard {
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
-                Text("今日の運勢")
+                Text("今日のヒント")
                     .font(KoyomiTheme.captionFont)
                     .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
                 Text(fortune.headline)
@@ -131,6 +139,36 @@ struct TodayView: View {
                     .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
                     .fixedSize(horizontal: false, vertical: true)
             }
+        }
+    }
+
+    private func dailyInspiration(_ fortune: DailyFortune) -> some View {
+        GlassCard {
+            DisclosureGroup(isExpanded: $showDailyInspiration) {
+                VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
+                    mainCard(fortune)
+                    skySignCard(fortune)
+                    if let lifestyle = viewModel.lifestyleContent {
+                        lifestyleCard(lifestyle, luckyColor: fortune.luckyColor)
+                    }
+                    categoryGrid(fortune)
+                    luckyCard(fortune)
+                    Text(fortune.disclaimer)
+                        .font(KoyomiTheme.captionFont)
+                        .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                }
+                .padding(.top, KoyomiTheme.Spacing.s)
+            } label: {
+                VStack(alignment: .leading, spacing: 3) {
+                    Label("今日のインスピレーション（任意）", systemImage: "sparkles")
+                        .font(KoyomiTheme.headlineFont)
+                    Text("気分の記録とは別に、楽しみたい日にだけ開けます。")
+                        .font(KoyomiTheme.captionFont)
+                        .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
+                }
+            }
+            .tint(KoyomiTheme.primaryText(colorScheme))
+            .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
         }
     }
 
@@ -243,6 +281,7 @@ struct TodayView: View {
                 TextField("160文字以内で、短く残してみて", text: $viewModel.reflectionDraft, axis: .vertical)
                     .lineLimit(2...4)
                     .textFieldStyle(.roundedBorder)
+                    .focused($isReflectionFocused)
                     .onChange(of: viewModel.reflectionDraft) { _, value in
                         if value.count > 160 { viewModel.reflectionDraft = String(value.prefix(160)) }
                         viewModel.reflectionSaved = false
@@ -257,7 +296,10 @@ struct TodayView: View {
                             .font(KoyomiTheme.captionFont)
                             .foregroundStyle(.green)
                     }
-                    Button("残す") { viewModel.saveReflection() }
+                    Button("残す") {
+                        viewModel.saveReflection()
+                        isReflectionFocused = false
+                    }
                         .buttonStyle(.borderedProminent)
                         .tint(KoyomiTheme.mistPurple)
                         .disabled(viewModel.reflectionDraft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -272,9 +314,9 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
                 HStack {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("今日の星願リスト")
+                        Text("今日の小さなセルフケア")
                             .font(KoyomiTheme.headlineFont)
-                        Text("ひとつできたら、今日のチャームが開きます")
+                        Text("ひとつできたら、今日のしるしが開きます")
                             .font(KoyomiTheme.captionFont)
                             .foregroundStyle(KoyomiTheme.secondaryText(colorScheme))
                     }
@@ -313,7 +355,7 @@ struct TodayView: View {
                     HStack(spacing: KoyomiTheme.Spacing.m) {
                         Text(content.charm.emoji).font(.system(size: 42))
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("今日のチャーム：\(content.charm.name)")
+                            Text("今日のしるし：\(content.charm.name)")
                                 .font(KoyomiTheme.bodyFont.weight(.bold))
                             Text(content.charm.message)
                                 .font(KoyomiTheme.captionFont)
@@ -403,7 +445,10 @@ struct TodayView: View {
             .buttonStyle(.plain)
             .accessibilityLabel(Text(viewModel.isFavorite ? "お気に入りから外す" : "お気に入りに追加"))
 
-            KoyomiPrimaryButton(title: "シェアカードをつくる") { showShareCard = true }
+            KoyomiPrimaryButton(title: "シェアカードをつくる") {
+                guard let content = viewModel.shareCardContent else { return }
+                shareCardSheet = ShareCardSheet(content: content)
+            }
                 .accessibilityIdentifier("today.share")
         }
     }

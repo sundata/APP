@@ -101,7 +101,6 @@ struct DataManagementView: View {
         }
         .alert("本当に削除しますか？", isPresented: $showsDeleteSecondConfirmation) {
             Button("削除する", role: .destructive) { deleteAll() }
-                .accessibilityIdentifier("confirmDeleteAllButton")
             Button("キャンセル", role: .cancel) {}
         } message: {
             Text("この操作は取り消せません。")

@@ -15,8 +15,17 @@ struct ProfileView: View {
     @State private var showDeleteConfirmation = false
     @State private var showCityPicker = false
     @State private var adMob = AdMobProvider.shared
+    @State private var locationAuthorization: LocationAuthorization = .notDetermined
 
     private var zodiac: Zodiac { Zodiac.from(date: birthday, calendar: KoyomiCalendar.japan) }
+
+    init(
+        environment: AppEnvironment,
+        onReset: @escaping () -> Void
+    ) {
+        self.environment = environment
+        self.onReset = onReset
+    }
 
     var body: some View {
         NavigationStack {
@@ -29,6 +38,10 @@ struct ProfileView: View {
 
                 Section("お天気") {
                     Toggle("現在地のお天気を使う", isOn: $usesCurrentLocation)
+                        .accessibilityIdentifier("profile.useCurrentLocation")
+                        .onChange(of: usesCurrentLocation) { _, enabled in
+                            changeLocationMode(enabled)
+                        }
                     Button {
                         showCityPicker = true
                     } label: {
@@ -40,7 +53,8 @@ struct ProfileView: View {
                         }
                         .frame(minHeight: KoyomiTheme.minimumTapTarget)
                     }
-                    if environment.locationProvider.authorization == .denied {
+                    .accessibilityIdentifier("profile.chooseCity")
+                    if locationAuthorization == .denied {
                         Text("位置情報が使えない設定になっています。iOS の設定から変更できます。")
                             .font(KoyomiTheme.captionFont)
                     }
@@ -88,6 +102,7 @@ struct ProfileView: View {
                 CityPickerView { city in
                     selectedCityID = city.id
                     usesCurrentLocation = false
+                    persistLocationPreference()
                     showCityPicker = false
                 }
             }
@@ -115,9 +130,40 @@ struct ProfileView: View {
         usesCurrentLocation = preferences.usesCurrentLocation
         selectedCityID = preferences.selectedCityID ?? City.tokyo.id
         reminderEnabled = preferences.reminderEnabled
+        environment.locationProvider.refreshAuthorization()
+        locationAuthorization = environment.locationProvider.authorization
         reminderTime = Calendar(identifier: .gregorian).date(
             from: DateComponents(year: 2000, month: 1, day: 1, hour: preferences.reminderHour, minute: preferences.reminderMinute)
         ) ?? Date()
+    }
+
+    private func changeLocationMode(_ enabled: Bool) {
+        // タブをすぐ切り替えても古い都市設定に戻らないよう、選択は同期的に保存する。
+        persistLocationPreference(usingCurrentLocation: enabled)
+
+        guard enabled else { return }
+        // すでに許可済みなら再要求せず、そのまま現在地モードを維持する。
+        environment.locationProvider.refreshAuthorization()
+        locationAuthorization = environment.locationProvider.authorization
+        guard environment.locationProvider.authorization != .authorized else { return }
+        Task {
+            let status = await environment.locationProvider.requestWhenInUseAuthorization()
+            locationAuthorization = status
+            guard status != .authorized else {
+                // 許可済みでも、権限確認中に設定がオフへ戻されていたら尊重する。
+                return
+            }
+            usesCurrentLocation = false
+            persistLocationPreference(usingCurrentLocation: false)
+        }
+    }
+
+    private func persistLocationPreference(usingCurrentLocation override: Bool? = nil) {
+        let currentLocationEnabled = override ?? usesCurrentLocation
+        let preferences = environment.store.preferences()
+        preferences.usesCurrentLocation = currentLocationEnabled
+        preferences.selectedCityID = currentLocationEnabled ? nil : selectedCityID
+        environment.store.save()
     }
 
     private func savePreferences() async {

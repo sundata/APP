@@ -14,9 +14,8 @@ final class AdMobProvider {
     private var hasStartedAds = false
     private var isPreparing = false
 
-    /// シフト手帳 の AdMob バナー広告ユニット ID（現在は Google 公式のテスト ID）。
-    /// リリース前に本アプリ専用のユニット ID に差し替える。
-    static let bannerAdUnitID = "ca-app-pub-3940256099942544/2934735716"
+    /// シフト手帳の本番バナー広告ユニット ID。
+    static let bannerAdUnitID = "ca-app-pub-7019246421185381/3328945847"
 
     func prepare() async {
         guard !isPreparing, !hasStartedAds else { return }

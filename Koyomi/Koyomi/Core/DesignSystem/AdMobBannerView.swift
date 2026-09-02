@@ -6,14 +6,12 @@ struct AdMobBannerView: View {
     let adUnitID: String
 
     var body: some View {
-        GeometryReader { proxy in
-            let width = max(320, proxy.size.width)
-            let adSize = largeAnchoredAdaptiveBanner(width: width)
-            BannerContainer(adSize: adSize, adUnitID: adUnitID)
-                .frame(width: adSize.size.width, height: adSize.size.height)
-                .frame(maxWidth: .infinity)
-        }
-        .frame(height: 60)
+        BannerContainer(adSize: AdSizeBanner, adUnitID: adUnitID)
+            .frame(width: AdSizeBanner.size.width, height: AdSizeBanner.size.height)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(height: AdSizeBanner.size.height)
+        // GoogleMobileAds の UIKit ビューが SwiftUI の予約領域外へ描画されないようにする。
+        .clipped()
         .accessibilityLabel("広告")
     }
 }
@@ -25,6 +23,7 @@ private struct BannerContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> BannerView {
         let banner = BannerView(adSize: adSize)
         banner.adUnitID = adUnitID
+        banner.clipsToBounds = true
         banner.load(Request())
         return banner
     }

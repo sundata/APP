@@ -63,7 +63,8 @@ final class AppEnvironment {
         return AppEnvironment(
             store: store,
             weatherProvider: MockWeatherProvider(category: .clear, temperature: 18),
-            locationProvider: StubLocationProvider(authorization: .notDetermined, place: nil),
+            // UI テストでは許可操作の後を再現し、現在地を大阪として固定する。
+            locationProvider: StubLocationProvider(authorization: .authorized, place: ResolvedPlace(city: .osaka)),
             notificationScheduler: StubNotificationScheduler(),
             clock: FixedClock(fixed)
         )

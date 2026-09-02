@@ -7,6 +7,7 @@ struct CalendarTabView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     private let environment: AppEnvironment
+    @State private var adMob = AdMobProvider.shared
 
     @State private var month: CalendarMonth
     @State private var selectedDayKey: String?
@@ -41,6 +42,11 @@ struct CalendarTabView: View {
                     monthGrid
                     legend
                     Spacer(minLength: 0)
+                    if adMob.canShowAds, !environment.isTestingMode, !environment.entitlements.isPro {
+                        AdMobBannerView(adUnitID: AdMobProvider.bannerAdUnitID)
+                            .frame(maxWidth: .infinity)
+                            .accessibilityIdentifier("calendarBannerAd")
+                    }
                 }
                 .padding(.horizontal, ShiftTechoTheme.Spacing.m)
                 .padding(.top, ShiftTechoTheme.Spacing.s)

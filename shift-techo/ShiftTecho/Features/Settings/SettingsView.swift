@@ -5,8 +5,10 @@ import ShiftTechoCore
 @MainActor
 struct SettingsView: View {
     private let environment: AppEnvironment
+    @State private var adMob = AdMobProvider.shared
     /// すべてのデータを削除したあと、初回起動状態に戻すためのコールバック。
     private let onResetToOnboarding: () -> Void
+    @State private var showsPremium = false
 
     init(environment: AppEnvironment, onResetToOnboarding: @escaping () -> Void) {
         self.environment = environment
@@ -16,6 +18,19 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Button { showsPremium = true } label: {
+                        HStack {
+                            Label("シフト手帳プレミアム", systemImage: "sparkles")
+                            Spacer()
+                            Text(environment.entitlements.isPro ? "利用中" : "詳しく見る")
+                                .font(.caption)
+                                .foregroundStyle(environment.entitlements.isPro ? ShiftTechoTheme.accent : .secondary)
+                        }
+                    }
+                    .disabled(environment.entitlements.isPro)
+                }
+
                 Section("シフト") {
                     NavigationLink("シフトテンプレート") {
                         ShiftTemplateListView(environment: environment)
@@ -50,8 +65,20 @@ struct SettingsView: View {
                     }
                     LabeledContent("バージョン", value: Bundle.appVersionText)
                 }
+
+                // 設定画面では一覧の末尾に置き、操作項目へ重ねない。
+                if adMob.canShowAds, !environment.isTestingMode, !environment.entitlements.isPro {
+                    Section("広告") {
+                        AdMobBannerView(adUnitID: AdMobProvider.bannerAdUnitID)
+                            .frame(maxWidth: .infinity)
+                            .listRowInsets(EdgeInsets())
+                    }
+                }
             }
             .navigationTitle("設定")
+            .sheet(isPresented: $showsPremium) {
+                PremiumPaywallView(entitlements: environment.entitlements)
+            }
         }
     }
 }

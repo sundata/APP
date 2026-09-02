@@ -10,6 +10,9 @@ struct ShiftShareView: View {
     private let content: ShiftShareContent
 
     @State private var exportedURL: URL?
+    @State private var exportErrorMessage: String?
+    @State private var isExporting = false
+    @State private var exportedImage: UIImage?
 
     init(month: CalendarMonth, assignments: [String: ShiftAssignment], holidays: [String: String]) {
         content = ShiftShareContent(month: month, assignments: assignments, holidays: holidays)
@@ -30,8 +33,10 @@ struct ShiftShareView: View {
                         .scaleEffect(0.3, anchor: .topLeading)
                         .frame(
                             width: ShiftShareContent.imageSize.width * 0.3,
-                            height: ShiftShareContent.imageSize.height * 0.3
+                            height: ShiftShareContent.imageSize.height * 0.3,
+                            alignment: .topLeading
                         )
+                        .clipped()
                         .accessibilityIdentifier("sharePreview")
                         .accessibilityLabel("共有画像のプレビュー。給与とメモは含まれません。")
 
@@ -41,6 +46,14 @@ struct ShiftShareView: View {
                         .accessibilityIdentifier("shareNoticeText")
 
                     if let url = exportedURL {
+                        if let exportedImage {
+                            Image(uiImage: exportedImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 260)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .accessibilityLabel("作成した共有画像")
+                        }
                         ShareLink(item: url) {
                             Text("画像を共有")
                                 .font(ShiftTechoTheme.bodyFont.weight(.semibold))
@@ -48,7 +61,8 @@ struct ShiftShareView: View {
                         }
                         .accessibilityIdentifier("shareSheetButton")
                     } else {
-                        ShiftTechoPrimaryButton(title: "画像を作成") { export() }
+                        ShiftTechoPrimaryButton(title: isExporting ? "作成中…" : "画像を作成") { export() }
+                            .disabled(isExporting)
                             .accessibilityIdentifier("shareRenderButton")
                     }
                 }
@@ -61,22 +75,55 @@ struct ShiftShareView: View {
                     Button("閉じる") { dismiss() }
                 }
             }
+            .alert("画像を作成できませんでした", isPresented: Binding(
+                get: { exportErrorMessage != nil },
+                set: { if !$0 { exportErrorMessage = nil } }
+            )) {
+                Button("OK", role: .cancel) { exportErrorMessage = nil }
+            } message: {
+                Text(exportErrorMessage ?? "もう一度お試しください。")
+            }
         }
     }
 
     @MainActor
     private func export() {
-        let renderer = ImageRenderer(content: ShiftSharePosterView(content: content))
-        renderer.proposedSize = ProposedViewSize(
+        isExporting = true
+        exportErrorMessage = nil
+        defer { isExporting = false }
+
+        let size = CGSize(
             width: ShiftShareContent.imageSize.width,
             height: ShiftShareContent.imageSize.height
         )
+        let renderer = ImageRenderer(content:
+            ShiftSharePosterView(content: content)
+                .environment(\.colorScheme, .light)
+                .frame(width: size.width, height: size.height)
+        )
+        renderer.proposedSize = ProposedViewSize(size)
         renderer.scale = 1
-        guard let image = renderer.uiImage, let data = image.pngData() else { return }
+        // ImageRenderer 自身に UIImage を生成させることで、Core Graphics と UIKit の
+        // Y 軸方向の違いによる上下反転を避ける。
+        guard let image = renderer.uiImage,
+              image.size == size,
+              let data = image.pngData(), !data.isEmpty else {
+            exportErrorMessage = "PNGデータへの変換に失敗しました。"
+            return
+        }
+
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("shifttecho-\(content.title).png")
-        try? data.write(to: url, options: .atomic)
-        exportedURL = url
+        do {
+            try data.write(to: url, options: .atomic)
+            guard FileManager.default.fileExists(atPath: url.path) else {
+                throw CocoaError(.fileNoSuchFile)
+            }
+            exportedImage = image
+            exportedURL = url
+        } catch {
+            exportErrorMessage = "画像ファイルを保存できませんでした。空き容量を確認してください。"
+        }
     }
 }
 

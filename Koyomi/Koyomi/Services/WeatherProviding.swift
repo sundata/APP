@@ -1,4 +1,5 @@
 import Foundation
+import os
 import KoyomiCore
 #if canImport(WeatherKit)
 import WeatherKit
@@ -19,6 +20,8 @@ enum WeatherProviderError: Error {
     case timedOut
     case unavailable
 }
+
+private let weatherLogger = Logger(subsystem: "jp.co.sundata.koyomi", category: "WeatherKit")
 
 /// 一定時間で必ず打ち切る（無限ローディングを避ける）。
 func withTimeout<T: Sendable>(
@@ -43,34 +46,41 @@ func withTimeout<T: Sendable>(
 struct WeatherKitWeatherProvider: WeatherProviding {
     let timeout: Double
 
-    init(timeout: Double = 4.0) {
+    /// 初回の実機リクエストでは WeatherKit の認証を含め数秒かかることがある。
+    /// 4秒では正常な通信まで失敗扱いになるため、Apple の応答を十分待つ。
+    init(timeout: Double = 8.0) {
         self.timeout = timeout
     }
 
     func snapshot(latitude: Double, longitude: Double, cityName: String) async throws -> WeatherSnapshot {
-        try await withTimeout(seconds: timeout) {
-            let location = CLLocation(latitude: latitude, longitude: longitude)
-            let weather = try await WeatherService.shared.weather(for: location)
-            let current = weather.currentWeather
-            let today = weather.dailyForecast.forecast.first
+        do {
+            return try await withTimeout(seconds: timeout) {
+                let location = CLLocation(latitude: latitude, longitude: longitude)
+                let weather = try await WeatherService.shared.weather(for: location)
+                let current = weather.currentWeather
+                let today = weather.dailyForecast.forecast.first
 
-            return WeatherSnapshot(
-                category: Self.category(
-                    for: current.condition,
+                return WeatherSnapshot(
+                    category: Self.category(
+                        for: current.condition,
+                        temperature: current.temperature.converted(to: .celsius).value,
+                        windSpeed: current.wind.speed.converted(to: .metersPerSecond).value
+                    ),
                     temperature: current.temperature.converted(to: .celsius).value,
-                    windSpeed: current.wind.speed.converted(to: .metersPerSecond).value
-                ),
-                temperature: current.temperature.converted(to: .celsius).value,
-                highTemperature: today?.highTemperature.converted(to: .celsius).value
-                    ?? current.temperature.converted(to: .celsius).value,
-                lowTemperature: today?.lowTemperature.converted(to: .celsius).value
-                    ?? current.temperature.converted(to: .celsius).value,
-                precipitationChance: today?.precipitationChance ?? 0,
-                humidity: current.humidity,
-                windSpeed: current.wind.speed.converted(to: .metersPerSecond).value,
-                cityName: cityName,
-                capturedAt: Date()
-            )
+                    highTemperature: today?.highTemperature.converted(to: .celsius).value
+                        ?? current.temperature.converted(to: .celsius).value,
+                    lowTemperature: today?.lowTemperature.converted(to: .celsius).value
+                        ?? current.temperature.converted(to: .celsius).value,
+                    precipitationChance: today?.precipitationChance ?? 0,
+                    humidity: current.humidity,
+                    windSpeed: current.wind.speed.converted(to: .metersPerSecond).value,
+                    cityName: cityName,
+                    capturedAt: Date()
+                )
+            }
+        } catch {
+            weatherLogger.error("WeatherKit snapshot failed: \(String(describing: error), privacy: .public)")
+            throw error
         }
     }
 

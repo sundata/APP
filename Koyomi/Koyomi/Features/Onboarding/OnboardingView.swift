@@ -52,9 +52,9 @@ struct OnboardingView: View {
         VStack(spacing: KoyomiTheme.Spacing.m) {
             Text("Koyomi")
                 .font(.system(.largeTitle, design: .serif).weight(.semibold))
-            Text("空と星から届く、わたしだけの毎日占い")
+            Text("気分と小さな行動を、わたしだけの暦に")
                 .font(KoyomiTheme.bodyFont)
-            Text("今日の空は、今日のあなたの味方。")
+            Text("毎日ひとつ、自分にやさしい記録を。")
                 .font(KoyomiTheme.headlineFont)
                 .multilineTextAlignment(.center)
         }
@@ -91,11 +91,11 @@ struct OnboardingView: View {
     private var locationPage: some View {
         GlassCard {
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.m) {
-                Text("今いる場所のお天気を、占いにそっと重ねます。")
+                Text("今いる場所のお天気を、毎日の記録にそっと重ねます。")
                     .font(KoyomiTheme.headlineFont)
                 Text("位置情報は「使用中のみ」お借りして、お天気の取得だけに使います。保存するのは都市名とお天気の要約だけです。")
                     .font(KoyomiTheme.bodyFont)
-                KoyomiPrimaryButton(title: "位置情報を許可する") {
+                KoyomiPrimaryButton(title: "次へ") {
                     Task { await requestLocation() }
                 }
                 .accessibilityIdentifier("onboarding.allowLocation")
@@ -114,7 +114,7 @@ struct OnboardingView: View {
                     .font(KoyomiTheme.headlineFont)
                 DatePicker("リマインダーの時刻", selection: $reminderTime, displayedComponents: .hourAndMinute)
                     .datePickerStyle(.compact)
-                KoyomiPrimaryButton(title: "リマインダーをオンにする") {
+                KoyomiPrimaryButton(title: "次へ") {
                     Task { await enableReminder() }
                 }
                 .accessibilityIdentifier("onboarding.enableReminder")

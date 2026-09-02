@@ -6,7 +6,7 @@ struct CalendarView: View {
     @Environment(\.colorScheme) private var colorScheme
     let environment: AppEnvironment
 
-    @State private var month: Date = Date()
+    @State private var month: Date
     @State private var records: [String: FortuneRecord] = [:]
     @State private var moodRecords: [String: DailyMoodRecord] = [:]
     @State private var ritualRecords: [String: DailyRitualRecord] = [:]
@@ -15,6 +15,11 @@ struct CalendarView: View {
     @State private var showFavoritesOnly = false
 
     private var calendar: Calendar { KoyomiCalendar.japan }
+
+    init(environment: AppEnvironment) {
+        self.environment = environment
+        _month = State(initialValue: environment.clock.now)
+    }
 
     var body: some View {
         ZStack {
@@ -182,6 +187,7 @@ struct CalendarView: View {
                             if let weather = record.weather {
                                 Text("\(record.cityName)・\(weather.category.japaneseName) \(weather.temperatureText)")
                                     .font(KoyomiTheme.captionFont)
+                                AppleWeatherAttributionView()
                             }
                         }
                         .foregroundStyle(KoyomiTheme.primaryText(colorScheme))
@@ -215,14 +221,14 @@ struct CalendarView: View {
         return GlassCard {
             VStack(alignment: .leading, spacing: KoyomiTheme.Spacing.s) {
                 HStack {
-                    Label("星のチャーム", systemImage: "sparkles")
+                    Label("つづけた日のしるし", systemImage: "sparkles")
                         .font(KoyomiTheme.headlineFont)
                     Spacer()
                     Text("\(charms.count)個")
                         .font(KoyomiTheme.captionFont.weight(.bold))
                 }
                 if charms.isEmpty {
-                    Text("今日の星願をひとつ叶えると、ここにチャームが増えます。")
+                    Text("今日の小さなセルフケアをひとつ終えると、ここにしるしが増えます。")
                         .font(KoyomiTheme.captionFont)
                 } else {
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -249,7 +255,7 @@ struct CalendarView: View {
         switch streak {
         case 1: return "今日のあなたに会えてうれしいです。"
         case 2...6: return "小さな習慣が、少しずつ育っています。"
-        case 7...29: return "一週間以上の星の記録。あなたらしいリズムです。"
+        case 7...29: return "一週間以上の記録。あなたらしいリズムです。"
         default: return "積み重ねた日々が、あなただけの暦になりました。"
         }
     }
@@ -270,6 +276,7 @@ struct HistoryDetailView: View {
                     if let weather = record.weather {
                         Text("\(record.cityName)・\(weather.category.japaneseName) \(weather.temperatureText)")
                             .font(KoyomiTheme.captionFont)
+                        AppleWeatherAttributionView()
                     } else {
                         Text("この日はお天気情報がありませんでした。")
                             .font(KoyomiTheme.captionFont)

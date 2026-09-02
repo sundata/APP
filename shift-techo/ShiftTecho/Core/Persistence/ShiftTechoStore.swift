@@ -18,6 +18,8 @@ final class ShiftTechoStore {
     private(set) var undoSnapshot: UndoSnapshot?
     /// 変更のたびに増える。View の再描画トリガー。
     private(set) var revision = 0
+    /// 永続化に失敗した場合、UI が成功扱いしないために保持する。
+    private(set) var lastSaveError: String?
 
     init(context: ModelContext) {
         self.context = context
@@ -55,9 +57,17 @@ final class ShiftTechoStore {
         save()
     }
 
-    func save() {
-        try? context.save()
-        revision += 1
+    @discardableResult
+    func save() -> Bool {
+        do {
+            try context.save()
+            lastSaveError = nil
+            revision += 1
+            return true
+        } catch {
+            lastSaveError = error.localizedDescription
+            return false
+        }
     }
 
     // MARK: - テンプレート

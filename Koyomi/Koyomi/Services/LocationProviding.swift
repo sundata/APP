@@ -88,6 +88,10 @@ final class CoreLocationProvider: LocationProviding {
         await withCheckedContinuation { continuation in
             locationContinuation = continuation
             manager.requestLocation()
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .seconds(5))
+                self?.handleLocation(nil)
+            }
         }
     }
 
