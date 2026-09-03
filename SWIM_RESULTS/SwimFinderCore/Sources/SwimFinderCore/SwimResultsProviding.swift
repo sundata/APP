@@ -1,13 +1,15 @@
 import Foundation
 
 /// 結果データの取得契約。
-/// Mode B（現行 MVP）ではアプリはこのプロトコルの実通信実装を持たない。
-/// Mode A（許諾取得後）で公式 API 実装を追加するための契約と、テスト用フィクスチャ実装のみを提供する。
+/// 公開データ API の実通信実装と、テスト用フィクスチャ実装がこの契約に準拠する。
 public protocol SwimResultsProviding: Sendable {
     func searchPlayers(query: PlayerQuery) async throws -> [PlayerSummary]
+    func playerProfile(playerID: String) async throws -> PlayerProfile
     func playerResults(playerID: String) async throws -> [SwimResult]
     func searchMeets(query: MeetQuery) async throws -> [MeetSummary]
     func meetResults(meetID: String, filter: ResultFilter) async throws -> [SwimResult]
+    func meetEvents(meetID: String) async throws -> [MeetEvent]
+    func eventResults(event: MeetEvent) async throws -> [SwimResult]
 }
 
 /// 取得失敗の分類。「該当なし」と混同しないよう、0 件は成功（空配列）で表し、失敗は必ず throw する。
@@ -84,11 +86,14 @@ public struct Fetched<Value: Sendable>: Sendable {
     }
 }
 
-/// 許諾未取得の間、常に `.notPermitted` を返す実装。Mode B でアプリに注入する。
+/// 通信機能を明示的に無効化する場合に、常に `.notPermitted` を返す実装。
 public struct DisabledSwimResultsProvider: SwimResultsProviding {
     public init() {}
     public func searchPlayers(query: PlayerQuery) async throws -> [PlayerSummary] { throw SwimResultsError.notPermitted }
+    public func playerProfile(playerID: String) async throws -> PlayerProfile { throw SwimResultsError.notPermitted }
     public func playerResults(playerID: String) async throws -> [SwimResult] { throw SwimResultsError.notPermitted }
     public func searchMeets(query: MeetQuery) async throws -> [MeetSummary] { throw SwimResultsError.notPermitted }
     public func meetResults(meetID: String, filter: ResultFilter) async throws -> [SwimResult] { throw SwimResultsError.notPermitted }
+    public func meetEvents(meetID: String) async throws -> [MeetEvent] { throw SwimResultsError.notPermitted }
+    public func eventResults(event: MeetEvent) async throws -> [SwimResult] { throw SwimResultsError.notPermitted }
 }

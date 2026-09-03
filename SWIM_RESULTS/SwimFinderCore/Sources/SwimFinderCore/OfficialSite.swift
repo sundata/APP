@@ -11,6 +11,13 @@ public enum OfficialSite {
     /// 大会検索（トップページと同一機能）
     public static let tournamentList = URL(string: "https://result.swim.or.jp/tournament/list")!
 
+    public static func affiliationSearch(name: String) -> URL? {
+        let normalized = QueryNormalizer.normalize(name)
+        guard QueryNormalizer.isSearchable(normalized), var components = URLComponents(url: playerSearch, resolvingAgainstBaseURL: false) else { return nil }
+        components.queryItems = [URLQueryItem(name: "entry_group_name", value: normalized)]
+        return components.url
+    }
+
     /// 選手情報ページ。ID は公式が発行した数値 ID のみ受け付ける。
     public static func athlete(id: String) -> URL? {
         guard isOfficialID(id) else { return nil }

@@ -7,7 +7,7 @@ struct SwimFinderApp: App {
     private let environment: AppEnvironment
 
     init() {
-        let schema = Schema([RecentSearchRecord.self, FavoriteRecord.self])
+        let schema = Schema([RecentSearchRecord.self, FavoriteRecord.self, PerformanceGoalRecord.self, RacePlanRecord.self, AthletePreferenceRecord.self])
         let arguments = ProcessInfo.processInfo.arguments
         let isUITesting = arguments.contains("-uiTesting")
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: isUITesting)
@@ -23,8 +23,15 @@ struct SwimFinderApp: App {
             clock: SystemClock(),
             isUITesting: isUITesting
         )
+        if !isUITesting {
+            environment.resultUpdateMonitor.registerBackgroundRefresh()
+            environment.resultUpdateMonitor.scheduleBackgroundRefresh()
+        }
         if isUITesting, arguments.contains("-seedHistory") {
             environment.store.seedForUITests()
+        }
+        if isUITesting, arguments.contains("-seedFreeAthleteLimit") {
+            environment.store.seedFreeAthleteLimitForUITests()
         }
     }
 

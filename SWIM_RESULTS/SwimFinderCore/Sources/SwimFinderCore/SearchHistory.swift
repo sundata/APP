@@ -4,11 +4,13 @@ import Foundation
 public struct RecentSearch: Sendable, Hashable, Codable, Identifiable {
     public enum Kind: String, Sendable, Codable, CaseIterable {
         case player
+        case affiliation
         case meet
 
         public var title: String {
             switch self {
             case .player: return "選手"
+            case .affiliation: return "所属"
             case .meet: return "大会"
             }
         }
@@ -21,22 +23,30 @@ public struct RecentSearch: Sendable, Hashable, Codable, Identifiable {
     /// 正規化済み検索語（重複判定に使う）
     public let normalizedQuery: String
     public let fiscalYear: Int?
+    public let prefectureCode: Int?
+    public let statusCode: Int?
+    public let waterwayCode: Int?
+    public let isFilterOnly: Bool
     public let officialURL: URL
     public let searchedAt: Date
 
-    public init(id: UUID = UUID(), kind: Kind, rawQuery: String, fiscalYear: Int? = nil, officialURL: URL, searchedAt: Date) {
+    public init(id: UUID = UUID(), kind: Kind, rawQuery: String, fiscalYear: Int? = nil, prefectureCode: Int? = nil, statusCode: Int? = nil, waterwayCode: Int? = nil, isFilterOnly: Bool = false, officialURL: URL, searchedAt: Date) {
         self.id = id
         self.kind = kind
         self.rawQuery = rawQuery
         self.normalizedQuery = QueryNormalizer.normalize(rawQuery)
         self.fiscalYear = fiscalYear
+        self.prefectureCode = prefectureCode
+        self.statusCode = statusCode
+        self.waterwayCode = waterwayCode
+        self.isFilterOnly = isFilterOnly
         self.officialURL = officialURL
         self.searchedAt = searchedAt
     }
 
     /// 同じ種類・同じ正規化検索語・同じ年度なら同一の検索とみなす。
     public var dedupeKey: String {
-        "\(kind.rawValue)|\(normalizedQuery)|\(fiscalYear.map(String.init) ?? "")"
+        "\(kind.rawValue)|\(normalizedQuery)|\(fiscalYear.map(String.init) ?? "")|\(prefectureCode.map(String.init) ?? "")|\(statusCode.map(String.init) ?? "")|\(waterwayCode.map(String.init) ?? "")"
     }
 }
 

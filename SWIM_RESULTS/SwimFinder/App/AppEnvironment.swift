@@ -11,8 +11,9 @@ final class AppEnvironment {
     let clock: ClockProviding
     let isUITesting: Bool
     let browser: OfficialSiteBrowser
-    /// Mode B のため、結果データ取得は常に無効化されている。
     let resultsProvider: SwimResultsProviding
+    let resultUpdateMonitor: ResultUpdateMonitor
+    let membership: MembershipStore
 
     init(store: LocalStore, clipboard: ClipboardWriting, clock: ClockProviding, isUITesting: Bool) {
         self.store = store
@@ -20,7 +21,12 @@ final class AppEnvironment {
         self.clock = clock
         self.isUITesting = isUITesting
         self.browser = OfficialSiteBrowser(isUITesting: isUITesting)
-        self.resultsProvider = DisabledSwimResultsProvider()
+        let provider: SwimResultsProviding = isUITesting
+            ? FixtureSwimResultsProvider()
+            : ReliableSwimResultsProvider(upstream: OfficialSwimResultsProvider())
+        self.resultsProvider = provider
+        self.resultUpdateMonitor = ResultUpdateMonitor(provider: provider)
+        self.membership = MembershipStore(isUITesting: isUITesting, forcesFreeTier: ProcessInfo.processInfo.arguments.contains("-uiTestingFree"))
     }
 }
 

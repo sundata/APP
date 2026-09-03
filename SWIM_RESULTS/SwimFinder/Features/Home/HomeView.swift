@@ -4,26 +4,111 @@ import SwimFinderCore
 struct HomeView: View {
     @Environment(AppEnvironment.self) private var environment
     @Environment(LocalStore.self) private var store
+    @State private var showsPlus = false
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
+                    HStack(spacing: 14) {
+                        Image("BrandMark")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 46, height: 46)
+                            .clipShape(Circle())
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text("積み重ねた一秒を、次の自信へ。")
+                                .font(.headline)
+                                .foregroundStyle(SwimFinderTheme.navy)
+                            Text("記録を探すだけでなく、成長の流れまで見渡せます。")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 5)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("home.valueMessage")
+                }
+
+                Section {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Label("公式情報を参照しています", systemImage: "checkmark.seal.fill")
+                            .font(.headline)
+                            .foregroundStyle(SwimFinderTheme.officialBlue)
+
+                        Text("選手・大会・競技結果は、公益財団法人日本水泳連盟が公開する「Results of Japan Swimming」の情報を参照しています。")
+                            .font(.footnote)
+
+                        Link(destination: OfficialSite.base) {
+                            Label("公式サイトで情報を確認", systemImage: "arrow.up.right.square")
+                                .font(.footnote.weight(.semibold))
+                        }
+                        .accessibilityIdentifier("home.officialSourceLink")
+
+                        Text("本アプリは日本水泳連盟の公式アプリではなく、同連盟の承認・提携を受けたものではありません。情報の正確性・最新性・完全性およびサービスの継続提供を保証するものではありません。正式な記録・判断には公式発表をご確認ください。")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.vertical, 4)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("home.sourceDisclaimer")
+                } header: {
+                    Text("情報源・免責")
+                }
+
+                Section {
                     NavigationLink {
                         PlayerSearchView()
                     } label: {
-                        EntryRow(title: "選手から探す", subtitle: "選手名を入力して公式の選手検索を開く", symbol: "person.fill")
+                        EntryRow(title: "選手から探す", subtitle: "選手名から登録選手を検索", symbol: "person.fill")
                     }
                     .accessibilityIdentifier("home.playerSearch")
 
                     NavigationLink {
+                        PlayerSearchView()
+                    } label: {
+                        EntryRow(title: "クラブ・学校から探す", subtitle: "所属名から選手と成績を検索", symbol: "building.2.fill")
+                    }
+                    .accessibilityIdentifier("home.affiliationSearch")
+
+                    NavigationLink {
                         MeetSearchView()
                     } label: {
-                        EntryRow(title: "大会から探す", subtitle: "大会名を入力して公式の大会検索を開く", symbol: "trophy.fill")
+                        EntryRow(title: "大会から探す", subtitle: "大会名や年度から大会を検索", symbol: "trophy.fill")
                     }
                     .accessibilityIdentifier("home.meetSearch")
                 } header: {
                     Text("検索")
+                }
+
+                if !environment.membership.isPlus {
+                    Section {
+                        Button { showsPlus = true } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "crown.fill").foregroundStyle(SwimFinderTheme.aqua)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("SwimScope Plus").font(.headline)
+                                    Text("通知・大会当日モード・成長分析").font(.caption).foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
+                        .accessibilityIdentifier("home.plus")
+                    }
+                }
+
+                if !store.favorites.isEmpty {
+                    Section("お気に入り") {
+                        ForEach(store.favorites.prefix(3)) { link in
+                            NavigationLink {
+                                homeFavoriteDestination(link)
+                            } label: {
+                                Label(link.title, systemImage: favoriteSymbol(link))
+                            }
+                        }
+                    }
                 }
 
                 Section {
@@ -33,8 +118,20 @@ struct HomeView: View {
                             .accessibilityIdentifier("home.emptyRecents")
                     } else {
                         ForEach(store.recentSearches) { item in
-                            RecentSearchRow(item: item) {
-                                reopen(item)
+                            NavigationLink {
+                                if item.kind == .player {
+                                    PlayerSearchView(initialQuery: item.normalizedQuery)
+                                } else if item.kind == .affiliation {
+                                    PlayerSearchView(initialAffiliation: item.normalizedQuery)
+                                } else {
+                                    MeetSearchView(initialQuery: item.isFilterOnly ? "" : item.normalizedQuery,
+                                                   initialYear: item.fiscalYear,
+                                                   initialPrefectureCode: item.prefectureCode,
+                                                   initialStatusCode: item.statusCode,
+                                                   initialWaterwayCode: item.waterwayCode)
+                                }
+                            } label: {
+                                RecentSearchRow(item: item)
                             }
                         }
                         .onDelete { offsets in
@@ -48,38 +145,38 @@ struct HomeView: View {
                     Text("履歴はこの端末内にのみ保存されます（最大\(SearchHistoryPolicy.maxCount)件）。")
                 }
 
-                Section {
-                    UnofficialNotice()
-                        .listRowInsets(EdgeInsets())
-                        .listRowBackground(Color.clear)
-                    Button {
-                        environment.browser.open(url: OfficialSite.base)
-                    } label: {
-                        Label("公式結果サイトを開く（result.swim.or.jp）", systemImage: "safari")
-                    }
-                    .accessibilityIdentifier("home.openOfficialSite")
-                } header: {
-                    Text("情報源")
-                }
             }
-            .navigationTitle("Swim Finder")
+            .swimFinderScreen()
+            .navigationTitle("SwimScope")
+            .sheet(isPresented: $showsPlus) { PlusView() }
         }
     }
 
-    private func reopen(_ item: RecentSearch) {
-        let now = environment.clock.now()
-        let result: Result<OfficialSiteLaunch.Plan, OfficialSiteLaunch.Failure>
-        switch item.kind {
-        case .player:
-            result = OfficialSiteLaunch.player(PlayerQuery(rawName: item.rawQuery), now: now)
-        case .meet:
-            result = OfficialSiteLaunch.meet(MeetQuery(rawName: item.rawQuery, fiscalYear: item.fiscalYear), now: now)
+    @ViewBuilder
+    private func homeFavoriteDestination(_ link: FavoriteLink) -> some View {
+        let parts = link.url.pathComponents.filter { $0 != "/" }
+        if link.kind == .athlete, let id = parts.last {
+            PlayerDetailView(player: PlayerSummary(id: id, athleteID: id, displayName: link.title))
+        } else if link.kind == .tournament, let id = parts.last {
+            MeetDetailView(meet: MeetSummary(id: id, name: link.title))
+        } else if link.kind == .playerSearch,
+                  let components = URLComponents(url: link.url, resolvingAgainstBaseURL: false),
+                  let affiliation = components.queryItems?.first(where: { $0.name == "entry_group_name" })?.value {
+            PlayerSearchView(initialAffiliation: affiliation)
+        } else {
+            PlayerSearchView()
         }
-        guard case .success(let plan) = result else { return }
-        environment.clipboard.copy(plan.clipboardText)
-        if let history = plan.historyItem { store.recordSearch(history) }
-        environment.browser.open(plan)
     }
+
+    private func favoriteSymbol(_ link: FavoriteLink) -> String {
+        switch link.kind {
+        case .athlete, .playerSearch: return link.url.query == nil ? "person.fill" : "building.2.fill"
+        case .tournament, .tournamentList: return "trophy.fill"
+        case .raceResult: return "flag.checkered"
+        case .other: return "star.fill"
+        }
+    }
+
 }
 
 private struct EntryRow: View {
@@ -95,7 +192,7 @@ private struct EntryRow: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title).font(.headline)
-                Text(subtitle).font(.footnote).foregroundStyle(.secondary)
+                Text(verbatim: subtitle).font(.footnote).foregroundStyle(.secondary)
             }
         }
         .frame(minHeight: SwimFinderTheme.minimumTapSize)
@@ -103,26 +200,21 @@ private struct EntryRow: View {
     }
 }
 
-struct RecentSearchRow: View {
+private struct RecentSearchRow: View {
     let item: RecentSearch
-    let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(systemName: item.kind == .player ? "person" : "trophy")
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(item.normalizedQuery).font(.body)
-                    Text(subtitle).font(.footnote).foregroundStyle(.secondary)
-                }
-                Spacer()
-                Image(systemName: "arrow.up.right.square").accessibilityHidden(true)
+        HStack {
+            Image(systemName: icon)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.normalizedQuery).font(.body)
+                Text(subtitle).font(.footnote).foregroundStyle(.secondary)
             }
-            .frame(minHeight: SwimFinderTheme.minimumTapSize)
+            Spacer()
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel("\(item.kind.title)検索「\(item.normalizedQuery)」を公式サイトで開く")
+        .frame(minHeight: SwimFinderTheme.minimumTapSize)
+        .accessibilityLabel("\(item.kind.title)検索「\(item.normalizedQuery)」")
         .accessibilityIdentifier("recent.\(item.kind.rawValue)")
     }
 
@@ -131,5 +223,13 @@ struct RecentSearchRow: View {
         if let year = item.fiscalYear { text += "・\(year)年度" }
         text += "・" + item.searchedAt.formatted(date: .abbreviated, time: .shortened)
         return text
+    }
+
+    private var icon: String {
+        switch item.kind {
+        case .player: return "person"
+        case .affiliation: return "building.2"
+        case .meet: return "trophy"
+        }
     }
 }

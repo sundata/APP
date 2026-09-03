@@ -4,67 +4,66 @@ import SwimFinderCore
 struct FavoritesView: View {
     @Environment(AppEnvironment.self) private var environment
     @Environment(LocalStore.self) private var store
-    @State private var isAdding = false
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
                     if store.favorites.isEmpty {
-                        Text("お気に入りはまだありません。公式サイトの選手ページや大会ページの URL を保存できます。")
+                        ContentUnavailableView("お気に入りはまだありません", systemImage: "star", description: Text("選手・所属・大会の詳細画面にある星ボタンから追加できます。"))
                             .foregroundStyle(.secondary)
                             .accessibilityIdentifier("favorites.empty")
                     } else {
                         ForEach(store.favorites) { link in
-                            Button {
-                                environment.browser.open(url: link.url)
+                            NavigationLink {
+                                favoriteDestination(link)
                             } label: {
                                 FavoriteRow(link: link)
                             }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel("お気に入り「\(link.title)」を公式サイトで開く")
+                            .accessibilityLabel("お気に入り「\(link.title)」を開く")
                             .accessibilityIdentifier("favorite.row")
                         }
                         .onDelete { offsets in
                             let targets = offsets.map { store.favorites[$0] }
-                            for link in targets { store.removeFavorite(link) }
+                            for link in targets {
+                                store.removeFavorite(link).forEach { environment.resultUpdateMonitor.cancelRaceReminder(id: $0) }
+                            }
+                            syncWatchedAthletes()
                         }
                     }
                 } footer: {
-                    Text("保存されるのは公式サイトの URL と名前だけです。結果本文は保存されません。")
+                    Text("お気に入りはこの端末内にのみ保存されます。")
                 }
 
-                Section {
-                    Button {
-                        environment.browser.open(url: OfficialSite.playerSearch)
-                    } label: {
-                        Label("公式 選手検索", systemImage: "person.fill")
-                            .frame(minHeight: SwimFinderTheme.minimumTapSize)
-                    }
-                    Button {
-                        environment.browser.open(url: OfficialSite.tournamentList)
-                    } label: {
-                        Label("公式 大会一覧", systemImage: "trophy.fill")
-                            .frame(minHeight: SwimFinderTheme.minimumTapSize)
-                    }
-                } header: {
-                    Text("公式ページ")
-                }
             }
+            .swimFinderScreen()
             .navigationTitle("お気に入り")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        isAdding = true
-                    } label: {
-                        Label("追加", systemImage: "plus")
-                    }
-                    .accessibilityIdentifier("favorites.add")
-                }
-            }
-            .sheet(isPresented: $isAdding) {
-                AddFavoriteView()
-            }
+        }
+    }
+
+    private func syncWatchedAthletes() {
+        let athletes = store.favorites.filter { $0.kind == .athlete }.compactMap { link -> (id: String, name: String)? in
+            guard let id = link.url.pathComponents.filter({ $0 != "/" }).last else { return nil }
+            return (id, link.title)
+        }
+        environment.resultUpdateMonitor.syncWatchedAthletes(athletes)
+    }
+
+    @ViewBuilder
+    private func favoriteDestination(_ link: FavoriteLink) -> some View {
+        let parts = link.url.pathComponents.filter { $0 != "/" }
+        if link.kind == .athlete, let id = parts.last {
+            PlayerDetailView(player: PlayerSummary(id: id, athleteID: id, displayName: link.title))
+        } else if link.kind == .tournament, let id = parts.last {
+            MeetDetailView(meet: MeetSummary(id: id, name: link.title))
+        } else if link.kind == .playerSearch,
+                  let components = URLComponents(url: link.url, resolvingAgainstBaseURL: false),
+                  let affiliation = components.queryItems?.first(where: { $0.name == "entry_group_name" })?.value {
+            PlayerSearchView(initialAffiliation: affiliation)
+        } else if link.kind == .playerSearch {
+            PlayerSearchView()
+        } else {
+            MeetSearchView()
         }
     }
 }
@@ -77,10 +76,10 @@ private struct FavoriteRow: View {
             Image(systemName: symbol).accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(link.title).font(.body)
-                Text(link.url.absoluteString).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                Text(kindLabel).font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            Image(systemName: "arrow.up.right.square").accessibilityHidden(true)
+            Image(systemName: "chevron.right").foregroundStyle(.tertiary).accessibilityHidden(true)
         }
         .frame(minHeight: SwimFinderTheme.minimumTapSize)
     }
@@ -91,6 +90,17 @@ private struct FavoriteRow: View {
         case .tournament, .tournamentList: return "trophy"
         case .raceResult: return "flag.checkered"
         case .other: return "link"
+        }
+    }
+
+    private var kindLabel: String {
+        switch link.kind {
+        case .athlete: return "選手"
+        case .playerSearch: return link.url.query == nil ? "選手検索" : "クラブ・学校"
+        case .tournament: return "大会"
+        case .tournamentList: return "大会検索"
+        case .raceResult: return "競技結果"
+        case .other: return "お気に入り"
         }
     }
 }
@@ -128,6 +138,7 @@ struct AddFavoriteView: View {
                     }
                 }
             }
+            .swimFinderScreen()
             .navigationTitle("お気に入りを追加")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
