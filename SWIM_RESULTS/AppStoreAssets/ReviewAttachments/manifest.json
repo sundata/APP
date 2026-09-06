@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B5BE7A24-8D2D-442C-9171-4DD356B3C290",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "B83CE623-B034-4427-9AE7-56068BC7583D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "05-plus-review_0_10365D8D-00B6-4E25-819F-4AEA157A8D89.png",
+        "timestamp" : 1788452437.207
+      }
+    ],
+    "testIdentifier" : "SwimFinderUITests/testFreeTierShowsPlusAndLimitsThirdAthlete()",
+    "testIdentifierURL" : "test://com.apple.xcode/SwimFinder/SwimFinderUITests/SwimFinderUITests/testFreeTierShowsPlusAndLimitsThirdAthlete"
+  }
+]
