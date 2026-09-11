@@ -23,13 +23,29 @@ final class StoreKitEntitlementProvider {
     func prepare() async {
         guard !isTesting else { return }
         isLoading = true
+        errorMessage = nil
         defer { isLoading = false }
-        do {
-            products = try await Product.products(for: ProductID.all).sorted(by: productOrder)
-            await refreshEntitlements()
-        } catch {
-            errorMessage = "商品情報を取得できませんでした。通信環境を確認して、もう一度お試しください。"
+
+        for attempt in 0..<3 {
+            do {
+                let loadedProducts = try await Product.products(for: ProductID.all).sorted(by: productOrder)
+                if !loadedProducts.isEmpty {
+                    products = loadedProducts
+                    await refreshEntitlements()
+                    return
+                }
+            } catch {
+                // App Store Connect updates can take time to propagate. Retry briefly
+                // before showing an error so review devices do not get a blank paywall.
+            }
+
+            if attempt < 2 {
+                try? await Task.sleep(for: .seconds(1))
+            }
         }
+
+        await refreshEntitlements()
+        errorMessage = "商品情報を取得できませんでした。通信環境を確認して、もう一度お試しください。"
     }
 
     func purchase(_ product: Product) async -> Bool {

@@ -29,6 +29,7 @@ struct SettingsView: View {
                         }
                     }
                     .disabled(environment.entitlements.isPro)
+                    .accessibilityIdentifier("settingsPremiumLink")
                 }
 
                 Section("シフト") {
