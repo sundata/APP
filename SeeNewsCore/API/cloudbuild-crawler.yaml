@@ -1,0 +1,29 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'jobs'
+      - 'deploy'
+      - 'newsnow-crawler'
+      - '--image=asia-northeast1-docker.pkg.dev/$PROJECT_ID/cloud-run-source-deploy/newsnow-backend'
+      - '--region=asia-northeast1'
+      - '--command=python'
+      - '--args=run_news_job.py'
+      - '--tasks=1'
+      - '--max-retries=1'
+      - '--memory=512Mi'
+      - '--cpu=1'
+      - '--set-env-vars=ARTICLE_BUCKET=seenews-news-json-327343217815,ARTICLE_OBJECT=articles.json,RUN_CRAWLER_IN_SERVICE=false'
+
+# Create or update the scheduler job separately after setting these substitutions:
+#   _SCHEDULER_LOCATION=asia-northeast1
+#   _SCHEDULER_SERVICE_ACCOUNT=<scheduler service account>
+#
+# gcloud scheduler jobs create http newsnow-crawler \
+#   --location="${_SCHEDULER_LOCATION}" \
+#   --schedule="*/5 * * * *" \
+#   --uri="https://run.googleapis.com/apis/run.googleapis.com/v1/projects/${PROJECT_ID}/locations/asia-northeast1/jobs/newsnow-crawler:run" \
+#   --http-method=POST \
+#   --oauth-service-account-email="${_SCHEDULER_SERVICE_ACCOUNT}" \
+#   --oauth-token-scope="https://www.googleapis.com/auth/cloud-platform"

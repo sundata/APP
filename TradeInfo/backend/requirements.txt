@@ -1,0 +1,8 @@
+# Runtime deps — Python 3.12 target (see environment.yaml); code is 3.9+ compatible.
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+alembic==1.14.0
+pydantic-settings==2.7.0
+psycopg[binary]==3.2.4
+redis==5.2.1

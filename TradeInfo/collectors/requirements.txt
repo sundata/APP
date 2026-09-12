@@ -1,0 +1,2 @@
+# collectors share backend's DB schema (app.* models) — see requirements-dev.txt
+httpx==0.28.1

@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install
+        run: |
+          cd backend && python -m venv .venv && .venv/bin/pip install -r requirements.txt -e .
+      - name: Lint
+        run: cd backend && .venv/bin/ruff check .
+      - name: Typecheck
+        run: cd backend && .venv/bin/mypy app
+      - name: Migration smoke
+        run: |
+          cd backend && rm -f test_ci.db && DATABASE_URL="sqlite:///./test_ci.db" .venv/bin/alembic upgrade head && rm -f test_ci.db
+      - name: Tests
+        run: cd backend && .venv/bin/pytest -q
+
+  collectors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install
+        run: |
+          cd backend && python -m venv .venv && .venv/bin/pip install -r requirements.txt -e .
+          cd ../collectors && ../backend/.venv/bin/pip install -r requirements.txt 2>/dev/null || true
+      - name: Lint
+        run: cd collectors && ../backend/.venv/bin/ruff check .
+      - name: Tests
+        run: cd collectors && PYTHONPATH=.:../backend ../backend/.venv/bin/pytest -q
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate OpenAPI
+        run: npx --yes @redocly/cli@latest lint api/openapi.yaml

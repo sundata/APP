@@ -1,0 +1,38 @@
+# Secrets — never commit (§67)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local test databases
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+.next/
+dist/
+coverage/
+
+# Flutter / Dart
+.dart_tool/
+build/
+*.iml
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/

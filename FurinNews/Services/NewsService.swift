@@ -40,7 +40,12 @@ class NewsService: ObservableObject {
     
     // MARK: - 获取新闻列表
     func fetchNews(category: NewsCategory? = nil, page: Int = 1, limit: Int = NewsService.pageSize) async {
-        await MainActor.run { isLoading = true }
+        let shouldShowLoading = articles.isEmpty || page > 1
+        await MainActor.run {
+            if shouldShowLoading {
+                isLoading = true
+            }
+        }
         error = nil
         
         do {

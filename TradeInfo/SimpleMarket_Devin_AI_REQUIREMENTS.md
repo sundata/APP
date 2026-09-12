@@ -487,6 +487,8 @@ Portfolio 必须保持简单。
 - Realized P/L
 - Daily P/L
 
+多币种：MVP 按资产原币计算与显示；统一基准货币换算（依赖 `fx_rates`）放到 Phase 1.5+。
+
 Portfolio 首页不要自动混入大量新闻。
 
 ---
@@ -528,6 +530,8 @@ Portfolio 首页不要自动混入大量新闻。
   "importance_score": 0
 }
 ```
+
+新闻只保存标题、摘要与原文链接，不复制 / 转载全文；正文展示一律跳转来源。
 
 ---
 
@@ -598,6 +602,18 @@ MVP：
 
 ---
 
+## 15.1 Alert Engine
+
+独立服务，必须包含：
+
+- 消费 quote stream 实时评估告警条件
+- 触发记录写入 `alert_trigger_log`，防止重复推送
+- 支持 one-shot / recurring 两种模式
+- 同一告警冷却期（cooldown）可配置，避免行情抖动造成告警轰炸
+- Economic Event 类告警由 Calendar 数据更新触发，不依赖行情
+
+---
+
 # 16. 数据采集架构
 
 ## 16.1 原则
@@ -644,6 +660,8 @@ Crawler 只能用于：
 - 不复制禁止转载的完整版权内容
 
 不得因为“技术上可以爬取”就直接上线。
+
+**行情红线**：股票 / 指数 / 外汇 / 商品 / 债券的报价数据只允许通过 Official / Exchange / Licensed API（优先级 1～3）获取，禁止用爬虫采集行情后再发布。Crawler（优先级 5）仅可用于新闻标题、财经日历等明确允许的内容。
 
 开发时必须维护：
 
@@ -924,9 +942,15 @@ notifications
 news
 news_asset_relations
 economic_events
+market_calendars
 data_sources
 collector_jobs
 collector_errors
+alert_trigger_log
+feature_flags
+asset_identifiers
+user_settings
+fx_rates
 ```
 
 ---
@@ -958,6 +982,12 @@ collector_errors
 必须最终统一到：
 
 `stock_us_aapl`
+
+`asset_aliases` / `asset_identifiers` 必须支持：
+
+- 多语言名称（如 Toyota / トヨタ / 丰田 → 7203）
+- ISIN / FIGI（支撑 §10 Search 的后期扩展）
+- 各数据源原始 symbol → 统一 Asset ID 的映射
 
 ---
 
@@ -1017,6 +1047,20 @@ Server：
 }
 ```
 
+## 25.1 WebSocket 协议
+
+- 订阅后先推 snapshot，之后只推 delta
+- 心跳：server ping / client pong，超时断开
+- 断线重连：client exponential backoff，重连后重新 subscribe 并拉取 snapshot
+- Cloud Run 限制：单连接最长约 60 分钟，client 必须实现到期自动重连；需要 session affinity；§58 的 10,000 并发需按实例并发上限规划 min/max instances，必要时拆独立 realtime 服务
+
+## 25.2 API 约定
+
+- 分页：列表接口统一 `?cursor=` + 响应 `next_cursor`
+- 错误格式：`{ "error": { "code": "", "message": "" } }`，HTTP status 语义正确
+- Rate limit：响应带 `X-RateLimit-*` headers
+- Search 实现：MVP 用 PostgreSQL `pg_trgm`，规模上来后可换 Typesense / OpenSearch
+
 ---
 
 # 26. Backend
@@ -1038,6 +1082,8 @@ TypeScript NestJS
 - WebSocket
 - Redis
 - PostgreSQL
+
+Devin 必须在开始开发前记录最终选择理由（同 §28，记入 ADR）。
 
 ---
 
@@ -1361,6 +1407,8 @@ Nikkei: 16 min delay
 
 禁止把 stale data 当 live。
 
+freshness 阈值必须结合 `market_calendars` 的开闭市时间 / 假日计算——闭市期间数据不更新不算 stale。
+
 ---
 
 # 40. Monitoring
@@ -1380,6 +1428,7 @@ Google Cloud Monitoring。
 - Memory
 - Pub/Sub backlog
 - Data freshness
+- Error Tracking（Cloud Error Reporting / Sentry）
 
 ---
 
@@ -1466,6 +1515,11 @@ DATA_SOURCE_COMPLIANCE.md
 特别注意：
 
 “可访问网页”不等于“允许商业再发布数据”。
+
+特别注意：
+
+- 中国 A 股（SSE / SZSE）行情有严格的分发许可制度，上线前必须做专项许可评估
+- 各交易所对 delayed data 的最短延迟要求不同，必须按来源写入 `data_source_registry`
 
 ---
 
@@ -1585,6 +1639,7 @@ Retention D1 / D7 / D30
 - Forex
 - Crypto
 - Commodity
+- Bond Yield
 
 ### Feature
 
@@ -1636,7 +1691,10 @@ MVP 禁止主动扩张到：
 ARCHITECTURE.md
 DATABASE.md
 API.md
+DATA_SOURCES.md
 DATA_SOURCE_COMPLIANCE.md
+DEVELOPMENT_PLAN.md
+MVP_TASKS.md
 DEPLOYMENT.md
 ```
 
@@ -1731,6 +1789,55 @@ Commit
 
 ---
 
+## 52.1 Devin 执行环境
+
+仓库采用 Monorepo：
+
+```text
+/
+├── web/               # Next.js
+├── mobile/            # Flutter（或 §28 最终选型）
+├── backend/           # FastAPI / NestJS（§26 最终选型）
+├── collectors/        # 数据采集器
+├── infra/terraform/   # GCP IaC
+├── docs/
+│   └── adr/           # Architecture Decision Records
+└── AGENTS.md
+```
+
+### AGENTS.md
+
+仓库根目录必须维护 `AGENTS.md`，作为每次 Devin session 自动生效的持久规则，至少包含：
+
+- 各子项目的 install / lint / test / run 命令
+- 代码风格与禁止事项
+- Commit / PR 规范
+- 本地依赖（PostgreSQL / Redis / emulator）启动方式
+
+Phase 0 规划文档生成后，关键约定必须同步进 `AGENTS.md`，不允许只留在会话上下文中。
+
+### 开发环境可复现
+
+根目录维护 `environment.yaml`（Devin snapshot setup）或等价的一键环境脚本，使任意新 Devin session 可以快速获得：
+
+- 固定版本的语言运行时
+- 本地 PostgreSQL / Redis（容器或本地服务）
+- 依赖安装完成
+- 测试可直接运行
+
+真实 GCP 凭据 / Secret 不进开发环境，Devin 使用本地替代（emulator / mock / testcontainers）。
+
+### Session 切分
+
+§52 的循环以**单个 milestone** 为粒度：
+
+- 一次会话只交付一个可测试增量
+- 每个增量对应一个独立 PR（`feature/*` 分支）
+- `MVP_TASKS.md` 中每个任务必须满足"一次会话可完成 + 有明确验收条件"
+- 跨 session 的决策（技术选型、API 契约变更）必须落到 `docs/adr/` 或 `AGENTS.md`，不能只留在会话记录里
+
+---
+
 # 53. Git 要求
 
 Branch：
@@ -1809,6 +1916,13 @@ Android：
 - Pixel class
 - Samsung class
 - latest Android + previous 2 major versions
+
+自动化测试框架：
+
+- Flutter：`integration_test` / Patrol
+- React Native：Detox / Maestro
+
+覆盖核心路径：Home → Search → Asset Detail → Add Watchlist → Set Alert。
 
 ---
 
@@ -2156,6 +2270,8 @@ Devin 首先制作：
 
 使用 Mock API。
 
+Mock 必须由 `API.md` / OpenAPI spec 自动生成，保证原型与真实后端契约一致（contract test）。
+
 UI 通过后再接真实数据。
 
 ---
@@ -2258,7 +2374,7 @@ MVP 成功的判断不是“功能比 Investing.com 多”。
 # 75. Devin AI 开始执行时的首个 Prompt
 
 ```text
-Read REQUIREMENTS.md completely.
+Read SimpleMarket_Devin_AI_REQUIREMENTS.md completely.
 
 Do not start coding immediately.
 
@@ -2271,6 +2387,7 @@ First create:
 5. DATA_SOURCE_COMPLIANCE.md
 6. DEVELOPMENT_PLAN.md
 7. MVP_TASKS.md
+8. DEPLOYMENT.md
 
 The product is a simplified real-time financial market information
 platform inspired by the functional scope of Investing.com, but it must
@@ -2301,7 +2418,7 @@ Do not scrape or reproduce third-party content in violation of Terms of
 Service, robots.txt, copyright, access controls, data licensing, or
 redistribution restrictions.
 
-After generating the seven planning files, review them for conflicts and
+After generating the eight planning files, review them for conflicts and
 missing dependencies. Then create the implementation plan as small,
 testable milestones.
 

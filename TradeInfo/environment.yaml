@@ -1,0 +1,54 @@
+# Devin snapshot setup — SimpleMarket
+# 目标：任意新 session 开箱即可 lint / test / run。
+# 无真实凭据：外部数据源用 mock；GCP 服务用本地替代（§52.1）。
+
+initialize:
+  # ---- 一次性工具安装 ----
+  - run: |
+      set -e
+      # Python 3.12 + pip 工具
+      sudo apt-get update -y
+      sudo apt-get install -y python3.12 python3.12-venv python3-pip
+      # Node 20 LTS + pnpm
+      curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+      sudo apt-get install -y nodejs
+      sudo corepack enable && corepack prepare pnpm@latest --activate
+      # Docker Compose plugin（postgres / redis 本地依赖）
+      sudo apt-get install -y docker-compose-plugin || true
+      # Flutter（mobile/，体积大；如构建超时可先移除，mobile 任务再单独装）
+      if [ ! -d "$HOME/flutter" ]; then
+        git clone --depth 1 -b stable https://github.com/flutter/flutter.git "$HOME/flutter" || true
+      fi
+      echo 'export PATH="$HOME/flutter/bin:$PATH"' >> "$HOME/.bashrc"
+
+maintenance:
+  # ---- 每次 session 启动时执行（保持快速、幂等） ----
+  - run: |
+      export PATH="$HOME/flutter/bin:$PATH"
+      # 本地依赖：PostgreSQL 16 + Redis 7
+      docker compose -f infra/local/docker-compose.yml up -d || true
+      # 各子项目依赖（目录有内容时才安装，骨架阶段跳过）
+      [ -f backend/requirements-dev.txt ] && pip install -r backend/requirements-dev.txt || true
+      [ -f web/package.json ] && (cd web && pnpm install) || true
+      [ -f mobile/pubspec.yaml ] && (cd mobile && flutter pub get) || true
+      [ -f collectors/requirements-dev.txt ] && pip install -r collectors/requirements-dev.txt || true
+
+knowledge:
+  - name: lint
+    contents: |
+      backend/collectors: ruff check . && mypy .
+      web: pnpm lint && pnpm typecheck
+      mobile: flutter analyze
+      terraform: terraform fmt -check -recursive && terraform validate
+  - name: test
+    contents: |
+      backend: cd backend && pytest
+      collectors: cd collectors && pytest
+      web: cd web && pnpm test && pnpm e2e
+      mobile: cd mobile && flutter test
+  - name: startup
+    contents: |
+      docker compose -f infra/local/docker-compose.yml up -d
+      backend: cd backend && uvicorn app.main:app --reload   # :8000
+      web: cd web && pnpm dev                                # :3000
+      mobile: cd mobile && flutter run

@@ -1,0 +1,27 @@
+[project]
+name = "simplemarket-backend"
+version = "0.1.0"
+description = "SimpleMarket backend API"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+# UP007/UP017/UP035 demand py3.10+ syntax; annotations must eval on py3.9 (local dev).
+# B008: Depends()/Query() in defaults is the FastAPI idiom
+ignore = ["UP007", "UP017", "UP035", "UP038", "B008"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "."
+exclude = ["alembic/versions/"]

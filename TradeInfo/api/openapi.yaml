@@ -1,0 +1,750 @@
+openapi: 3.0.3
+info:
+  title: SimpleMarket API
+  version: "0.1.0"
+  description: >
+    Read-only market data, news, economic calendar, watchlists, alerts and
+    simple portfolio records. Mobile and web clients build against this
+    contract; the backend's /api/v1/* implements it.
+
+    Conventions: cursor pagination (`cursor` in, `next_cursor` out — null
+    means end), unified error envelope, RFC3339/ISO-8601 UTC timestamps.
+servers:
+  - url: https://api.simplemarket.example.com/api/v1
+  - url: http://localhost:8000/api/v1
+
+paths:
+  /auth/register:
+    post:
+      summary: Register with email+password
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string, minLength: 8 }
+                display_name: { type: string }
+                locale: { type: string, default: en }
+      responses:
+        "201": { $ref: "#/components/responses/TokenPair" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "409": { description: Email already registered, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+
+  /auth/login:
+    post:
+      summary: Login with email+password
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/TokenPair" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /auth/oauth:
+    post:
+      summary: Login via Google/Apple id_token
+      operationId: oauthLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [provider, id_token]
+              properties:
+                provider: { type: string, enum: [google, apple] }
+                id_token: { type: string }
+      responses:
+        "200": { $ref: "#/components/responses/TokenPair" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /auth/refresh:
+    post:
+      summary: Rotate refresh token -> new token pair
+      operationId: refreshTokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties: { refresh_token: { type: string } }
+      responses:
+        "200": { $ref: "#/components/responses/TokenPair" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /auth/logout:
+    post:
+      summary: Revoke refresh token
+      operationId: logout
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties: { refresh_token: { type: string } }
+      responses:
+        "204": { description: Revoked }
+
+  /me:
+    get:
+      summary: Current user profile
+      operationId: getMe
+      security: [ { bearerAuth: [] } ]
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema: { type: object, properties: { user: { $ref: "#/components/schemas/User" } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /notifications:
+    get:
+      summary: In-app notification inbox
+      operationId: listNotifications
+      security: [ { bearerAuth: [] } ]
+      responses:
+        "200": { $ref: "#/components/responses/NotificationList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /notifications/{notif_id}/read:
+    post:
+      summary: Mark notification read
+      operationId: markNotificationRead
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - { name: notif_id, in: path, required: true, schema: { type: integer } }
+      responses:
+        "200": { description: Updated, content: { application/json: { schema: { type: object } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /notifications/read-all:
+    post:
+      summary: Mark all read
+      operationId: markAllNotificationsRead
+      security: [ { bearerAuth: [] } ]
+      responses:
+        "200": { description: OK }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /notifications/prefs:
+    get:
+      summary: Notification preferences
+      operationId: getNotifyPrefs
+      security: [ { bearerAuth: [] } ]
+      responses:
+        "200": { description: Prefs, content: { application/json: { schema: { type: object } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    put:
+      summary: Update notification preferences
+      operationId: putNotifyPrefs
+      security: [ { bearerAuth: [] } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                push: { type: boolean }
+                email: { type: boolean }
+                alert: { type: boolean }
+                system: { type: boolean }
+      responses:
+        "200": { description: Updated prefs }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /healthz:
+    get:
+      summary: Liveness probe
+      operationId: healthz
+      responses:
+        "200":
+          description: Service is up
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Health" }
+
+  /search:
+    get:
+      summary: Asset search (name/symbol/aliases, multilingual)
+      operationId: search
+      parameters:
+        - { name: q, in: query, required: true, schema: { type: string, minLength: 1 } }
+        - { name: limit, in: query, schema: { type: integer, default: 20, maximum: 50 } }
+      responses:
+        "200": { $ref: "#/components/responses/SearchResult" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /markets/quotes:
+    get:
+      summary: Batch quotes (markets list / watchlist refresh)
+      operationId: listQuotes
+      parameters:
+        - name: asset_ids
+          in: query
+          schema: { type: string, description: "comma-separated asset_ids" }
+        - { name: asset_type, in: query, schema: { $ref: "#/components/schemas/AssetType" } }
+        - { name: exchange_id, in: query, schema: { type: string } }
+        - { name: cursor, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 50, maximum: 200 } }
+      responses:
+        "200": { $ref: "#/components/responses/QuotePage" }
+        "429": { $ref: "#/components/responses/RateLimited" }
+
+  /markets/{category}:
+    get:
+      summary: Quotes for a market tab (stocks|etfs|indices|forex|crypto|commodities|bonds)
+      operationId: listMarketCategory
+      parameters:
+        - { name: category, in: path, required: true, schema: { type: string, enum: [stocks, etfs, indices, forex, crypto, commodities, bonds] } }
+        - { name: cursor, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 50, maximum: 200 } }
+      responses:
+        "200": { $ref: "#/components/responses/QuotePage" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+
+  /assets/{asset_id}:
+    get:
+      summary: Asset detail (price, change, freshness label, related news)
+      operationId: getAsset
+      parameters:
+        - { name: asset_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { $ref: "#/components/responses/AssetDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /assets/{asset_id}/chart:
+    get:
+      summary: OHLCV candles
+      operationId: getAssetChart
+      parameters:
+        - { name: asset_id, in: path, required: true, schema: { type: string } }
+        - { name: range, in: query, schema: { type: string, enum: ["1D", "1W", "1M", "3M", "1Y"], default: "1M" } }
+      responses:
+        "200": { $ref: "#/components/responses/ChartData" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /news:
+    get:
+      summary: News feed, deduplicated (one row per story group)
+      operationId: listNews
+      parameters:
+        - { name: importance, in: query, schema: { type: string, enum: [all, important] } }
+        - { name: category, in: query, schema: { type: string, enum: [macro, earnings, crypto, company] } }
+        - { name: asset_id, in: query, schema: { type: string } }
+        - { name: cursor, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 30, maximum: 100 } }
+      responses:
+        "200": { $ref: "#/components/responses/NewsPage" }
+
+  /news/{news_id}:
+    get:
+      summary: News item detail (title + summary + link; no full text)
+      operationId: getNews
+      parameters:
+        - { name: news_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { $ref: "#/components/responses/NewsDetail" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /calendar/events:
+    get:
+      summary: Economic calendar events
+      operationId: listCalendarEvents
+      parameters:
+        - { name: date, in: query, schema: { type: string, format: date } }
+        - { name: importance, in: query, schema: { type: string, enum: [high, medium, low, all] } }
+        - { name: country, in: query, schema: { type: string } }
+        - { name: cursor, in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 50, maximum: 200 } }
+      responses:
+        "200": { $ref: "#/components/responses/CalendarPage" }
+
+  /exchanges:
+    get:
+      summary: Exchange list with live open/closed status
+      operationId: listExchanges
+      responses:
+        "200": { $ref: "#/components/responses/ExchangeList" }
+
+  /watchlists:
+    get:
+      summary: User watchlists
+      operationId: listWatchlists
+      responses:
+        "200": { $ref: "#/components/responses/WatchlistList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    post:
+      summary: Create watchlist
+      operationId: createWatchlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties: { name: { type: string } }
+      responses:
+        "201": { $ref: "#/components/responses/WatchlistDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /watchlists/{watchlist_id}:
+    patch:
+      summary: Rename / reorder watchlist
+      operationId: updateWatchlist
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                position: { type: integer }
+      responses:
+        "200": { $ref: "#/components/responses/WatchlistDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    delete:
+      summary: Delete watchlist
+      operationId: deleteWatchlist
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204": { description: Deleted }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /watchlists/{watchlist_id}/items/reorder:
+    patch:
+      summary: Reorder watchlist items
+      operationId: reorderWatchlistItems
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [asset_ids]
+              properties:
+                asset_ids: { type: array, items: { type: string } }
+      responses:
+        "200": { $ref: "#/components/responses/WatchlistItems" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /watchlists/{watchlist_id}/items:
+    get:
+      summary: Watchlist items
+      operationId: listWatchlistItems
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200": { $ref: "#/components/responses/WatchlistItems" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+    post:
+      summary: Add asset to watchlist
+      operationId: addWatchlistItem
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [asset_id]
+              properties: { asset_id: { type: string } }
+      responses:
+        "201": { $ref: "#/components/responses/WatchlistItems" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /watchlists/{watchlist_id}/items/{asset_id}:
+    delete:
+      summary: Remove asset from watchlist
+      operationId: removeWatchlistItem
+      parameters:
+        - { name: watchlist_id, in: path, required: true, schema: { type: string } }
+        - { name: asset_id, in: path, required: true, schema: { type: string } }
+      responses:
+        "204": { description: Removed }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /alerts:
+    get:
+      summary: User price alerts
+      operationId: listAlerts
+      responses:
+        "200": { $ref: "#/components/responses/AlertList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    post:
+      summary: Create price alert (price-only rules in MVP)
+      operationId: createAlert
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AlertCreate" }
+      responses:
+        "201": { $ref: "#/components/responses/AlertDetail" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /alerts/{alert_id}:
+    patch:
+      summary: Update alert (enabled toggle, price, channel)
+      operationId: updateAlert
+      parameters:
+        - { name: alert_id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AlertUpdate" }
+      responses:
+        "200": { $ref: "#/components/responses/AlertDetail" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "404": { $ref: "#/components/responses/NotFound" }
+
+  /portfolio/holdings:
+    get:
+      summary: Computed positions from the transaction ledger (original currency)
+      operationId: listHoldings
+      responses:
+        "200": { $ref: "#/components/responses/HoldingList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+  /portfolio/transactions:
+    get:
+      summary: Transaction history
+      operationId: listTransactions
+      responses:
+        "200": { $ref: "#/components/responses/TransactionList" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+    post:
+      summary: Record a buy/sell transaction
+      operationId: createTransaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TransactionCreate" }
+      responses:
+        "201": { $ref: "#/components/responses/TransactionDetail" }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    NotificationList:
+      description: Notifications + unread count
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { type: object } },
+          unread: { type: integer } } } }
+    TokenPair:
+      description: Issued token pair + user
+      content: { application/json: { schema: { type: object, properties:
+          access_token: { type: string },
+          token_type: { type: string },
+          expires_in: { type: integer },
+          refresh_token: { type: string },
+          user: { $ref: "#/components/schemas/User" } } } }
+    SearchResult:
+      description: Search hits
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/SearchItem" } } } } }
+    QuotePage:
+      description: Quotes page
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Quote" } },
+          next_cursor: { type: string, nullable: true } } } }
+    AssetDetail:
+      description: Asset detail
+      content: { application/json: { schema: { $ref: "#/components/schemas/AssetDetail" } } }
+    ChartData:
+      description: Candles
+      content: { application/json: { schema: { type: object, properties:
+          asset_id: { type: string },
+          range: { type: string },
+          candles: { type: array, items: { $ref: "#/components/schemas/Candle" } } } } }
+    NewsPage:
+      description: News page
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/NewsItem" } },
+          next_cursor: { type: string, nullable: true } } } }
+    NewsDetail:
+      description: News item
+      content: { application/json: { schema: { $ref: "#/components/schemas/NewsItem" } } }
+    CalendarPage:
+      description: Events page
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/CalendarEvent" } },
+          next_cursor: { type: string, nullable: true } } } }
+    ExchangeList:
+      description: Exchanges
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Exchange" } } } } }
+    WatchlistList:
+      description: Watchlists
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Watchlist" } } } } }
+    WatchlistDetail:
+      description: Watchlist
+      content: { application/json: { schema: { $ref: "#/components/schemas/Watchlist" } } }
+    WatchlistItems:
+      description: Watchlist items
+      content: { application/json: { schema: { type: object, properties:
+          watchlist_id: { type: string },
+          items: { type: array, items: { $ref: "#/components/schemas/WatchlistItem" } } } } }
+    AlertList:
+      description: Alerts
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Alert" } } } } }
+    AlertDetail:
+      description: Alert
+      content: { application/json: { schema: { $ref: "#/components/schemas/Alert" } } }
+    HoldingList:
+      description: Positions
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Position" } } } } }
+    TransactionList:
+      description: Transactions
+      content: { application/json: { schema: { type: object, properties:
+          items: { type: array, items: { $ref: "#/components/schemas/Transaction" } } } } }
+    TransactionDetail:
+      description: Transaction
+      content: { application/json: { schema: { $ref: "#/components/schemas/Transaction" } } }
+    BadRequest:
+      description: Bad request
+      content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+    Unauthorized:
+      description: Missing/invalid auth token
+      content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+    NotFound:
+      description: Not found
+      content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+    RateLimited:
+      description: Rate limit exceeded
+      headers:
+        X-RateLimit-Limit: { schema: { type: integer } }
+        X-RateLimit-Remaining: { schema: { type: integer } }
+        Retry-After: { schema: { type: integer } }
+      content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } }
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: string }
+        email: { type: string }
+        display_name: { type: string, nullable: true }
+        locale: { type: string }
+        provider: { type: string }
+        settings: { type: object }
+    Health:
+      type: object
+      properties: { status: { type: string, example: "ok" } }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, example: "not_found" }
+            message: { type: string }
+            details: { type: object, nullable: true }
+    AssetType:
+      type: string
+      enum: [stock, etf, index, forex, crypto, commodity, bond_yield]
+    SearchItem:
+      type: object
+      properties:
+        asset_id: { type: string }
+        symbol: { type: string }
+        name: { type: string }
+        asset_type: { $ref: "#/components/schemas/AssetType" }
+        exchange_id: { type: string, nullable: true }
+        currency: { type: string }
+    Quote:
+      type: object
+      properties:
+        asset_id: { type: string }
+        symbol: { type: string }
+        name: { type: string }
+        asset_type: { $ref: "#/components/schemas/AssetType" }
+        price: { type: string, description: "decimal as string" }
+        change: { type: string, nullable: true }
+        change_pct: { type: string, nullable: true }
+        quote_ts: { type: string, format: date-time }
+        currency: { type: string }
+        delay_minutes: { type: integer }
+        freshness: { type: string, enum: [live, delayed, stale, closed, no_data] }
+        market_open: { type: boolean, nullable: true }
+    AssetDetail:
+      type: object
+      properties:
+        asset_id: { type: string }
+        symbol: { type: string }
+        name: { type: string }
+        name_i18n: { type: object, additionalProperties: { type: string } }
+        asset_type: { $ref: "#/components/schemas/AssetType" }
+        exchange_id: { type: string, nullable: true }
+        currency: { type: string }
+        latest_price: { type: string, nullable: true }
+        change_pct: { type: string, nullable: true }
+        freshness: { type: string, enum: [live, delayed, stale, closed, no_data] }
+        is_watchlisted: { type: boolean }
+        related_news: { type: array, maxItems: 5, items: { type: object } }
+    Candle:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        open: { type: string }
+        high: { type: string }
+        low: { type: string }
+        close: { type: string }
+        volume: { type: string, nullable: true }
+    NewsItem:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        summary: { type: string, nullable: true }
+        source: { type: string }
+        source_url: { type: string }
+        published_at: { type: string, format: date-time }
+        language: { type: string }
+        importance_score: { type: integer }
+        dedup_count: { type: integer, description: "stories sharing this dedup_group_id" }
+        related_assets: { type: array, items: { type: string } }
+    CalendarEvent:
+      type: object
+      properties:
+        id: { type: integer }
+        country: { type: string }
+        currency: { type: string }
+        event_name: { type: string }
+        event_time_utc: { type: string, format: date-time }
+        importance: { type: string, enum: [high, medium, low] }
+        actual: { type: string, nullable: true }
+        forecast: { type: string, nullable: true }
+        previous: { type: string, nullable: true }
+    Exchange:
+      type: object
+      properties:
+        exchange_id: { type: string }
+        name: { type: string }
+        country: { type: string, nullable: true }
+        timezone: { type: string }
+        currency: { type: string }
+        market_open: { type: boolean }
+    Watchlist:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        item_count: { type: integer }
+    WatchlistItem:
+      type: object
+      properties:
+        asset_id: { type: string }
+        symbol: { type: string }
+        name: { type: string }
+        latest_price: { type: string, nullable: true }
+        change_pct: { type: string, nullable: true }
+        freshness: { type: string }
+        added_at: { type: string, format: date-time }
+    Alert:
+      type: object
+      properties:
+        id: { type: string }
+        asset_id: { type: string }
+        symbol: { type: string, nullable: true }
+        direction: { type: string, enum: [above, below] }
+        price: { type: string }
+        channel: { type: string, enum: [push, email] }
+        enabled: { type: boolean }
+        last_triggered_at: { type: string, format: date-time, nullable: true }
+    AlertCreate:
+      type: object
+      required: [asset_id, direction, price]
+      properties:
+        asset_id: { type: string }
+        direction: { type: string, enum: [above, below] }
+        price: { type: string }
+        channel: { type: string, enum: [push, email], default: push }
+    AlertUpdate:
+      type: object
+      properties:
+        direction: { type: string, enum: [above, below] }
+        price: { type: string }
+        channel: { type: string, enum: [push, email] }
+        enabled: { type: boolean }
+    Position:
+      type: object
+      properties:
+        asset_id: { type: string }
+        symbol: { type: string }
+        name: { type: string }
+        quantity: { type: string }
+        avg_cost: { type: string }
+        currency: { type: string }
+        latest_price: { type: string, nullable: true }
+        market_value: { type: string, nullable: true }
+        unrealized_pnl: { type: string, nullable: true }
+    Transaction:
+      type: object
+      properties:
+        id: { type: string }
+        asset_id: { type: string }
+        symbol: { type: string }
+        side: { type: string, enum: [buy, sell] }
+        quantity: { type: string }
+        price: { type: string }
+        transacted_at: { type: string, format: date-time }
+        note: { type: string, nullable: true }
+    TransactionCreate:
+      type: object
+      required: [asset_id, side, quantity, price]
+      properties:
+        asset_id: { type: string }
+        side: { type: string, enum: [buy, sell] }
+        quantity: { type: string }
+        price: { type: string }
+        transacted_at: { type: string, format: date-time, nullable: true }
+        note: { type: string, nullable: true }

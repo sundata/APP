@@ -991,10 +991,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 scheduler = AsyncIOScheduler()
+RUN_CRAWLER_IN_SERVICE = os.environ.get("RUN_CRAWLER_IN_SERVICE", "false").lower() == "true"
 
 
 @app.on_event("startup")
 async def startup():
+    if not RUN_CRAWLER_IN_SERVICE:
+        logger.info("In-service crawler disabled; use the Cloud Run Job scheduler")
+        return
     # 延迟30秒后开始爬取，避免阻塞 Cloud Run 启动
     async def _delayed_crawl():
         await asyncio.sleep(30)
@@ -1007,7 +1011,8 @@ async def startup():
 
 @app.on_event("shutdown")
 async def shutdown():
-    scheduler.shutdown()
+    if scheduler.running:
+        scheduler.shutdown()
 
 
 def _to_schema(a: ArticleORM) -> ArticleSchema:
